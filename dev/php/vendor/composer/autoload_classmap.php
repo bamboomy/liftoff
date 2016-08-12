@@ -12,6 +12,9 @@ return array(
     'PHPMailerOAuthGoogle' => $vendorDir . '/phpmailer/phpmailer/class.phpmaileroauthgoogle.php',
     'POP3' => $vendorDir . '/phpmailer/phpmailer/class.pop3.php',
     'SMTP' => $vendorDir . '/phpmailer/phpmailer/class.smtp.php',
+    'SimpleEmailService' => $vendorDir . '/daniel-zahariev/php-aws-ses/src/SimpleEmailService.php',
+    'SimpleEmailServiceMessage' => $vendorDir . '/daniel-zahariev/php-aws-ses/src/SimpleEmailServiceMessage.php',
+    'SimpleEmailServiceRequest' => $vendorDir . '/daniel-zahariev/php-aws-ses/src/SimpleEmailServiceRequest.php',
     'ntlm_sasl_client_class' => $vendorDir . '/phpmailer/phpmailer/extras/ntlm_sasl_client.php',
     'phpmailerException' => $vendorDir . '/phpmailer/phpmailer/class.phpmailer.php',
 );

@@ -25,13 +25,13 @@ $mail = new PHPMailer;
 $mail->isSMTP();                                      // Set mailer to use SMTP
 $mail->Host = 'email-smtp.eu-west-1.amazonaws.com';  // Specify main and backup SMTP servers
 $mail->SMTPAuth = true;                               // Enable SMTP authentication
-$mail->Username = 'AKIAJIWTNXM3JDR6P5IQ';                 // SMTP username
-$mail->Password = 'AtbSa7hZGu1gLPMcimAhrUGaJns15/Pd2o0aZ/6MovlJ';                           // SMTP password
+$mail->Username = 'AKIAIMKPUBJMO74AKAPQ';                 // SMTP username
+$mail->Password = 'AmxqPmX2st17Ace/QDU2uffcBMfZ4w2kiAx1yIQZ5JVD';                           // SMTP password
 $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
 $mail->Port = 587;    
 
 $mail->setFrom('bamboomy@gmail.com', 'Mailer');
-$mail->addAddress('bamboomy@gmail.com', 'Joe User'); 
+$mail->addAddress('sander.theetaert@gmail.com', 'Joe User'); 
 
 $mail->isHTML(true); 
 

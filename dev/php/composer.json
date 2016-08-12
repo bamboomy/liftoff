@@ -1,5 +1,7 @@
 {
     "require": {
-        "phpmailer/phpmailer": "^5.2"
+        "phpmailer/phpmailer": "^5.2",
+        "daniel-zahariev/php-aws-ses": "^0.8.8",
+        "aws/aws-sdk-php": "^3.18"
     }
 }
