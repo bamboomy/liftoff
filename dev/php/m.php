@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+  <script src="../js/m.js"></script>
+  
 	<style>
 		.jumbotron { 
 			background-color: #a4ca39; /* Orange */
@@ -93,7 +96,7 @@
 				<br/>
 				Put the (play store) link below to register...<br/>
 			</p> 
-			<form class="form-inline">
+			<form class="form-inline" id="subscribeForm">
 					<div class="row">
 						<div class="col-sm-1"></div>
 						<div class="col-sm-5">
@@ -110,14 +113,14 @@
 							I like to review new work from promising app developers:
 						</div>
 						<div class="col-sm-5">
-							<input type="email" class="form-control" size="50" placeholder="someone@somewhere.com"><br/>
+							<input type="email" class="form-control" size="50" placeholder="someone@somewhere.com" id="inputEmail"><br/>
 						</div>
 						<div class="col-sm-1"></div>
 					</div>
 					<div class="row">
 						<div class="col-sm-1"></div>
 						<div class="col-sm-10">
-							<button type="button" class="btn btn-danger">Subscribe</button><br/>
+							<button type="button" class="btn btn-danger" id="subscribe" disabled="disabled">Subscribe</button><br/>
 						</div>
 						<div class="col-sm-1"></div>
 					</div>
