@@ -15,16 +15,15 @@ $(document).ready(function () {
         }
     });
 
-    $('#subscribeForm input#appurl').on('keyup blur', function () { // fires on every keyup & blur
+    $('#subscribeAppForm input#appurl').on('keyup blur', function () { // fires on every keyup & blur
 
 		if($('#subscribeForm').valid()){
 
-			$('button#subscribe.btn').prop('disabled', false);        // enables button
-			//$("#inputEmail").prop('disabled', 'disabled');   // disables email
+			$('button#register_app.btn').prop('disabled', false);        // enables button
+
 		}else{
 			
-			$('button#subscribe.btn').prop('disabled', 'disabled');   // disables button
-			//$("#inputEmail").prop('disabled', false);   // disables email
+			$('button#register_app.btn').prop('disabled', 'disabled');   // disables button
 		}
 	
     });

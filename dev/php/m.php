@@ -124,36 +124,42 @@
 				provided on your app's page!!!<br/>
 				<br/>
 			</p> 
-			<form class="form-inline" id="subscribeForm">
-					<div class="row">
-						<div class="col-sm-1"></div>
-						<div class="col-sm-5">
-							I'm an app developer and want to submit my app:
-						</div>
-						<div class="col-sm-5">
-							<input type="app" class="form-control subscribe" size="50" 
-								placeholder="https://play.google.com/store/apps/details?id=" id="appurl"
-								value="https://play.google.com/store/apps/details?id=a">
-						</div>
-						<div class="col-sm-1"></div>
+			
+			<div class="row">
+				<form class="form-inline" id="subscribeAppForm" action="register_app.php" method="post">
+					<div class="col-sm-1"></div>
+					<div class="col-sm-3">
+						I'm an app developer and want to submit my app:
 					</div>
-					<div class="row">
-						<div class="col-sm-1"></div>
-						<div class="col-sm-5">
-							I like to review new work from promising app developers:
-						</div>
-						<div class="col-sm-5">
-							<input type="email" class="form-control subscribe" size="50" placeholder="someone@somewhere.com" id="inputEmail" disabled="disabled"><br/>
-						</div>
-						<div class="col-sm-1"></div>
+					<div class="col-sm-6">
+						<input type="app" class="form-control subscribe" size="40" 
+							placeholder="https://play.google.com/store/apps/details?id=" 
+							id="appurl" name="appurl"
+							value="https://play.google.com/store/apps/details?id=org.bamboomy.memdicez">
 					</div>
-					<div class="row">
-						<div class="col-sm-11"></div>
-						<div class="col-sm-1">
-							<button type="button" class="btn btn-danger" id="subscribe" disabled="disabled" data-toggle="modal" data-target="#subscribeModal">Subscribe</button><br/>
-						</div>
+					<div class="col-sm-1">
+						<button type="submit" class="btn btn-primary" id="register_app" disabled="disabled">Register app</button><br/>
 					</div>
-			</form>
+					<div class="col-sm-1"></div>
+				</form>
+			</div>
+
+			<div class="row">
+				<form class="form-inline" id="subscribeForm" action="register_reviewer.php">
+					<div class="col-sm-1"></div>
+					<div class="col-sm-3">
+						I like to review new work from promising app developers:
+					</div>
+					<div class="col-sm-6">
+						<input type="email" class="form-control subscribe" size="40" placeholder="someone@somewhere.com" id="inputEmail" disabled="disabled"><br/>
+					</div>
+					<div class="col-sm-1">
+						<button type="submit" class="btn btn-primary" id="subscribe" disabled="disabled">Register as reviewer</button><br/>
+					</div>
+					<div class="col-sm-1"></div>
+				</form>
+			</div>
+
 		</div>
 		<div class="col-sm-2"></div>
 	</div>
