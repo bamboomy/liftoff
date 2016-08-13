@@ -1,0 +1,55 @@
+var validator;
+
+$.validator.addMethod("app", function(appUrl, element) {
+
+	//validates postalcode.
+	return appUrl.match(/https:\/\/play\.google\.com\/store\/apps\/details\?id=[a-z\.]+/);
+}, "This doesn't seem like a good app id...");
+
+$(document).ready(function () {
+
+    validator = $('#subscribeForm').validate({
+        rules: {
+            inputEmail: {
+                email: {
+					require_from_group: [1, '.subscribe']	
+				}
+            },
+			appurl: {
+				app: {
+					require_from_group: [1, '.subscribe']
+				}
+			}
+        }
+    });
+
+    $('#subscribeForm input#appurl').on('keyup blur', function () { // fires on every keyup & blur
+	
+		validator.element( "#subscribeForm" );
+	
+		if($('#subscribeForm').valid() && ($('#appurl').val().length > 0)) {
+
+			$('button#subscribe.btn').prop('disabled', false);        // enables button
+			$("#inputEmail").prop('disabled', 'disabled');   // disables email
+		}else{
+			
+			$('button#subscribe.btn').prop('disabled', 'disabled');   // disables button
+			$("#inputEmail").prop('disabled', false);   // disables email
+		}
+	
+    });
+
+    $('#subscribeForm input#inputEmail').on('keyup blur', function () { // fires on every keyup & blur
+	
+		validator.element( "#subscribeForm" );
+
+		if($('#subscribeForm').valid() && $('#inputEmail').val().length > 0) {
+			$('button#subscribe.btn').prop('disabled', false);        // enables button
+			$("#appurl").prop('disabled', 'disabled');   // disables email
+		} else {
+			$('button#subscribe.btn').prop('disabled', 'disabled');   // disables button
+			$("#appurl").prop('disabled', false);   // disables email
+		}
+    });
+});    
+
