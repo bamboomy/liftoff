@@ -6,6 +6,31 @@ $html = file_get_html($_POST['appurl']);
 
 $title = $html->find('div.id-app-title',0)->innertext;
 
+function startsWith($haystack, $needle){
+     $length = strlen($needle);
+     return (substr($haystack, 0, $length) === $needle);
+}
+
+foreach($html->find('a') as $element) {
+	
+	$link = $element->href;
+	
+	if(startsWith($link, "mailto:")){
+		$mail = explode(":",$link)[1];
+		
+		break;
+	}
+}
+
+foreach($html->find('span') as $element) {
+	
+	if($element->itemprop == "name"){
+		$name = $element->innertext;
+		
+		break;
+	}
+}
+	
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +73,7 @@ $title = $html->find('div.id-app-title',0)->innertext;
   </div>
   
 	<div class="jumbotron text-center">
-		<h1>Welcome, <?php echo $title; ?>!!!</h1> 
+		<h1>Welcome, <?php echo $name; ?>!!!</h1> 
 	</div>
 
 	<div class="row">
@@ -61,21 +86,65 @@ $title = $html->find('div.id-app-title',0)->innertext;
 			
 				<div class="row">
 					<div class="col-sm-2">
-	<?php
+<?php
 
-foreach($html->find('img.cover-image') as $element) {
+	$src = $html->find('img.cover-image',0)->src;
 	
-	echo "<img src='".$element->src."'/ width='100' height='100'>";
-
-	break;
-}
-
+	echo "<img src='".$src."'/ width='100' height='100'>";
+	
+	$counter = 0;
+	
+	foreach($html->find('span') as $element) {
+		
+		if($element->itemprop == "genre"){
+			
+			$genre[$counter++] = $element->innertext;
+		}
+	}
+	
+	$stars = $html->find('div.left-info',0)->outertext;
 ?>					
 					</div>
 					<div class="col-sm-8">
-						<p>MemDicez</p>
+						<div class="row">
+							<div class="col-sm-12">
+								<h4><?php echo $title; ?></h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<p>
+<?
+									echo $name . "&nbsp;";
+									
+									foreach($genre as $genreElement) {
+										
+										echo $genreElement . "&nbsp;";
+										
+									}
+?>
+								</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<input type="text" placeholder="Say in one sentence what your app does." size="100" />
+							</div>
+						</div>
 					</div>
 					<div class="col-sm-2"></div>
+				</div>
+			</div>
+			
+			<div class="well">
+				<p>We will send an e-mail to this address to verify that you are really the app owner:</p>
+				<div class="row">
+					<div class="col-sm-10">
+						<p><?php echo $mail; ?></p>
+					</div>
+					<div class="col-sm-2">
+						<button type="submit" class="btn btn-primary" id="register_app" disabled="disabled">Register app</button>
+					</div>
 				</div>
 			</div>
 			
