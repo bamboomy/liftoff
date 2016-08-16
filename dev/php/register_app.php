@@ -4,6 +4,19 @@ include_once("simple_html_dom.php");
 
 $html = file_get_html($_POST['appurl']);
 
+;
+
+foreach($html->find('div.content') as $potentialNumber){
+	
+	if($potentialNumber->itemprop=='numDownloads'){
+		$number = $potentialNumber->innertext;
+		
+		break;
+	}
+}
+
+$maxDownloads = explode ( " - " , $number)[1];
+
 $title = $html->find('div.id-app-title',0)->innertext;
 
 function startsWith($haystack, $needle){
@@ -31,6 +44,8 @@ foreach($html->find('span') as $element) {
 	}
 }
 	
+if(strpos($maxDownloads, ',') !== false){
+	
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +58,66 @@ foreach($html->find('span') as $element) {
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
-  <script src="../js/m.js"></script>
+  <script src="../js/register_app.js"></script>
+  
+	<style>
+		.navbar {
+			margin-bottom: 0;
+			background-color: #a4ca39;
+			z-index: 9999;
+			border: 0;
+			font-size: 12px !important;
+			line-height: 1.42857143 !important;
+			letter-spacing: 4px;
+			border-radius: 0;
+		}
+	</style>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span> 
+		  </button>
+		  <a class="navbar-brand" href="#">Android Liftoff : submit app</a>
+		</div>
+	</div>
+	<div class="jumbotron text-center">
+		<h1>Sorry, <?php echo $name; ?>...</h1> 
+	</div>
+	<div class="well">
+		<p>
+		We're sorry, but your app already has 500 downloads, apps with more then 500 downloads outnumber the apps where this site is intended for...<br/>
+		<br/>
+		<a href="m.php">back.</a><br/>
+		</p>
+	</div>
+</nav>
+</body>
+</html>
+
+<?	
+	
+	
+}else{
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Android Liftoff</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+  <script src="../js/register_app.js"></script>
   
 	<style>
 		.navbar {
@@ -128,11 +202,12 @@ foreach($html->find('span') as $element) {
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<input type="text" placeholder="Say in one sentence what your app does." size="100" />
+								<input id='sentence' type="text" placeholder="Say in one sentence what your app does." size="100" onkeyup="verifySentence();"/>
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-2"></div>
+					<div class="col-sm-2">
+					</div>
 				</div>
 			</div>
 			
@@ -155,3 +230,8 @@ foreach($html->find('span') as $element) {
 </nav>
 </body>
 </html>
+<?
+
+}
+
+?>
