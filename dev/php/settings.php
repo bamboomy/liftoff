@@ -1,6 +1,8 @@
 <?
 
-$liftoffUrl = "http://www.bamboomy.be/~dropboxwww/Dropbox/liftoff/dev/php/m.php";
+$liftoffBaseUrl = "http://www.bamboomy.be/~dropboxwww/Dropbox/liftoff/dev/php/";
+
+$liftoffUrl = $liftoffBaseUrl."m.php";
 
 $servername = "localhost";
 $username = "liftoff";

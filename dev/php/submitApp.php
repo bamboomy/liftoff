@@ -4,6 +4,10 @@ require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
 
 include_once("settings.php");
 
+// this is the hash which identifies a mail sent
+
+$hash = md5(md5(md5(time()) . $_POST['username']) . $_POST['username']);
+
 //first set mail parameters for possible errors
 
 $mail = new PHPMailer;
@@ -77,7 +81,7 @@ if ($conn->query($sql) !== TRUE) {
 
 	$mailContent = "Hey ".$_POST['username'].", <br/><br/>someone, ideally you, has registerd the app '".$_POST['appName']."' on ".$liftoffUrl."...<br/><br/>";
 
-	$mailContent .= "If it was you, you can click <a href=''>this link</a> to register your app.<br/><br/>";
+	$mailContent .= "If it was you, you can click <a href='".$liftoffBaseUrl."mailRegistration.php?hash=".$hash."'>this link</a> to register your app.<br/><br/>";
 
 	$mailContent .= "If you weren't expecting this e-mail you can safely ignore it.<br/><br/>";
 
@@ -113,8 +117,6 @@ if ($conn->query($sql) !== TRUE) {
 	
 	} else {
 
-		$hash = md5(md5(md5(time()) . $_POST['username']) . $_POST['username']);
-		
 		$sql = "INSERT INTO mails (appUrl, userName, mailAddress, hash) VALUES ('".$_POST['url']."', '".$_POST['username']."', '".$_POST['mailAddress']."', '".$hash."');";
 
 		if ($conn->query($sql) !== TRUE) {
