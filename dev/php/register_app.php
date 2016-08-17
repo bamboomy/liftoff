@@ -208,7 +208,7 @@ if(strpos($maxDownloads, ',') !== false){
 								<? echo "<input type='hidden' name='mailAddress' value='".$mail."' />\n";?>
 								<? echo "<input type='hidden' name='username' value='".$name."' />\n";?>
 								<input id='sentence' type="text" placeholder="Say in one sentence what your app does." size="100" 
-										onkeyup="verifySentence();countChar(this);"/><br/>
+										onkeyup="verifySentence();countChar(this);" name="sentence" /><br/>
 								<div id="charNum"></div>
 							</div>
 						</div>

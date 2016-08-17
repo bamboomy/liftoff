@@ -4,6 +4,8 @@ require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
 
 include_once("settings.php");
 
+//first set mail parameters for possible errors
+
 $mail = new PHPMailer;
 
 $mail->isSMTP();                                      // Set mailer to use SMTP
@@ -15,57 +17,129 @@ $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, 
 $mail->Port = 587;    
 
 $mail->setFrom('bamboomy@gmail.com', 'Liftoff staff');
-$mail->addAddress('sander.theetaert@gmail.com', $_POST['username']); 
 
 $mail->isHTML(true); 
 
-$mail->Subject = 'App registered';
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-$mailContent = "Hey ".$_POST['username'].", <br/><br/>someone, ideally you, has registerd the app '".$_POST['appName']."' on ".$liftoffUrl."...<br/><br/>";
+// Check connection
+if ($conn->connect_error) {
 
-$mailContent .= "If it was you, you can click <a href=''>this link</a> to register your app.<br/><br/>";
+	$mail->Subject = 'error encountered: no database';
 
-$mailContent .= "If you weren't expecting this e-mail you can safely ignore it.<br/><br/>";
+	$mail->Body = "couldn't connect to database... -> ".$conn->connect_error;
+	
+	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+	
+	$mail->send();//fire and forget
 
-$mailContent .= "If you have recieved more mails like this and you don't want to receive any anymore you can click <a href=''>this link to unsubscribe</a>.<br/><br/>";
+?>
 
-$mailContent .= "Thanks for choosing Android Liftoff,<br/> we wish you a nice day and all the best with your app :).<br/><br/>";
-
-$mailContent .= "Sincerely,<br/>The Android Liftoff team.";
-
-$mail->Body = $mailContent;
-
-$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-if(!$mail->send()) {
-    echo 'Message could not be sent.';
-    echo 'Mailer Error: ' . $mail->ErrorInfo;
+	<script>
+		alert("an error has occured, you will be redirected to the main page...");
+		window.location.assign("m.php");
+	</script>
+	
+<?
 	die;
-} else {
+} 
 
-	// Create connection
-	$conn = new mysqli($servername, $username, $password);
+//ownerId == 0 because we don't neccesarily know the owner yet (we let him register after app submission...).
 
-	// Check connection
-	if ($conn->connect_error) {
-		die("Connection failed: " . $conn->connect_error);
-	} 
+$sql = "INSERT INTO reviewCandidate (appUrl, sentence, ownerId, ownerEmail) VALUES ('".$_POST['url']."', '".$_POST['sentence']."', '0', '".$_POST['mailAddress']."');";
 
-	$sql = "SELECT max(id) FROM mails;";
-	$result = $conn->query($sql);
-
-	if ($result->num_rows == 1) {
-		
-		$newId = $row["id"] + 1;
-		
-	}else{
-		
-		$newId = 0;
-	}
+if ($conn->query($sql) !== TRUE) {
 	
-	$hash = md5(md5(md5(time()) . $_POST['username']) . $_POST['username']);
+	//TODO: error module
 	
-	$sql = "INSERT INTO table_name (id, appUrl, userName, mailAddress, hash) VALUES (".$newId.", ".$_POST['url'].", ".$_POST['username'].", ".$_POST['mailAddress'].", ".$hash.");";
+	$mail->Subject = 'error encountered: reviewCandidate';
+
+	$mail->Body = "couldn't insert reviewCandidate... -> ".$conn->error;
+	
+	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+	
+	$mail->send();//fire and forget
+
+?>
+
+	<script>
+		alert("an error has occured, you will be redirected to the main page...");
+		window.location.assign("m.php");
+	</script>
+	
+<?
+	die;
+
+}else{
+
+	$mail->Subject = 'App registered';
+
+	$mailContent = "Hey ".$_POST['username'].", <br/><br/>someone, ideally you, has registerd the app '".$_POST['appName']."' on ".$liftoffUrl."...<br/><br/>";
+
+	$mailContent .= "If it was you, you can click <a href=''>this link</a> to register your app.<br/><br/>";
+
+	$mailContent .= "If you weren't expecting this e-mail you can safely ignore it.<br/><br/>";
+
+	$mailContent .= "If you have recieved more mails like this and you don't want to receive any anymore you can click <a href=''>this link to unsubscribe</a>.<br/><br/>";
+
+	$mailContent .= "Thanks for choosing Android Liftoff,<br/><br/>we wish you a nice day and all the best with your app :).<br/><br/>";
+
+	$mailContent .= "Sincerely,<br/>The Android Liftoff team.";
+
+	$mail->Body = $mailContent;
+
+	$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+	
+	$mail->addAddress('sander.theetaert@gmail.com', $_POST['name']);  //needs to be replaced with owner e-mail
+
+	if(!$mail->send()) {
+		
+		//TODO: error module (db)
+		
+		//echo 'Message could not be sent.';
+		//echo 'Mailer Error: ' . $mail->ErrorInfo; -> usefull info
+		
+		?>
+
+			<script>
+				alert("an error has occured, you will be redirected to the main page...");
+				window.location.assign("m.php");
+			</script>
+			
+		<?
+		
+		die;
+	
+	} else {
+
+		$hash = md5(md5(md5(time()) . $_POST['username']) . $_POST['username']);
+		
+		$sql = "INSERT INTO mails (appUrl, userName, mailAddress, hash) VALUES ('".$_POST['url']."', '".$_POST['username']."', '".$_POST['mailAddress']."', '".$hash."');";
+
+		if ($conn->query($sql) !== TRUE) {
+			
+			//TODO: error module
+			
+			$mail->Subject = 'error encountered';
+
+			$mail->Body = $conn->error;
+
+			$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+
+			$mail->send();//fire and forget
+
+		?>
+
+			<script>
+				alert("an error has occured, you will be redirected to the main page...");
+				window.location.assign("m.php");
+			</script>
+			
+		<?
+			die;
+
+		}else{
 ?>
 
 <!DOCTYPE html>
@@ -128,10 +202,6 @@ if(!$mail->send()) {
 				Once you verify the app it is registered and will be put on the to be reviewed list.<br/>
 				<br/>
 				<a href="m.php">Back to main page.</a><br/>
-				<br/>
-				<? 
-					echo $hash ."<br/>"; 
-				?>
 				</p>
 			
 			</div>
@@ -143,8 +213,11 @@ if(!$mail->send()) {
 </body>
 </html>
 <?
-
-	$conn->close();
-
+		
+		}
+	}
 }
+
+$conn->close();
+
 ?>
