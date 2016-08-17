@@ -28,3 +28,7 @@ function countChar(val) {
 		}
 	}
 };
+
+$( document ).ready(function() {
+	$( "#sentence" ).focus();
+});
