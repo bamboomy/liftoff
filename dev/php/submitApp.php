@@ -63,7 +63,7 @@ if(!$mail->send()) {
 		$newId = 0;
 	}
 	
-	$hash = md5(md5(md5(time) . $_POST['username']) . $_POST['username']);
+	$hash = md5(md5(md5(time()) . $_POST['username']) . $_POST['username']);
 	
 	$sql = "INSERT INTO table_name (id, appUrl, userName, mailAddress, hash) VALUES (".$newId.", ".$_POST['url'].", ".$_POST['username'].", ".$_POST['mailAddress'].", ".$hash.");";
 ?>
@@ -129,7 +129,9 @@ if(!$mail->send()) {
 				<br/>
 				<a href="m.php">Back to main page.</a><br/>
 				<br/>
-				<? echo $hash; ?>
+				<? 
+					echo $hash ."<br/>"; 
+				?>
 				</p>
 			
 			</div>
