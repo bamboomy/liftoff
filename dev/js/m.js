@@ -1,7 +1,6 @@
 
 $.validator.addMethod("app", function(appUrl, element) {
 
-	//validates postalcode.
 	return appUrl.match(/https:\/\/play\.google\.com\/store\/apps\/details\?id=[a-z\.]+/);
 }, "This doesn't seem like a good app id...");
 

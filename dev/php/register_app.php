@@ -154,7 +154,7 @@ if(strpos($maxDownloads, ',') !== false){
 		<div class="col-sm-2"></div>
 		<div class="col-sm-8">
 		
-			<h2>This is how your app will look in the review list:</h2>
+			<h2>This is how your app will look in the to be reviewed list:</h2>
 		
 			<div class="well">
 			
@@ -200,9 +200,15 @@ if(strpos($maxDownloads, ',') !== false){
 								</p>
 							</div>
 						</div>
+						<form action="submitApp.php" method="post">
 						<div class="row">
 							<div class="col-sm-12">
-								<input id='sentence' type="text" placeholder="Say in one sentence what your app does." size="100" onkeyup="verifySentence();"/>
+								<? echo "<input type='hidden' name='url' value='".$_POST['appurl']."' />\n";?>
+								<? echo "<input type='hidden' name='mailAddress' value='".$mail."' />\n";?>
+								<? echo "<input type='hidden' name='username' value='".$name."' />\n";?>
+								<input 	id='sentence' type="text" placeholder="Say in one sentence what your app does." size="100" 
+										onkeyup="verifySentence();countChar(this);"/><br/>
+								<div id="charNum"></div>
 							</div>
 						</div>
 					</div>
@@ -220,6 +226,7 @@ if(strpos($maxDownloads, ',') !== false){
 					<div class="col-sm-2">
 						<button type="submit" class="btn btn-primary" id="register_app" disabled="disabled">Register app</button>
 					</div>
+					</form>
 				</div>
 			</div>
 			
