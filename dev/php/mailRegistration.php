@@ -68,7 +68,6 @@ if ($result->num_rows == 1) {
 ?>
 
 	<script>
-		alert("going to block...");
 		alert("an error has occured, you will be redirected to the main page...");
 		window.location.assign("m.php");
 	</script>
@@ -77,24 +76,53 @@ if ($result->num_rows == 1) {
 	die;
 }
 
-/*
-$sql = "INSERT INTO reviewCandidate (appUrl, sentence, ownerId, ownerEmail) VALUES ('".$_POST['url']."', '".$_POST['sentence']."', '0', '".$_POST['mailAddress']."');";
+$sql = "UPDATE mails SET status='verified' WHERE hash='".$_GET['hash']."'";
 
 if ($conn->query($sql) !== TRUE) {
-	
-	//TODO: error module
-	
-	$mail->Subject = 'error encountered: reviewCandidate';
 
-	$mail->Body = "couldn't insert reviewCandidate... -> ".$conn->error;
+	$mail->Subject = "error encountered: couldn't update mail";
+
+	$mail->Body = "couldn't update mail... -> ".$conn->error;
 	
 	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
 	
 	$mail->send();//fire and forget
 
+?>
 
-}else{
-*/
+	<script>
+		alert("an error has occured, you will be redirected to the main page...");
+		window.location.assign("m.php");
+	</script>
+	
+<?
+	die;
+	
+} else {
+
+	$sql = "UPDATE reviewCandidate SET status='verified' WHERE appUrl='".$row["appUrl"]."' and status='new'";
+
+	if ($conn->query($sql) !== TRUE) {
+
+		$mail->Subject = "error encountered: couldn't update reviewCandidate";
+
+		$mail->Body = "couldn't update reviewCandidate... -> ".$conn->error;
+		
+		$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+		
+		$mail->send();//fire and forget
+
+	?>
+
+		<script>
+			alert("an error has occured, you will be redirected to the main page...");
+			window.location.assign("m.php");
+		</script>
+		
+	<?
+		die;
+		
+	} else {
 
 ?>
 
@@ -153,32 +181,32 @@ if ($conn->query($sql) !== TRUE) {
 		<div class="col-sm-8">
 		
 			<div class="well">
-				Good news: Your app is now registered on our site :D!!!<br/>
-				<br/>
-				And that's not all of the good news!!!<br/>
-				<br/>
-				Although it is perfectly possible to just submit your app and stop your commitment to this site, you can do even more!!!<br/>
-				<br/>
-				For the present moment your app is only visible to other (registered) app owners or reviewers <br/>
-				(and not to causal surfers of the site).<br/>
-				<br/>
-				They are in the same situation as you: their app is only visible in the to be reviewed page...<br/>
-				<br/>
-				Once someone (except you) has reviewed your app, we will send you a mail.<br/>
-				<br/>
-				Once a review is approved by you, your app, toghether with this review will be visible on the main site.<br/>
-				<br/>
-				For to be able to review you need to register (provide a password).<br/>
-				<br/>
-				Registering has other benefits as well:<br/>
-				<ul>
-					<li>You can review (as many) other apps (as you like).</li>
-					<li>For every review for an app that is approved by the app owner, you get one vote.</li>
+				<p>
+					Good news: Your app is now registered on our site :-D !!!<br/>
+					<br/>
+					And that's not all of the good news!!!<br/>
+					<br/>
+					Although it is perfectly possible to just submit your app and stop your commitment there, there are many other things you can do here as well!!!<br/>
+					<br/>
+					For the present moment your app is only visible to other (registered) app owners or reviewers <br/>
+					(and not to causal surfers of the site).<br/>
+					<br/>
+					If you register you have access to the other apps of the other app owners of this site!!!<br/>
+					<br/>
+					You can review apps of other owners and let them promote their app to the main site!!!<br/>
+					<br/>
+					Maybe one of them returns you the favour and your app is ready for some real liftoffing!!!<br/>
+					<br/>
+					Registering has other benefits as well:<br/>
 					<ul>
-						<li>You can use all of your votes every day to vote up other apps.</li>
+						<li>You can review (as many) other apps (as you like).</li>
+						<li>For every review for an app that is approved by the app owner, you get one vote.</li>
+						<ul>
+							<li>You can use all of your votes every day to vote up other apps.</li>
+						</ul>
+						<li>You can submit multiple apps (if you're not registered the same e-mail address can only have one submitted app).</li>
 					</ul>
-					<li>You can submit multiple apps (if you're not registered the same e-mail address can only have one submitted app)</li>
-				</ul>
+				</p>
 			</div>
 			
 		</div>
@@ -240,10 +268,18 @@ if ($conn->query($sql) !== TRUE) {
 							</div>
 							<div class="col-sm-2"></div>
 						</div>
+						<div class="row">
+							<div class="col-sm-4"></div>
+							<div class="col-sm-3"></div>
+							<div class="col-sm-3">
+								<button type='submit' id='submit' disabled='disabled' class="btn btn-primary">I want to review other apps or submit another one of my own.</button><br/><br/>
+								<? echo "<a href='toBeReviewedList.php?token=".$_GET['hash']."'>No thanks</a>"; ?>
+							</div>
+							<div class="col-sm-2"></div>
+						</div>
 					</div>
 				</form>
 			</div>
-			
 		</div>
 		<div class="col-sm-2"></div>
 	</div>
@@ -251,6 +287,10 @@ if ($conn->query($sql) !== TRUE) {
 </body>
 </html>
 <?
+
+	}
+
+}
 
 $conn->close();
 

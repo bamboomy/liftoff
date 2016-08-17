@@ -7,7 +7,7 @@ $.validator.addMethod("app", function(appUrl, element) {
 function validatePw(pwElement){
 
 	$("#pwoutput").css("color", "red");
-
+	
 	if(pwElement.value.length<6){
 		$("#pwoutput").text("Not 6 long...");
 		return;
@@ -31,13 +31,22 @@ function validatePw(pwElement){
 	
 	$("#pwoutput").text("excellent!!!");
 	$("#pwoutput").css("color", "green");
+
+	if($("#pw2").val().length != 0){
+		verifyEquality();	
+	}
 }
 
 function verifyEquality(){
 	
 	if($("#pw1").val() !== $("#pw2").val()){
+		$("#pwoutput2").css("color", "red");
 		$("#pwoutput2").text("Passwords must match...");
+		$("#pwoutput").text("");
+		$('#submit').prop('disabled', 'disabled'); 
 	}else{
-		$("#pwoutput2").text("");
+		$("#pwoutput2").text("excellent!!!");
+		$("#pwoutput2").css("color", "green");
+		$("#submit").prop('disabled', false); 
 	}
 }
