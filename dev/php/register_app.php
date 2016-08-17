@@ -4,8 +4,6 @@ include_once("simple_html_dom.php");
 
 $html = file_get_html($_POST['appurl']);
 
-;
-
 foreach($html->find('div.content') as $potentialNumber){
 	
 	if($potentialNumber->itemprop=='numDownloads'){
@@ -164,7 +162,7 @@ if(strpos($maxDownloads, ',') !== false){
 
 	$src = $html->find('img.cover-image',0)->src;
 	
-	echo "<img src='".$src."'/ width='100' height='100'>";
+	echo "<img src='".$src."' width='100' height='100' />";
 	
 	$counter = 0;
 	
@@ -175,14 +173,12 @@ if(strpos($maxDownloads, ',') !== false){
 			$genre[$counter++] = $element->innertext;
 		}
 	}
-	
-	$stars = $html->find('div.left-info',0)->outertext;
 ?>					
 					</div>
 					<div class="col-sm-8">
 						<div class="row">
 							<div class="col-sm-12">
-								<h4><?php echo $title; ?></h4>
+								<h4><?php echo $title." by ".$name; ?></h4>
 							</div>
 						</div>
 						<div class="row">

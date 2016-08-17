@@ -4,6 +4,8 @@ require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
 
 include_once("settings.php");
 
+include_once("simple_html_dom.php");
+
 //first set mail parameters for possible errors
 
 $mail = new PHPMailer;
@@ -49,14 +51,14 @@ if ($conn->connect_error) {
 
 if(isset($_GET['token'])){
 	
-	$sql = "SELECT appUrl FROM mails where hash='".$_GET['hash']."'";
+	$sql = "SELECT appUrl FROM mails where hash='".$_GET['token']."'";
 	$result = $conn->query($sql);
 
 	if ($result->num_rows == 1) {
 
 		$row = $result->fetch_assoc();
 			
-		$sql = "SELECT id FROM reviewCandidate where appUrl='".$row["appUrl"]."'";
+		$sql = "SELECT id, appUrl, sentence, ownerName FROM reviewCandidate where appUrl='".$row["appUrl"]."'";
 		$result = $conn->query($sql);
 
 		if ($result->num_rows == 1) {
@@ -64,6 +66,12 @@ if(isset($_GET['token'])){
 			$row = $result->fetch_assoc();
 			
 			$launchId = $row["id"];
+			
+			$launchUrl = $row["appUrl"];
+			
+			$launchSentence = $row["sentence"];
+			
+			$launchName = $row["ownerName"];
 
 		} else if($result->num_rows > 1){
 			
@@ -85,7 +93,7 @@ if(isset($_GET['token'])){
 		<?
 			die;
 			
-		}
+		} // if we don't find a matching reviewCandidate we simply show the list
 		
 	} else if($result->num_rows > 1){
 		
@@ -107,7 +115,7 @@ if(isset($_GET['token'])){
 	<?
 		die;
 		
-	}
+	} // same for the token
 }
 
 ?>
@@ -161,7 +169,13 @@ if(isset($_GET['token'])){
 	<div class="jumbotron text-center">
 		<h1>The infamous to be reviewed list...</h1> 
 	</div>
+<?
 
+if(isset($launchId)){
+		
+?>
+	
+	
 	<div class="row">
 		<div class="col-sm-2"></div>
 		<div class="col-sm-8">
@@ -169,43 +183,85 @@ if(isset($_GET['token'])){
 			<h2>This is your app, are you ready to launch?</h2>
 		
 			<div class="well">
+<?
+
+	$html = file_get_html($launchUrl);
+	
+	foreach($html->find('div.content') as $potentialNumber){
+	
+		if($potentialNumber->itemprop=='numDownloads'){
+			$number = $potentialNumber->innertext;
+			
+			break;
+		}
+	}
+
+	$maxDownloads = explode ( " - " , $number)[1]; //needed later on
+
+	$title = $html->find('div.id-app-title',0)->innertext;
+	
+	$src = $html->find('img.cover-image',0)->src;
+	
+	$counter = 0;
+	
+	foreach($html->find('span') as $element) {
+		
+		if($element->itemprop == "genre"){
+			
+			$genre[$counter++] = $element->innertext;
+		}
+	}
+
+?>
+
 			
 				<div class="row">
 					<div class="col-sm-2">
-						<!--img src='".$src."'/ width='100' height='100'-->
+						<? echo "<img src='".$src."' width='100' height='100'/>"; ?>
 					</div>
 					<div class="col-sm-8">
 						<div class="row">
 							<div class="col-sm-12">
-								<h4>$title</h4>
+								<h4><? echo $title." by ".$launchName; ?></h4>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
 								<p>
+<?
+									foreach($genre as $genreElement) {
+										
+										echo $genreElement . "&nbsp;";
+										
+									}
+?>
 								</p>
 							</div>
 						</div>
 						<form action="submitApp.php" method="post">
 						<div class="row">
 							<div class="col-sm-12">
-								<input id='sentence' type="text" placeholder="Say in one sentence what your app does." size="100" 
-										onkeyup="verifySentence();countChar(this);" name="sentence" /><br/>
+								<p><? echo $launchSentence; ?></p>
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-2">
-					</div>
+					<div class="col-sm-2"><button type="button" class="btn btn-primary" id="launch">Launch!!!</button></div>
 				</div>
 			</div>
 		</div>
 		<div class="col-sm-2"></div>
 	</div>
+<?
+
+}
+
+?>
+
 </nav>
 </body>
 </html>
 <?
 
-//$conn->close();
+$conn->close();
 
 ?>
