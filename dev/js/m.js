@@ -2,7 +2,7 @@
 $.validator.addMethod("app", function(appUrl, element) {
 
 	return appUrl.match(/https:\/\/play\.google\.com\/store\/apps\/details\?id=[a-z\.]+/);
-}, "This doesn't seem like a good app id...");
+}, "");
 
 $(document).ready(function () {
 
@@ -16,7 +16,9 @@ $(document).ready(function () {
 
     $('#subscribeAppForm input#appurl').on('keyup blur', function () { // fires on every keyup & blur
 
-		if($('#subscribeForm').valid()){
+		//alert($('#subscribeForm').valid());
+	
+		if($('#subscribeAppForm').valid()){
 
 			$('button#register_app.btn').prop('disabled', false);        // enables button
 

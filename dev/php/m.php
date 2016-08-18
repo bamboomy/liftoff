@@ -116,49 +116,20 @@
 				Sounds like a fair system?<br/>
 				<br/>
 				Put the (play store) link below to register...<br/>
-				<br/>
-				(Optional) If you'd only like to review new apps just your email suffices.<br/>
-				<br/>
-				CAUTION!!!<br/>
-				if you submit an app we use the e-mail address<br/>
-				provided on your app's page!!!<br/>
-				<br/>
 			</p> 
 			
 			<div class="row">
 				<form class="form-inline" id="subscribeAppForm" action="register_app.php" method="post">
-					<div class="col-sm-1"></div>
-					<div class="col-sm-3">
-						I'm an app developer and want to submit my app:
-					</div>
-					<div class="col-sm-6">
-						<input type="app" class="form-control subscribe" size="40" 
+					<div class="col-sm-2"></div>
+					<div class="col-sm-8">
+						<input type="app" class="form-control subscribe" size="80" 
 							placeholder="https://play.google.com/store/apps/details?id=" 
 							id="appurl" name="appurl" />
-					</div>
-					<div class="col-sm-1">
 						<button type="submit" class="btn btn-primary" id="register_app" disabled="disabled">Register app</button><br/>
 					</div>
-					<div class="col-sm-1"></div>
+					<div class="col-sm-2"></div>
 				</form>
 			</div>
-
-			<div class="row">
-				<form class="form-inline" id="subscribeForm" action="register_reviewer.php">
-					<div class="col-sm-1"></div>
-					<div class="col-sm-3">
-						I like to review new work from promising app developers:
-					</div>
-					<div class="col-sm-6">
-						<input type="email" class="form-control subscribe" size="40" placeholder="someone@somewhere.com" id="inputEmail" disabled="disabled"><br/>
-					</div>
-					<div class="col-sm-1">
-						<button type="submit" class="btn btn-primary" id="subscribe" disabled="disabled">Register as reviewer</button><br/>
-					</div>
-					<div class="col-sm-1"></div>
-				</form>
-			</div>
-
 		</div>
 		<div class="col-sm-2"></div>
 	</div>

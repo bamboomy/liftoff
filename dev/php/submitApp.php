@@ -49,10 +49,47 @@ if ($conn->connect_error) {
 	die;
 } 
 
-//ownerId == 0 because we don't neccesarily know the owner yet (we let him register after app submission...).
+$sql = "INSERT INTO user (name, email) ";
+$sql .= "VALUES ('".$_POST['username']."', '".$_POST['mailAddress']."')";
+
+if ($conn->query($sql) !== TRUE) {
+
+	//TODO: error module
+	
+	$mail->Subject = "error encountered: couldn't insert user";
+
+	$mail->Body = "couldn't insert user... -> ".$conn->error;
+	
+	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+	
+	$mail->send();//fire and forget
+
+?>
+
+	<script>
+		alert("an error has occured, you will be redirected to the main page...");
+		window.location.assign("m.php");
+	</script>
+	
+<?
+	die;
+
+}
+
+$sql = "SELECT id FROM user where name='".$_POST['username']."' and email='".$_POST['mailAddress']."'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        $ownerId = $row["id"];//we need the last one
+    }
+} else {
+    die "0 results";
+}
 
 $sql = "INSERT INTO reviewCandidate (appUrl, sentence, ownerId, ownerEmail, ownerName, maxDownloads, title, src, genre) ";
-$sql .= "VALUES ('".$_POST['url']."', '".$_POST['sentence']."', '0', '".$_POST['mailAddress']."', '".$_POST['username']."', ";
+$sql .= "VALUES ('".$_POST['url']."', '".$_POST['sentence']."', '".$ownerId."', '".$_POST['mailAddress']."', '".$_POST['username']."', ";
 $sql .= "'".$_POST['maxDownloads']."', '".$_POST['title']."', '".$_POST['src']."', '".$_POST['genre']."')";
 
 if ($conn->query($sql) !== TRUE) {
@@ -87,7 +124,7 @@ if ($conn->query($sql) !== TRUE) {
 
 	$mailContent .= "If you weren't expecting this e-mail you can safely ignore it.<br/><br/>";
 
-	$mailContent .= "If you have recieved more mails like this and you don't want to receive any anymore you can click <a href=''>this link to unsubscribe</a>.<br/><br/>";
+	$mailContent .= "If you have recieved more mails like this and you don't want to receive any anymore you can click <a href=''>this link</a> to unsubscribe.<br/><br/>";
 
 	$mailContent .= "Thanks for choosing Android Liftoff,<br/><br/>we wish you a nice day and all the best with your app :).<br/><br/>";
 
@@ -155,27 +192,7 @@ if ($conn->query($sql) !== TRUE) {
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-  <style>
-		.navbar {
-			margin-bottom: 0;
-			background-color: #a4ca39;
-			z-index: 9999;
-			border: 0;
-			font-size: 12px !important;
-			line-height: 1.42857143 !important;
-			letter-spacing: 4px;
-			border-radius: 0;
-		}
-		
-		p, li, .small{
-			letter-spacing: 2px;
-		}
-		
-		.red {
-			color: red;
-		}
-	</style>
+  <link rel="stylesheet" type="text/css" href="../css/main.css">
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -204,6 +221,10 @@ if ($conn->query($sql) !== TRUE) {
 				<p>A mail has been sent to '<?echo $_POST['mailAddress'];?>' with a link to register the app.<br/>
 				<br/>
 				Once you verify the app it is registered and will be put on the to be reviewed list.<br/>
+				<br/>
+				Additionally, the name of the owner of the app is registered as well,<br/>
+				<br/>
+				If you wish, you can register on this site when verifying the app with the link in the mail.<br/>
 				<br/>
 				<a href="m.php">Back to main page.</a><br/>
 				</p>

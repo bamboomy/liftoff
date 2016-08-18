@@ -119,20 +119,8 @@ if(strpos($maxDownloads, ',') !== false){
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
   <script src="../js/register_app.js"></script>
-  
-	<style>
-		.navbar {
-			margin-bottom: 0;
-			background-color: #a4ca39;
-			z-index: 9999;
-			border: 0;
-			font-size: 12px !important;
-			line-height: 1.42857143 !important;
-			letter-spacing: 4px;
-			border-radius: 0;
-		}
-	</style>
-</head>
+  <link rel="stylesheet" type="text/css" href="../css/main.css">
+  </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
@@ -216,16 +204,19 @@ if(strpos($maxDownloads, ',') !== false){
 			</div>
 			
 			<div class="well">
-				<p>We will send an e-mail to this address to verify that you are really the app owner:</p>
+				<p>We will send an e-mail to this address to verify that you are really the app owner, 
+				<br/>this e-mail address will be used for future communication with you...</p>
 				<div class="row">
 					<div class="col-sm-10">
 						<p><?php echo $mail; ?></p>
 					</div>
 					<div class="col-sm-2">
-						<button type="submit" class="btn btn-primary" id="register_app" disabled="disabled">Register app</button>
+						<button type="submit" class="btn btn-primary" id="register_app" disabled="disabled">I agree</button>
 					</div>
 					</form>
 				</div>
+				<p>We will also reserve your user name '<? echo $name; ?>' for future registration purposes...</p>
+				<p>We don't have a policy (yet) and hope not to need one in the future, this site is inteded to do good, please don't misuse it...</p>
 			</div>
 			
 		</div>
