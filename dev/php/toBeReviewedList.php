@@ -279,21 +279,16 @@ if ($result->num_rows > 0) {
 			"genre" => $row["genre"],
 		);
     }
-	
-	//var_dump($appList);
 
 	$sortArrayCounter = 0;
 	
 	foreach($appList as $app){
 
 		$sortArray[$sortArrayCounter++] = intval($app["maxDownloads"]); //for multisort
-
 	}
 
 	array_multisort($sortArray, $appList);
-	
-	var_dump($sortArray);
-	
+
 	foreach($appList as $app){
 
 	?>
