@@ -129,31 +129,7 @@ if(isset($_GET['token'])){
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="../js/verify_password.js"></script>
-
-  <style>
-		.navbar {
-			margin-bottom: 0;
-			background-color: #a4ca39;
-			z-index: 9999;
-			border: 0;
-			font-size: 12px !important;
-			line-height: 1.42857143 !important;
-			letter-spacing: 4px;
-			border-radius: 0;
-		}
-		
-		p, li, .small{
-			letter-spacing: 2px;
-		}
-		
-		.red {
-			color: red;
-		}
-		
-		.androidGreen{
-			background-color: #a4ca39;
-		}
-	</style>
+  <link rel="stylesheet" type="text/css" href="../css/main.css">
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">

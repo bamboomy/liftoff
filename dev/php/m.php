@@ -9,8 +9,8 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
   <script src="../js/m.js"></script>
-  
-	<style>
+
+  <style>
 		.jumbotron { 
 			background-color: #a4ca39; /* Orange */
 			color: #000000;

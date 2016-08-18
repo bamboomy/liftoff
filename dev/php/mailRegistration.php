@@ -136,31 +136,11 @@ if ($conn->query($sql) !== TRUE) {
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="../js/verify_password.js"></script>
-
-  <style>
-		.navbar {
-			margin-bottom: 0;
-			background-color: #a4ca39;
-			z-index: 9999;
-			border: 0;
-			font-size: 12px !important;
-			line-height: 1.42857143 !important;
-			letter-spacing: 4px;
-			border-radius: 0;
-		}
-		
-		p, li, .small{
-			letter-spacing: 2px;
-		}
-		
-		.red {
-			color: red;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="../css/main.css">
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
+  <div class="container-fluid androidGreen">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
@@ -171,119 +151,123 @@ if ($conn->query($sql) !== TRUE) {
       <a class="navbar-brand" href="#">Android Liftoff : just one more thing...</a>
     </div>
   </div>
+ </nav>
   
-	<div class="jumbotron text-center">
-		<h1>Just one more thing...</h1> 
+	<div class="container-fluid androidGreen">
+		<div class="jumbotron text-center">
+			<h1>Just one more thing...</h1> 
+		</div>
 	</div>
 
-	<div class="row">
-		<div class="col-sm-2"></div>
-		<div class="col-sm-8">
-		
-			<div class="well">
-				<p>
-					Good news: Your app is now registered on our site :-D !!!<br/>
-					<br/>
-					And that's not all of the good news!!!<br/>
-					<br/>
-					Although it is perfectly possible to just submit your app and stop your commitment there, there are many other things you can do here as well!!!<br/>
-					<br/>
-					For the present moment your app is only visible to other (registered) app owners or reviewers <br/>
-					(and not to causal surfers of the site).<br/>
-					<br/>
-					If you register you have access to the other apps of the other app owners of this site!!!<br/>
-					<br/>
-					You can review apps of other owners and let them promote their app to the main site!!!<br/>
-					<br/>
-					Maybe one of them returns you the favour and your app is ready for some real liftoffing!!!<br/>
-					<br/>
-					Registering has other benefits as well:<br/>
-					<ul>
-						<li>You can review (as many) other apps (as you like).</li>
-						<li>For every review for an app that is approved by the app owner, you get one vote.</li>
-						<ul>
-							<li>You can use all of your votes every day to vote up other apps.</li>
-						</ul>
-						<li>You can submit multiple apps (if you're not registered the same e-mail address can only have one submitted app).</li>
-					</ul>
-				</p>
-			</div>
+	<div class="container-fluid androidGreen">
+		<div class="row">
+			<div class="col-sm-2"></div>
+			<div class="col-sm-8">
 			
-		</div>
-		<div class="col-sm-2"></div>
-	</div>
-	<div class="row">
-		<div class="col-sm-2"></div>
-		<div class="col-sm-8">
-		
-			<div class="well">
-				<form action="registerUser" method="post">
-					<div class="well">
-						<div class="row">
-							<div class="col-sm-2"></div>
-							<div class="col-sm-2"><p>Username:</p></div>
-							<div class="col-sm-6">
-								<?echo "<input type='text' value='".$row["userName"]."'/>";?>
-							</div>
-							<div class="col-sm-2"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-2"></div>
-							<div class="col-sm-2"><p>E-mail:</p></div>
-							<div class="col-sm-6">
-								<?echo "<p>".$row['mailAddress']."</p>\n";?>
-								<?echo "<input type='hidden' value='".$row['mailAddress']."' />";?>
-							</div>
-							<div class="col-sm-2"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-2"></div>
-							<div class="col-sm-2"><p>Password:</p></div>
-							<div class="col-sm-6">
-								<?echo "<input type='password' id='pw1' class='password' onkeyup='validatePw(this)'/>";?>
-							</div>
-							<div class="col-sm-2"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-2"></div>
-							<div class="col-sm-2"></div>
-							<div class="col-sm-6">
-								<div id="" class="small">Password must contain at least 6 characters; 20 at most, Uppercase letters, lowercase letters, numbers and ideally special characters:<div id="pwoutput" class="red"></div></div>
-							</div>
-							<div class="col-sm-2"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-2"></div>
-							<div class="col-sm-2"><p>Once more:</p></div>
-							<div class="col-sm-6">
-								<?echo "<input type='password' id='pw2' onkeyup='verifyEquality();'/>";?>
-							</div>
-							<div class="col-sm-2"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-2"></div>
-							<div class="col-sm-2"></div>
-							<div class="col-sm-6">
-								<div id="pwoutput2" class="small red"></div>
-							</div>
-							<div class="col-sm-2"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4"></div>
-							<div class="col-sm-3"></div>
-							<div class="col-sm-3">
-								<button type='submit' id='submit' disabled='disabled' class="btn btn-primary">I want to review other apps or submit another one of my own.</button><br/><br/>
-								<? echo "<a href='toBeReviewedList.php?token=".$_GET['hash']."'>No thanks</a>"; ?>
-							</div>
-							<div class="col-sm-2"></div>
-						</div>
-					</div>
-				</form>
+				<div class="well">
+					<p>
+						Good news: Your app is now registered on our site :-D !!!<br/>
+						<br/>
+						And that's not all of the good news!!!<br/>
+						<br/>
+						Although it is perfectly possible to just submit your app and stop your commitment there, there are many other things you can do here as well !!!<br/>
+						<br/>
+						For the present moment your app is only visible to other (registered) app owners or reviewers <br/>
+						(and not to causal surfers of the site).<br/>
+						<br/>
+						If you register you have access to the other apps of the other app owners of this site as well!!!<br/>
+						<br/>
+						You can review apps of other owners and let them promote their app to the main site!!!<br/>
+						<br/>
+						Maybe one of them returns you the favour and your app is ready for some real liftoffing!!!<br/>
+						<br/>
+						Registering has other benefits as well:<br/>
+						<ul>
+							<li>You can review (as many) other apps (as you like).</li>
+							<li>For every review for an app that is approved by the app owner, you get one vote.</li>
+							<ul>
+								<li>You can use all of your votes every day to vote up other apps.</li>
+							</ul>
+							<li>You can submit multiple apps (if you're not registered the same e-mail address can only have one submitted app).</li>
+						</ul>
+					</p>
+				</div>
+				
 			</div>
+			<div class="col-sm-2"></div>
 		</div>
-		<div class="col-sm-2"></div>
+		<div class="row">
+			<div class="col-sm-2"></div>
+			<div class="col-sm-8">
+			
+				<div class="well">
+					<form action="registerUser.php" method="post">
+						<div class="well">
+							<div class="row">
+								<div class="col-sm-2"></div>
+								<div class="col-sm-2"><p>Username:</p></div>
+								<div class="col-sm-6">
+									<?echo "<input type='text' value='".$row["userName"]."' name='username'/>";?>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-2"></div>
+								<div class="col-sm-2"><p>E-mail:</p></div>
+								<div class="col-sm-6">
+									<?echo "<p>".$row['mailAddress']."</p>\n";?>
+									<?echo "<input type='hidden' value='".$row['mailAddress']."' name='email'/>";?>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-2"></div>
+								<div class="col-sm-2"><p>Password:</p></div>
+								<div class="col-sm-6">
+									<?echo "<input type='password' id='pw1' class='password' onkeyup='validatePw(this)' name='pw'/>";?>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-2"></div>
+								<div class="col-sm-2"></div>
+								<div class="col-sm-6">
+									<div class="small">Password must contain at least 6 characters; 20 at most, UPPERCASE letters, lowercase letters, numbers and ideally special characters...<div id="pwoutput" class="red"></div></div>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-2"></div>
+								<div class="col-sm-2"><p>Once more:</p></div>
+								<div class="col-sm-6">
+									<?echo "<input type='password' id='pw2' onkeyup='verifyEquality();'/>";?>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-2"></div>
+								<div class="col-sm-2"></div>
+								<div class="col-sm-6">
+									<div id="pwoutput2" class="small red"></div>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4"></div>
+								<div class="col-sm-3"></div>
+								<div class="col-sm-3">
+									<button type='submit' id='submit' disabled='disabled' class="btn btn-primary">I want to review other apps<br/>or submit another one of my own.</button><br/><br/>
+									<span class="center"><? echo "<a href='toBeReviewedList.php?token=".$_GET['hash']."'>No thanks</a>"; ?></span>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="col-sm-2"></div>
+		</div>
 	</div>
-</nav>
 </body>
 </html>
 <?
