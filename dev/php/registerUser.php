@@ -4,10 +4,6 @@ require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
 
 include_once("settings.php");
 
-// this is the hash which identifies a mail sent
-
-$hash = md5(md5(md5(time()) . $_POST['username']) . $_POST['username']);
-
 //first set mail parameters for possible errors
 
 $mail = new PHPMailer;
@@ -49,19 +45,20 @@ if ($conn->connect_error) {
 	die;
 } 
 
-//ownerId == 0 because we don't neccesarily know the owner yet (we let him register after app submission...).
+$salt = md5(md5(md5(time()) . md5(md5($_POST['username']) . $_POST['email'])));
 
-$sql = "INSERT INTO reviewCandidate (appUrl, sentence, ownerId, ownerEmail, ownerName, maxDownloads, title, src, genre) ";
-$sql .= "VALUES ('".$_POST['url']."', '".$_POST['sentence']."', '0', '".$_POST['mailAddress']."', '".$_POST['username']."', ";
-$sql .= "'".$_POST['maxDownloads']."', '".$_POST['title']."', '".$_POST['src']."', '".$_POST['genre']."')";
+$pwHash = md5(md5(md5($salt)) . md5($_POST['pw']));
+
+$sql = "INSERT INTO user (name, email, salt, pwhash) ";
+$sql .= "VALUES ('".$_POST['username']."', '".$_POST['email']."', '".$salt."', '".$pwHash."')";
 
 if ($conn->query($sql) !== TRUE) {
 	
 	//TODO: error module
 	
-	$mail->Subject = 'error encountered: reviewCandidate';
+	$mail->Subject = "error encountered: couldn't insert user";
 
-	$mail->Body = "couldn't insert reviewCandidate... -> ".$conn->error;
+	$mail->Body = "couldn't insert user... -> ".$conn->error;
 	
 	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
 	
@@ -79,17 +76,17 @@ if ($conn->query($sql) !== TRUE) {
 
 }else{
 
-	$mail->Subject = 'App registered';
+	$mail->Subject = 'Password set.';
 
-	$mailContent = "Hey ".$_POST['username'].", <br/><br/>someone, ideally you, has registerd the app '".$_POST['appName']."' on ".$liftoffUrl."...<br/><br/>";
+	$mailContent = "Hey ".$_POST['username'].", <br/><br/>someone, ideally you, set a password on ".$liftoffUrl."...<br/><br/>";
 
-	$mailContent .= "If it was you, you can click <a href='".$liftoffBaseUrl."mailRegistration.php?hash=".$hash."'>this link</a> to register your app.<br/><br/>";
+	$mailContent .= "If it was you, you can go to <a href='".$liftoffBaseUrl."toBeReviewedList.php'>the to be reviewed list</a> from now on to review apps from other users.<br/><br/>";
 
-	$mailContent .= "If you weren't expecting this e-mail you can safely ignore it.<br/><br/>";
+	$mailContent .= "Remember: for every review you write you get a daily vote to vote up apps that you like from the <a href='".$liftoffBaseUrl."appList.php'>main site app list</a>.<br/><br/>";
 
-	$mailContent .= "If you have recieved more mails like this and you don't want to receive any anymore you can click <a href=''>this link to unsubscribe</a>.<br/><br/>";
+	$mailContent .= "You can also now <a href='".$liftoffBaseUrl."submitOtherApp.php'>submit</a> as many other apps as you like...<br/><br/>";
 
-	$mailContent .= "Thanks for choosing Android Liftoff,<br/><br/>we wish you a nice day and all the best with your app :).<br/><br/>";
+	$mailContent .= "Thanks for choosing Android Liftoff,<br/><br/>thanks for registering, we wish you a nice day and a lot of fun on the site :).<br/><br/>";
 
 	$mailContent .= "Sincerely,<br/>The Android Liftoff team.";
 
@@ -117,33 +114,8 @@ if ($conn->query($sql) !== TRUE) {
 		
 		die;
 	
-	} else {
-
-		$sql = "INSERT INTO mails (appUrl, userName, mailAddress, hash) VALUES ('".$_POST['url']."', '".$_POST['username']."', '".$_POST['mailAddress']."', '".$hash."');";
-
-		if ($conn->query($sql) !== TRUE) {
-			
-			//TODO: error module
-			
-			$mail->Subject = 'error encountered';
-
-			$mail->Body = $conn->error;
-
-			$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
-
-			$mail->send();//fire and forget
-
-		?>
-
-			<script>
-				alert("an error has occured, you will be redirected to the main page...");
-				window.location.assign("m.php");
-			</script>
-			
-		<?
-			die;
-
-		}else{
+	} 
+	
 ?>
 
 <!DOCTYPE html>
@@ -155,27 +127,8 @@ if ($conn->query($sql) !== TRUE) {
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../css/main.css">
 
-  <style>
-		.navbar {
-			margin-bottom: 0;
-			background-color: #a4ca39;
-			z-index: 9999;
-			border: 0;
-			font-size: 12px !important;
-			line-height: 1.42857143 !important;
-			letter-spacing: 4px;
-			border-radius: 0;
-		}
-		
-		p, li, .small{
-			letter-spacing: 2px;
-		}
-		
-		.red {
-			color: red;
-		}
-	</style>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -187,39 +140,59 @@ if ($conn->query($sql) !== TRUE) {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span> 
       </button>
-      <a class="navbar-brand" href="#">Android Liftoff : mail sent...</a>
+      <a class="navbar-brand" href="#">Android Liftoff : you are registered...</a>
     </div>
   </div>
+ </nav>
   
-	<div class="jumbotron text-center">
-		<h1>Mail sent...</h1> 
-	</div>
-
-	<div class="row">
-		<div class="col-sm-2"></div>
-		<div class="col-sm-8">
-		
-			<div class="well">
-
-				<p>A mail has been sent to '<?echo $_POST['mailAddress'];?>' with a link to register the app.<br/>
-				<br/>
-				Once you verify the app it is registered and will be put on the to be reviewed list.<br/>
-				<br/>
-				<a href="m.php">Back to main page.</a><br/>
-				</p>
-			
-			</div>
-			
+	<div class="container-fluid androidGreen">
+		<div class="jumbotron text-center">
+			<h1>Welcome once more, <? echo $_POST['username']; ?>!!!</h1> 
 		</div>
-		<div class="col-sm-2"></div>
+
+		<div class="row">
+			<div class="col-sm-2"></div>
+			<div class="col-sm-8">
+			
+				<div class="well">
+
+					<h2>Congratulations, <? echo $_POST['username']; ?></h2>
+				
+					<p>
+						... and welcome of course :)<br/>
+						<br/>
+						From now on until the end of time you will be able to:<br/>
+						<ul>
+							<li><a href="toBeReviewedList.php">Write as many reviews as you like.</a></li>
+							<ul>
+								<li>For every review you write you get an extra daily vote on the <a href="appList.php">main app list</a> (see above)</li>
+								<ul>
+									<li>And just because you are so special you get a first vote for free (this will be discontinued quite shortly).</a></li>
+								</ul>
+							</ul>
+							<li>Vote on the <a hre="appList.php">app page</a>.</li>
+							<li>Submit:</li>
+							<ul>
+								<li><a href="submitOtherApp.php">A second</a></li>
+								<li><a href="submitOtherApp.php">A third</a></li>
+								<li><a href="submitOtherApp.php">A fourth</a></li>
+								<li>...</li> 
+								(to be short) <a href="submitOtherApp.php">as many apps as you like</a> on the <a href="submitOtherApp.php">app submition page</a>.
+							</ul>
+						</ul><br/>
+						<br/>
+						Don't worry, all of this info is also mailed to you for easy reference...<br/>
+						<br/>
+					</p>
+				</div>
+			</div>
+			<div class="col-sm-2"></div>
+		</div>
 	</div>
-</nav>
-</body>
+	</body>
 </html>
 <?
-		
-		}
-	}
+
 }
 
 $conn->close();
