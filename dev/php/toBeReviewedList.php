@@ -255,7 +255,7 @@ if(isset($launchId)){
 <?
 }
 
-$sql = "SELECT appUrl, sentence, ownerName, maxDownloads, title, src, genre FROM reviewCandidate where status='verified' order by timeStamp desc";
+$sql = "SELECT appUrl, sentence, ownerName, maxDownloads, title, src, genre FROM reviewCandidate where status='verified' order by timeStamp asc";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -286,13 +286,13 @@ if ($result->num_rows > 0) {
 	
 	foreach($appList as $app){
 
-		$sortArray[$sortArrayCounter++] = $app["maxDownloads"]; //for multisort
+		$sortArray[$sortArrayCounter++] = intval($app["maxDownloads"]); //for multisort
 
 	}
 
-	array_multisort($appList, $sortArray);
+	array_multisort($sortArray, $appList);
 	
-	//var_dump($appList);
+	var_dump($sortArray);
 	
 	foreach($appList as $app){
 
