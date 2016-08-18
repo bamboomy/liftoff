@@ -51,7 +51,9 @@ if ($conn->connect_error) {
 
 //ownerId == 0 because we don't neccesarily know the owner yet (we let him register after app submission...).
 
-$sql = "INSERT INTO reviewCandidate (appUrl, sentence, ownerId, ownerEmail, ownerName) VALUES ('".$_POST['url']."', '".$_POST['sentence']."', '0', '".$_POST['mailAddress']."', '".$_POST['username']."');";
+$sql = "INSERT INTO reviewCandidate (appUrl, sentence, ownerId, ownerEmail, ownerName, maxDownloads, title, src, genre) ";
+$sql .= "VALUES ('".$_POST['url']."', '".$_POST['sentence']."', '0', '".$_POST['mailAddress']."', '".$_POST['username']."', ";
+$sql .= "'".$_POST['maxDownloads']."', '".$_POST['title']."', '".$_POST['src']."', '".$_POST['genre']."')";
 
 if ($conn->query($sql) !== TRUE) {
 	

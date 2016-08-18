@@ -255,6 +255,8 @@ if(isset($launchId)){
 $sql = "SELECT appUrl, sentence, ownerName FROM reviewCandidate where status='verified' order by timeStamp desc";
 $result = $conn->query($sql);
 
+$appList = array();
+
 if ($result->num_rows > 0) {
     // output data of each row
 	
@@ -273,6 +275,12 @@ if ($result->num_rows > 0) {
 		);
     }
 	
+	var_dump($appList);
+	
+	$conn->close(); //we don't want the connection be hanging around with the heavy processing comming ahead...
+	
+	$sortArrayCounter = 0;
+	
 	foreach($appList as $app){
 		
 		$html = file_get_html($app["appUrl"]);
@@ -287,6 +295,8 @@ if ($result->num_rows > 0) {
 		}
 
 		$app["maxDownloads"] = explode ( " - " , $number)[1]; //needed later on
+		
+		$sortArray[$sortArrayCounter++] = $app["maxDownloads"]; //for multisort
 
 		$app["title"] = $html->find('div.id-app-title',0)->innertext;
 		
@@ -303,54 +313,31 @@ if ($result->num_rows > 0) {
 		}
 	}
 
+	array_multisort($appList, $sortArray);
 	
-	//for each reviewCandidate
-	{
-
-		$html = file_get_html($launchUrl);
-		
-		foreach($html->find('div.content') as $potentialNumber){
-		
-			if($potentialNumber->itemprop=='numDownloads'){
-				$number = $potentialNumber->innertext;
-				
-				break;
-			}
-		}
-
-		$maxDownloads = explode ( " - " , $number)[1]; //needed later on
-
-		$title = $html->find('div.id-app-title',0)->innertext;
-		
-		$src = $html->find('img.cover-image',0)->src;
-		
-		$counter = 0;
-		
-		foreach($html->find('span') as $element) {
-			
-			if($element->itemprop == "genre"){
-				
-				$genre[$counter++] = $element->innertext;
-			}
-		}
+	foreach($appList as $app){
 
 	?>
+	<div class="row">
+		<div class="col-sm-2"></div>
+		<div class="col-sm-8">
+			<div class="row">
 				<div class="well">
 					<div class="row">
 						<div class="col-sm-2">
-							<? echo "<img src='".$src."' width='100' height='100'/>"; ?>
+							<? echo "<img src='".$app["src"]."' width='100' height='100'/>"; ?>
 						</div>
 						<div class="col-sm-8">
 							<div class="row">
 								<div class="col-sm-12">
-									<h4><? echo $title." by ".$launchName; ?></h4>
+									<h4><? echo $app["title"]." by ".$app["ownerName"]; ?></h4>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-sm-12">
 									<p>
 	<?
-										foreach($genre as $genreElement) {
+										foreach($app["genre"] as $genreElement) {
 											
 											echo $genreElement . "&nbsp;";
 											
@@ -362,26 +349,22 @@ if ($result->num_rows > 0) {
 							<form action="submitApp.php" method="post">
 							<div class="row">
 								<div class="col-sm-12">
-									<p><? echo $launchSentence; ?></p>
+									<p><? echo $app["sentence"]; ?></p>
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-2"><button type="button" class="btn btn-primary" id="launch">Launch!!!</button></div>
+						<div class="col-sm-2"><button type="button" class="btn btn-primary" id="review$id">Review</button></div>
 					</div>
 				</div>	
+			</div>	
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
 	<?
 
 	}
 }
 ?>
-		</div>
-		<div class="col-sm-2"></div>
-	</div>
 </nav>
 </body>
 </html>
-<?
-
-$conn->close();
-
-?>

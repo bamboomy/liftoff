@@ -13,7 +13,7 @@ foreach($html->find('div.content') as $potentialNumber){
 	}
 }
 
-$maxDownloads = explode ( " - " , $number)[1];
+$maxDownloads = str_replace ( ",", "", explode ( " - " , $number)[1]);
 
 $title = $html->find('div.id-app-title',0)->innertext;
 
@@ -169,11 +169,15 @@ if(strpos($maxDownloads, ',') !== false){
 	
 	$counter = 0;
 	
+	$genre = "unclassified";
+	
 	foreach($html->find('span') as $element) {
 		
 		if($element->itemprop == "genre"){
 			
-			$genre[$counter++] = $element->innertext;
+			$genre = $element->innertext;
+			
+			break;
 		}
 	}
 ?>					
@@ -186,17 +190,7 @@ if(strpos($maxDownloads, ',') !== false){
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<p>
-<?
-									echo $name . "&nbsp;";
-									
-									foreach($genre as $genreElement) {
-										
-										echo $genreElement . "&nbsp;";
-										
-									}
-?>
-								</p>
+								<p><? echo $genre; ?></p>
 							</div>
 						</div>
 						<form action="submitApp.php" method="post">
@@ -206,6 +200,10 @@ if(strpos($maxDownloads, ',') !== false){
 								<? echo "<input type='hidden' name='url' value='".$_POST['appurl']."' />\n";?>
 								<? echo "<input type='hidden' name='mailAddress' value='".$mail."' />\n";?>
 								<? echo "<input type='hidden' name='username' value='".$name."' />\n";?>
+								<? echo "<input type='hidden' name='src' value='".$src."' />\n";?>
+								<? echo "<input type='hidden' name='title' value='".$title."' />\n";?>
+								<? echo "<input type='hidden' name='genre' value='".$genre."' />\n";?>
+								<? echo "<input type='hidden' name='maxDownloads' value='".$maxDownloads."' />\n";?>
 								<input id='sentence' type="text" placeholder="Say in one sentence what your app does." size="100" 
 										onkeyup="verifySentence();countChar(this);" name="sentence" /><br/>
 								<div id="charNum"></div>
