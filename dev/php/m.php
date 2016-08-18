@@ -134,8 +134,7 @@
 					<div class="col-sm-6">
 						<input type="app" class="form-control subscribe" size="40" 
 							placeholder="https://play.google.com/store/apps/details?id=" 
-							id="appurl" name="appurl"
-							value="https://play.google.com/store/apps/details?id=org.bamboomy.memdicez">
+							id="appurl" name="appurl" />
 					</div>
 					<div class="col-sm-1">
 						<button type="submit" class="btn btn-primary" id="register_app" disabled="disabled">Register app</button><br/>

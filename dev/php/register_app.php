@@ -42,6 +42,8 @@ foreach($html->find('span') as $element) {
 	}
 }
 	
+/* for debugging purposes...
+	
 if(strpos($maxDownloads, ',') !== false){
 	
 ?>
@@ -99,9 +101,10 @@ if(strpos($maxDownloads, ',') !== false){
 </html>
 
 <?	
-	
-	
+
 }else{
+	
+*/
 
 ?>
 
@@ -236,6 +239,6 @@ if(strpos($maxDownloads, ',') !== false){
 </html>
 <?
 
-}
+//}
 
 ?>
