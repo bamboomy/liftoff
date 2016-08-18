@@ -144,8 +144,6 @@ if(isset($_GET['token'])){
 		<div class="jumbotron text-center">
 			<h1>The infamous to be reviewed list...</h1> 
 		</div>
-	</div>
-	<div class="container-fluid androidGreen">
 <?
 
 if(isset($launchId)){
@@ -226,8 +224,6 @@ if(isset($launchId)){
 				</div>
 			</div>
 		</div>
-	</div>
-			
 <?
 }
 

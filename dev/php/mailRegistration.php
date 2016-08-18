@@ -155,7 +155,7 @@ if ($conn->query($sql) !== TRUE) {
   
 	<div class="container-fluid androidGreen">
 		<div class="jumbotron text-center">
-			<h1>Just one more thing...</h1> 
+			<h1>3, 2, 1...</h1> 
 		</div>
 	</div>
 
@@ -168,28 +168,48 @@ if ($conn->query($sql) !== TRUE) {
 					<p>
 						Good news: Your app is now registered on our site :-D !!!<br/>
 						<br/>
-						And that's not all of the good news!!!<br/>
+						It's not yet visible on the main site but that won't take long...<br/>
 						<br/>
-						Although it is perfectly possible to just submit your app and stop your commitment there, there are many other things you can do here as well !!!<br/>
-						<br/>
-						For the present moment your app is only visible to other (registered) app owners or reviewers <br/>
-						(and not to causal surfers of the site).<br/>
-						<br/>
-						If you register you have access to the other apps of the other app owners of this site as well!!!<br/>
-						<br/>
-						You can review apps of other owners and let them promote their app to the main site!!!<br/>
-						<br/>
-						Maybe one of them returns you the favour and your app is ready for some real liftoffing!!!<br/>
-						<br/>
-						Registering has other benefits as well:<br/>
+						It's waiting for a peer to review:<br/>
 						<ul>
-							<li>You can review (as many) other apps (as you like).</li>
-							<li>For every review for an app that is approved by the app owner, you get one vote.</li>
+							<li>Your app is added to the to be reviewed list</li>
 							<ul>
-								<li>You can use all of your votes every day to vote up other apps.</li>
+								<li>This list is sorted by:</li>
+								<ul>
+									<li>least number of downloads first</li>
+									<li>then, oldest apps first</li>
+								</ul>
 							</ul>
-							<li>You can submit multiple apps (if you're not registered the same e-mail address can only have one submitted app).</li>
+							<li>Once some other app developer from this site has reviewed your app you will be notified.</li>
+							<li>If you approve a review the app and that review will be promoted to the main site.</li>
+							<li>Additional reviews also need to be approved by you to be added to the app on the main app list.</li>
 						</ul>
+						You can also review apps from others...<br/>
+						<br/>
+						<ul>
+							<li>You can review as many apps as you like</li>
+							<li>For every app you review you get a daily vote,</li>
+							<ul>
+								<li>Because you are amongst one of the first users of this site you get 1 vote for free.</li>
+								<li>Every day you can cast all of your daily votes on the main app page.</li>
+								<li>On this page apps are sorted on votes (popular apps are shown higher)</li>
+								<li>You can only upvote a certain app once (and can't upvote your own apps)</li>
+							</ul>
+						</ul>
+						And then the liftoff can commence...<br/>
+						<br/>
+						The review process already generates some downloads.<br/>
+						<br/>
+						And we'll do our best to attract as many people to the site<br/>
+						where they'll get a nice list of promising apps with a short review and 3 +'s and -'s for every app.<br/>
+						<br/>
+						We don't have the intention to get as big as the play store itself... ;)<br/>
+						<br/>
+						..but 500 downloads for good apps seems like a decent promise towards our users...<br/>
+						<br/>
+						Thank you for choosing Android Liftoff :D<br/>
+						<br/>
+						If you want to review apps of others you can set a password below:<br/>
 					</p>
 				</div>
 				
@@ -207,7 +227,9 @@ if ($conn->query($sql) !== TRUE) {
 								<div class="col-sm-2"></div>
 								<div class="col-sm-2"><p>Username:</p></div>
 								<div class="col-sm-6">
-									<?echo "<input type='text' value='".$row["userName"]."' name='username'/>";?>
+									<?echo "<p>".$row['userName']."</p>\n";?>
+									<?echo "<input type='hidden' value='".$row['userName']."' name='username'/>";?>
+									<?echo "<input type='hidden' value='".$_GET['id']."' name='id'/>";?>
 								</div>
 								<div class="col-sm-2"></div>
 							</div>
@@ -256,7 +278,7 @@ if ($conn->query($sql) !== TRUE) {
 								<div class="col-sm-4"></div>
 								<div class="col-sm-3"></div>
 								<div class="col-sm-3">
-									<button type='submit' id='submit' disabled='disabled' class="btn btn-primary">I want to review other apps<br/>or submit another one of my own.</button><br/><br/>
+									<button type='submit' id='submit' disabled='disabled' class="btn btn-primary">I would love to review other apps!!!</button><br/><br/>
 									<span class="center"><? echo "<a href='toBeReviewedList.php?token=".$_GET['hash']."'>No thanks</a>"; ?></span>
 								</div>
 								<div class="col-sm-2"></div>

@@ -49,16 +49,15 @@ $salt = md5(md5(md5(time()) . md5(md5($_POST['username']) . $_POST['email'])));
 
 $pwHash = md5(md5(md5($salt)) . md5($_POST['pw']));
 
-$sql = "INSERT INTO user (name, email, salt, pwhash) ";
-$sql .= "VALUES ('".$_POST['username']."', '".$_POST['email']."', '".$salt."', '".$pwHash."')";
+$sql = "UPDATE user SET salt='".$salt."', pwhash='".$pwHash."', status='registered' WHERE id='".$_POST['id']."' and name='".$_POST['username']."' and email='".$_POST['email']."'";
 
 if ($conn->query($sql) !== TRUE) {
 	
 	//TODO: error module
 	
-	$mail->Subject = "error encountered: couldn't insert user";
+	$mail->Subject = "error encountered: couldn't update user";
 
-	$mail->Body = "couldn't insert user... -> ".$conn->error;
+	$mail->Body = "couldn't update user... -> ".$conn->error;
 	
 	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
 	
@@ -147,7 +146,7 @@ if ($conn->query($sql) !== TRUE) {
   
 	<div class="container-fluid androidGreen">
 		<div class="jumbotron text-center">
-			<h1>Welcome once more, <? echo $_POST['username']; ?>!!!</h1> 
+			<h1>And now you're registered as well...</h1> 
 		</div>
 
 		<div class="row">
@@ -164,25 +163,13 @@ if ($conn->query($sql) !== TRUE) {
 						From now on until the end of time you will be able to:<br/>
 						<ul>
 							<li><a href="toBeReviewedList.php">Write as many reviews as you like.</a></li>
-							<ul>
-								<li>For every review you write you get an extra daily vote on the <a href="appList.php">main app list</a> (see above)</li>
-								<ul>
-									<li>And just because you are so special you get a first vote for free (this will be discontinued quite shortly).</a></li>
-								</ul>
-							</ul>
 							<li>Vote on the <a hre="appList.php">app page</a>.</li>
-							<li>Submit:</li>
-							<ul>
-								<li><a href="submitOtherApp.php">A second</a></li>
-								<li><a href="submitOtherApp.php">A third</a></li>
-								<li><a href="submitOtherApp.php">A fourth</a></li>
-								<li>...</li> 
-								(to be short) <a href="submitOtherApp.php">as many apps as you like</a> on the <a href="submitOtherApp.php">app submition page</a>.
-							</ul>
+							<li><a href="submitOtherApp.php">Submit</a> any number of apps to the to be reviewed page.</li>
 						</ul><br/>
 						<br/>
-						Don't worry, all of this info is also mailed to you for easy reference...<br/>
+						Don't worry, these links are also mailed to you as available <a href="login.php">once you log in</a> for easy reference...<br/>
 						<br/>
+						<a href="m.php">Back to main page.</a><br/>
 					</p>
 				</div>
 			</div>

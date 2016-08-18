@@ -1,5 +1,6 @@
 
-<form action="email.php">
-<input type="text" name="appUrl" value="https://play.google.com/store/apps/details?id=org.bamboomy.memdicez" />
+<form action="nonExistend.php">
+<input type="text" name="appUrl" value="hoohel" />
+<input type="text" name="name" value="franske" />
 <input type="submit" value="send e-mail" />
 </form>

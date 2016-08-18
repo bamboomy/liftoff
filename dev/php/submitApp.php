@@ -85,7 +85,26 @@ if ($result->num_rows > 0) {
         $ownerId = $row["id"];//we need the last one
     }
 } else {
-    die "0 results";
+    die ;
+	//TODO: error module
+	
+	$mail->Subject = "error encountered: 0 results";
+
+	$mail->Body = "0 results... -> ".$conn->error;
+	
+	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+	
+	$mail->send();//fire and forget
+
+?>
+
+	<script>
+		alert("an error has occured, you will be redirected to the main page...");
+		window.location.assign("m.php");
+	</script>
+	
+<?
+	die;
 }
 
 $sql = "INSERT INTO reviewCandidate (appUrl, sentence, ownerId, ownerEmail, ownerName, maxDownloads, title, src, genre) ";
@@ -120,7 +139,7 @@ if ($conn->query($sql) !== TRUE) {
 
 	$mailContent = "Hey ".$_POST['username'].", <br/><br/>someone, ideally you, has registerd the app '".$_POST['appName']."' on ".$liftoffUrl."...<br/><br/>";
 
-	$mailContent .= "If it was you, you can click <a href='".$liftoffBaseUrl."mailRegistration.php?hash=".$hash."'>this link</a> to register your app.<br/><br/>";
+	$mailContent .= "If it was you, you can click <a href='".$liftoffBaseUrl."mailRegistration.php?hash=".$hash."&id=".$ownerId."'>this link</a> to register your app.<br/><br/>";
 
 	$mailContent .= "If you weren't expecting this e-mail you can safely ignore it.<br/><br/>";
 
@@ -134,7 +153,7 @@ if ($conn->query($sql) !== TRUE) {
 
 	$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 	
-	$mail->addAddress('sander.theetaert@gmail.com', $_POST['name']);  //needs to be replaced with owner e-mail
+	$mail->addAddress('sander.theetaert@gmail.com', $_POST['username']);  //needs to be replaced with owner e-mail
 
 	if(!$mail->send()) {
 		
