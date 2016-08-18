@@ -248,15 +248,135 @@ if(isset($launchId)){
 					<div class="col-sm-2"><button type="button" class="btn btn-primary" id="launch">Launch!!!</button></div>
 				</div>
 			</div>
+			
+<?
+}
+
+$sql = "SELECT appUrl, sentence, ownerName FROM reviewCandidate where status='verified' order by timeStamp desc";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // output data of each row
+	
+	$counter = 0;
+	
+    while($row = $result->fetch_assoc()) {
+		
+		if(isset($launchId)){
+			//exclude to be launched app
+		}
+		
+		$appList[$counter++] = array(
+			"appUrl" => $row["appUrl"],
+			"sentence" => $row["sentence"],
+			"ownerName" => $row["ownerName"],
+		);
+    }
+	
+	foreach($appList as $app){
+		
+		$html = file_get_html($app["appUrl"]);
+		
+		foreach($html->find('div.content') as $potentialNumber){
+		
+			if($potentialNumber->itemprop=='numDownloads'){
+				$app["number"] = $potentialNumber->innertext;
+				
+				break;
+			}
+		}
+
+		$app["maxDownloads"] = explode ( " - " , $number)[1]; //needed later on
+
+		$app["title"] = $html->find('div.id-app-title',0)->innertext;
+		
+		$app["src"] = $html->find('img.cover-image',0)->src;
+		
+		$counter = 0;
+		
+		foreach($html->find('span') as $element) {
+			
+			if($element->itemprop == "genre"){
+				
+				$app["genre"][$counter++] = $element->innertext;
+			}
+		}
+	}
+
+	
+	//for each reviewCandidate
+	{
+
+		$html = file_get_html($launchUrl);
+		
+		foreach($html->find('div.content') as $potentialNumber){
+		
+			if($potentialNumber->itemprop=='numDownloads'){
+				$number = $potentialNumber->innertext;
+				
+				break;
+			}
+		}
+
+		$maxDownloads = explode ( " - " , $number)[1]; //needed later on
+
+		$title = $html->find('div.id-app-title',0)->innertext;
+		
+		$src = $html->find('img.cover-image',0)->src;
+		
+		$counter = 0;
+		
+		foreach($html->find('span') as $element) {
+			
+			if($element->itemprop == "genre"){
+				
+				$genre[$counter++] = $element->innertext;
+			}
+		}
+
+	?>
+				<div class="well">
+					<div class="row">
+						<div class="col-sm-2">
+							<? echo "<img src='".$src."' width='100' height='100'/>"; ?>
+						</div>
+						<div class="col-sm-8">
+							<div class="row">
+								<div class="col-sm-12">
+									<h4><? echo $title." by ".$launchName; ?></h4>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<p>
+	<?
+										foreach($genre as $genreElement) {
+											
+											echo $genreElement . "&nbsp;";
+											
+										}
+	?>
+									</p>
+								</div>
+							</div>
+							<form action="submitApp.php" method="post">
+							<div class="row">
+								<div class="col-sm-12">
+									<p><? echo $launchSentence; ?></p>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-2"><button type="button" class="btn btn-primary" id="launch">Launch!!!</button></div>
+					</div>
+				</div>	
+	<?
+
+	}
+}
+?>
 		</div>
 		<div class="col-sm-2"></div>
 	</div>
-<?
-
-}
-
-?>
-
 </nav>
 </body>
 </html>
