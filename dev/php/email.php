@@ -31,7 +31,7 @@ $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, 
 $mail->Port = 587;    
 
 $mail->setFrom('bamboomy@gmail.com', 'Mailer');
-$mail->addAddress('sander.theetaert@gmail.com', 'Joe User'); 
+$mail->addAddress('sander.theetaert@atos.net', 'Joe User'); 
 //$mail->addAddress('bamboomy@gmail.com', 'Joe User2'); 
 
 $mail->isHTML(true); 
