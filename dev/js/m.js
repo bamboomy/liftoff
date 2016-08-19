@@ -30,3 +30,11 @@ $(document).ready(function () {
     });
 });    
 
+function login(){
+	$.post( "login.php", { user: $("#username").val(), pw: $("#password").val() } 
+	).done(function( data ) {
+		alert( "Data Loaded: " + data );
+	});
+}
+
+

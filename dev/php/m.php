@@ -177,7 +177,7 @@
 			<div class="col-sm-1"></div>
 			<div class="col-sm-4">username/e-mail:</div>
 			<div class="col-sm-5">
-				<input type="text" class="pull-right" />
+				<input type="text" class="pull-right" id="username" />
 			</div>
 			<div class="col-sm-2"></div>
 		</div>
@@ -185,14 +185,14 @@
 			<div class="col-sm-1"></div>
 			<div class="col-sm-4">password:</div>
 			<div class="col-sm-5">
-				<input type="password" class="pull-right" />
+				<input type="password" class="pull-right" id="password"/>
 			</div>
 			<div class="col-sm-2"></div>
 		</div>
 		<div class="row">
 			<div class="col-sm-5"></div>
 			<div class="col-sm-5">
-				<button class="btn btn-default pull-right" type="submit" >Login</button>
+				<button class="btn btn-default pull-right" onclick="login();">Login</button>
 			</div>
 			<div class="col-sm-2"></div>
 		</div>
