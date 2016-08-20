@@ -62,6 +62,10 @@
 			
 		}
 		
+		.red{
+			color: red;
+		}
+		
 	</style>
 </head>
 <body>
@@ -81,7 +85,7 @@
         <li><a href="#about">The System</a></li>
         <li><a href="#services">The reviews</a></li>
         <li><a href="#contact">Contact</a></li>
-		<li><a data-toggle="modal" data-target="#loginModal">Log in/register</a></li>
+		<li><a href="#loginModal" data-toggle="modal">Log in/register</a></li>
       </ul>
     </div>
   </div>
@@ -192,6 +196,13 @@
 		<div class="row">
 			<div class="col-sm-5"></div>
 			<div class="col-sm-5">
+				<span class="red pull-right" id="error"></span>
+			</div>
+			<div class="col-sm-2"></div>
+		</div>
+		<div class="row">
+			<div class="col-sm-5"></div>
+			<div class="col-sm-5">
 				<button class="btn btn-default pull-right" onclick="login();">Login</button>
 			</div>
 			<div class="col-sm-2"></div>
@@ -212,6 +223,27 @@
 			</div>
 			<div class="col-sm-2"></div>
 		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="welcomeModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Welcome :)</h4>
+      </div>
+      <div class="modal-body">
+		<p id="welcome"></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

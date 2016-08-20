@@ -33,7 +33,17 @@ $(document).ready(function () {
 function login(){
 	$.post( "login.php", { user: $("#username").val(), pw: $("#password").val() } 
 	).done(function( data ) {
-		alert( "Data Loaded: " + data );
+		if(data !== 'not found'){
+
+			$("#welcome").html("Hellow there, " + data);
+			
+			$("#loginModal").modal("hide");
+			
+			setTimeout(function(){ $("#welcomeModal").modal("show"); }, 1000);
+
+		}else{
+			$("#error").html("we couldn't find this user");
+		}
 	});
 }
 
