@@ -39,6 +39,8 @@ function login(){
 			
 			$("#loginModal").modal("hide");
 			
+			addDropDown(data);
+
 			setTimeout(function(){ $("#welcomeModal").modal("show"); }, 1000);
 
 		}else{
@@ -47,4 +49,44 @@ function login(){
 	});
 }
 
+function logout(){
+	$.post( "logout.php").done(function( data ) {
+		if(data == "done"){
+			$("#logoutModal").modal("show");
+			
+			removeDropdown();
+		}
+	});
+}
 
+function addDropDown(name){
+
+	var element = $("#login");
+
+	element.addClass("dropdown");
+	
+	//if you change this you should also change the code in m.php
+	
+	html = "<a data-toggle='dropdown' class='dropdown-toggle' href='#'>" + name + "\n";
+	html += "<b class='caret'></b></a>\n";
+	html += "<ul class='dropdown-menu'>\n";
+	html += "<li><a href='#'>Review</a></li>\n";
+	html += "<li><a href='#'>Submit app</a></li>\n";
+	html += "<li><a href='#'>Stats</a></li>\n";
+	html += "<li class='divider'></li>\n";
+	html += "<li><a href='#' onclick='logout();'>Log out</a></li>\n";
+	html += "</ul>\n";
+
+	element.html(html);
+}
+
+function removeDropdown(){
+	
+	var element = $("#login");
+
+	element.removeClass("dropdown");
+	
+	html = "<a href='#loginModal' data-toggle='modal'>Log in/register</a>";
+	
+	element.html(html);
+}

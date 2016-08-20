@@ -1,3 +1,9 @@
+<?php
+
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,7 +91,27 @@
         <li><a href="#about">The System</a></li>
         <li><a href="#services">The reviews</a></li>
         <li><a href="#contact">Contact</a></li>
-		<li><a href="#loginModal" data-toggle="modal">Log in/register</a></li>
+<?
+	if(isset($_SESSION['login_user'])){
+		//whenever changing this code change the code in m.js as well...
+?>
+		<li class="dropdown" id='login'>
+			<? echo "<a data-toggle='dropdown' class='dropdown-toggle' href='#'>".$_SESSION['login_user']; ?>
+			<b class="caret"></b>
+			</a>
+			<ul class="dropdown-menu">
+				<li><a href="#">Review</a></li>
+				<li><a href="#">Submit app</a></li>
+				<li><a href="#">Stats</a></li>
+				<li class="divider"></li>
+				<li><a href="#" onclick="logout();">Log out</a></li>
+			</ul>
+		</li>
+<?
+	}else{
+		echo "<li id='login'><a href='#loginModal' data-toggle='modal'>Log in/register</a></li>";
+	}
+?>
       </ul>
     </div>
   </div>
@@ -244,6 +270,27 @@
       </div>
       <div class="modal-body">
 		<p id="welcome"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="logoutModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Goodbye!!!</h4>
+      </div>
+      <div class="modal-body">
+		<p>You are logged out.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
