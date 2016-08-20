@@ -134,6 +134,7 @@ if(strpos($maxDownloads, ',') !== false){
       <a class="navbar-brand" href="#">Android Liftoff : submit app</a>
     </div>
   </div>
+</nav>
   
 	<div class="jumbotron text-center">
 		<h1>Welcome, <?php echo $name; ?>!!!</h1> 
@@ -222,8 +223,6 @@ if(strpos($maxDownloads, ',') !== false){
 		</div>
 		<div class="col-sm-2"></div>
 	</div>
-  
-</nav>
 </body>
 </html>
 <?

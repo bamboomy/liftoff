@@ -70,7 +70,7 @@ function addDropDown(name){
 	html = "<a data-toggle='dropdown' class='dropdown-toggle' href='#'>" + name + "\n";
 	html += "<b class='caret'></b></a>\n";
 	html += "<ul class='dropdown-menu'>\n";
-	html += "<li><a href='#'>Review</a></li>\n";
+	html += "<li><a href='toBeReviewedList.php'>Review</a></li>\n";
 	html += "<li><a href='#'>Submit app</a></li>\n";
 	html += "<li><a href='#'>Stats</a></li>\n";
 	html += "<li class='divider'></li>\n";

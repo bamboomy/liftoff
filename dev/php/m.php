@@ -100,7 +100,7 @@ session_start();
 			<b class="caret"></b>
 			</a>
 			<ul class="dropdown-menu">
-				<li><a href="#">Review</a></li>
+				<li><a href="toBeReviewedList.php">Review</a></li>
 				<li><a href="#">Submit app</a></li>
 				<li><a href="#">Stats</a></li>
 				<li class="divider"></li>

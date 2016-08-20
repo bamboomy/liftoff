@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
 
 include_once("settings.php");
@@ -128,8 +130,12 @@ if(isset($_GET['token'])){
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="../js/verify_password.js"></script>
   <link rel="stylesheet" type="text/css" href="../css/main.css">
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -142,7 +148,7 @@ if(isset($_GET['token'])){
   
 	<div class="container-fluid androidGreen">
 		<div class="jumbotron text-center">
-			<h1>The infamous to be reviewed list...</h1> 
+			<h1>The notorious to be reviewed list...</h1> 
 		</div>
 <?
 
@@ -212,7 +218,6 @@ if(isset($launchId)){
 									</p>
 								</div>
 							</div>
-							<form action="submitApp.php" method="post">
 							<div class="row">
 								<div class="col-sm-12">
 									<p><? echo $launchSentence; ?></p>
@@ -227,7 +232,7 @@ if(isset($launchId)){
 <?
 }
 
-$sql = "SELECT appUrl, sentence, ownerName, maxDownloads, title, src, genre FROM reviewCandidate where status='verified' order by timeStamp asc";
+$sql = "SELECT id, appUrl, sentence, ownerName, maxDownloads, title, src, genre FROM reviewCandidate where status='verified' order by timeStamp asc";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -242,6 +247,7 @@ if ($result->num_rows > 0) {
 		}
 		
 		$appList[$counter++] = array(
+			"id" => $row["id"],
 			"appUrl" => $row["appUrl"],
 			"sentence" => $row["sentence"],
 			"ownerName" => $row["ownerName"],
@@ -292,14 +298,30 @@ if ($result->num_rows > 0) {
 										</p>
 									</div>
 								</div>
-								<form action="submitApp.php" method="post">
 								<div class="row">
 									<div class="col-sm-12">
 										<p><? echo $app["sentence"]; ?></p>
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-2"><button type="button" class="btn btn-primary" id="review$id">Review</button></div>
+<?
+	if($app["ownerName"] === $_SESSION['login_user']){
+?>
+							<div class="col-sm-2"><button type="button" class="btn btn-primary disabled" 
+								id="review$id" data-toggle="tooltip" data-placement="bottom" title="" 
+								data-original-title="Apps can't be reviewed by someone with the same name as the app owner.">Review</button></div>
+<?
+	} else{
+?>
+							<form action="review.php" method="post">
+<?
+							echo "<input type='hidden' name='id' value='".$app["id"]."'/>";
+							echo "<div class='col-sm-2'><button type='submit' class='btn btn-primary'>Review</button></div>";
+?>
+							</form>
+<?						
+	}
+?>						
 						</div>
 					</div>	
 				</div>	
