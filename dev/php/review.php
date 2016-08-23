@@ -244,14 +244,60 @@ if ($result->num_rows != 1) {
 	<div class="row collapse" id="review">
 		<div class="col-sm-2"></div>
 		<div class="col-sm-8">
-
+			<form action="submitReview.php" method="post">
+			<? 
+			echo "<input type='hidden' name='reviewCandidateId' value='".$_POST["id"]."'/>"; 
+			echo "<input type='hidden' name='appUrl' value='".$row["appUrl"]."'/>"; 
+			?>
 			<div class="well">
 				<div class="row">
-					<div class="col-sm-2">Review by <?echo $_SESSION['login_user']; ?></div>
-					<div class="col-sm-8"><textarea rows="15" cols="80" name="content">2do: 500 check</textarea></div>
+					<div class="col-sm-2">
+						Review by <?echo $_SESSION['login_user']; ?><br/>
+						<br/>
+						<div id="feedback"></div>
+					</div>
+					<div class="col-sm-8"><textarea rows="15" cols="80" name="content" id="reviewText" onkeyup="verifyLength();"></textarea></div>
 					<div class="col-sm-2"></div>
 				</div>
+				<div class="row">
+					<div class="col-sm-2"></div>
+					<div class="col-sm-4">Pro</div>
+					<div class="col-sm-4">Con</div>
+					<div class="col-sm-2"></div>
+				</div>
+				<br/>
+				<div class="row">
+					<div class="col-sm-2"></div>
+					<div class="col-sm-4"><input name="pro0" type="text" id="pro0" onkeyup="updateSubmitMessage();"/></div>
+					<div class="col-sm-4"><input name="con0" type="text" id="con0" onkeyup="updateSubmitMessage();"/></div>
+					<div class="col-sm-2"></div>
+				</div>
+				<br/>
+				<div class="row">
+					<div class="col-sm-2"></div>
+					<div class="col-sm-4"><input name="pro1" type="text" placeholder="(optional)"/></div>
+					<div class="col-sm-4"><input name="con1" type="text" placeholder="(optional)"/></div>
+					<div class="col-sm-2"></div>
+				</div>
+				<br/>
+				<div class="row">
+					<div class="col-sm-2"></div>
+					<div class="col-sm-4"><input name="pro2" type="text" placeholder="(optional)"/></div>
+					<div class="col-sm-4"><input name="con2" type="text" placeholder="(optional)"/></div>
+					<div class="col-sm-2"></div>
+				</div>
+				<br/>
+				<div class="row">
+					<div class="col-sm-2"></div>
+					<div class="col-sm-8">
+						<div id="submitMessage"></div>
+					</div>
+					<div class="col-sm-2">
+						<button type="submit" class="btn btn-primary" id="submitReview" disabled="disabled">Submit</button>
+					</div>
+				</div>	
 			</div>
+			</form>
 		</div>
 		<div class="col-sm-2"></div>
 	</div>
