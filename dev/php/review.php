@@ -49,7 +49,7 @@ if ($conn->connect_error) {
 	die;
 } 
 
-$sql = "SELECT id, appUrl, sentence, ownerName FROM reviewCandidate where id='".$_POST["id"]."'";
+$sql = "SELECT id, appUrl, sentence, ownerName FROM reviewCandidate where id='".$_POST["id"]."' and status='verified'";
 $result = $conn->query($sql);
 
 if ($result->num_rows != 1) {
@@ -75,6 +75,48 @@ if ($result->num_rows != 1) {
 	
 	$row = $result->fetch_assoc();
 	
+	$html = file_get_html($row['appUrl']);
+
+	foreach($html->find('div.content') as $potentialNumber){
+		
+		if($potentialNumber->itemprop=='numDownloads'){
+			$number = $potentialNumber->innertext;
+			
+			break;
+		}
+	}
+
+	$maxDownloads = str_replace ( ",", "", explode ( " - " , $number)[1]);
+	
+	$launched = ($maxDownloads > 500);
+	
+	$launched = false;
+	
+	if($launched){
+		
+		$sql = "UPDATE reviewCandidate SET status='airborn' WHERE id='".$row['id']."'";
+
+		if ($conn->query($sql) !== TRUE) {
+
+			$mail->Subject = 'error encountered: illegal id reviewCandidate while setting airborn';
+
+			$mail->Body = "illegal id reviewCandidate(airborn)... -> ".$conn->error;
+			
+			$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+			
+			$mail->send();//fire and forget
+
+		?>
+
+			<script>
+				alert("an error has occured, you will be redirected to the main page...");
+				window.location.assign("m.php");
+			</script>
+			
+		<?
+			die;
+		}		
+	}
 ?>
 	
 <!DOCTYPE html>
@@ -88,6 +130,7 @@ if ($result->num_rows != 1) {
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
   <link rel="stylesheet" type="text/css" href="../css/main.css">
+  <script src="../js/review.js"></script>
   </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -110,7 +153,17 @@ if ($result->num_rows != 1) {
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="jumbotron">
+<?
+	if($launched){
+?>
+						<h2>You're the last one who saw this app on this site...</h2>
+<?	
+	}else{
+?>
 						<h2>This is how the app will look in the app list:</h2>
+<?	
+	}					
+?>
 					</div>
 				</div>
 			</div>
@@ -120,19 +173,6 @@ if ($result->num_rows != 1) {
 						<div class="row">
 							<div class="col-sm-2">
 <?php
-
-	$html = file_get_html($row['appUrl']);
-
-	foreach($html->find('div.content') as $potentialNumber){
-		
-		if($potentialNumber->itemprop=='numDownloads'){
-			$number = $potentialNumber->innertext;
-			
-			break;
-		}
-	}
-
-	$maxDownloads = str_replace ( ",", "", explode ( " - " , $number)[1]);
 
 	$title = $html->find('div.id-app-title',0)->innertext;
 
@@ -179,12 +219,45 @@ if ($result->num_rows != 1) {
 							</div>
 							<div class="col-sm-2"></div>
 						</div>
+						<br/>
+<?
+	if(!$launched){
+?>
+						<div class="row">
+							<div class="col-sm-2">
+								<a class="btn btn-primary" data-toggle="collapse" href="#review">Review by <?echo $_SESSION['login_user']; ?></a>
+							</div>
+							<div class="col-sm-10"></div>
+						</div>
+<?
+	}
+?>
 					</div>
 				</div>
 				<div class="col-sm-2"></div>
 			</div>
 		</div>
 	</div>
+<?
+	if(!$launched){
+?>
+	<div class="row collapse" id="review">
+		<div class="col-sm-2"></div>
+		<div class="col-sm-8">
+
+			<div class="well">
+				<div class="row">
+					<div class="col-sm-2">Review by <?echo $_SESSION['login_user']; ?></div>
+					<div class="col-sm-8"><textarea rows="15" cols="80" name="content">2do: 500 check</textarea></div>
+					<div class="col-sm-2"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+<?
+	}
+?>
 	<div class="row">
 		<div class="col-sm-2"></div>
 		<div class="col-sm-8">
@@ -195,20 +268,34 @@ if ($result->num_rows != 1) {
 		</div>
 		<div class="col-sm-2"></div>
 	</div>
+<?
+	if($launched){
+?>
 	<div class="row">
 		<div class="col-sm-2"></div>
 		<div class="col-sm-8">
 
 			<div class="well">
 				<div class="row">
-					<div class="col-sm-2">Review by <?echo $_SESSION['login_user']; ?></div>
-					<div class="col-sm-8"><textarea rows="15" cols="80" name="content"></textarea></div>
+					<div class="col-sm-2"></div>
+					<div class="col-sm-8"><p>
+						Between the app registration and just now this app has surpasssed 500 downloads...<br/>
+						<br/>
+						This site is only intended for an app to get it's first 500 downloads 
+						so this app will not appear anymore on this site...<br/>
+						<br/>
+						You can <a href="toBeReviewedList.php">review another app</a> if you want...<br/>
+					</p></div>
 					<div class="col-sm-2"></div>
 				</div>
 			</div>
 		</div>
 		<div class="col-sm-2"></div>
 	</div>
+
+<?		
+	}
+?>	
 </div>
 </body>
 </html>

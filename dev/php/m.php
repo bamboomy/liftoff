@@ -100,8 +100,8 @@ session_start();
 			<b class="caret"></b>
 			</a>
 			<ul class="dropdown-menu">
-				<li><a href="toBeReviewedList.php">Review</a></li>
-				<li><a href="#">Submit app</a></li>
+				<li><a href="toBeReviewedList.php">Review an app</a></li>
+				<li><a href="#">Submit an app</a></li>
 				<li><a href="#">Stats</a></li>
 				<li class="divider"></li>
 				<li><a href="#" onclick="logout();">Log out</a></li>
