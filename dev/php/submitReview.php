@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
 
 include_once("settings.php");
@@ -46,17 +48,7 @@ if ($conn->connect_error) {
 } 
 
 $sql = "INSERT INTO `app`(`reviewCandidateId`, `url`, `votes`, `status`)";
-$sql .= "VALUES (".$_POST['reviewCandidateId'].",".$_POST['appUrl'].",'0','need_administration')";
-
-$sql = "INSERT INTO `app`(`ownerId`, `status`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`)";
-$sql .= "VALUES ([value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10],[value-11])";
-
-
-$sql = "INSERT INTO `review`(`ownerId`, `status`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`)";
-$sql .= "VALUES ([value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10],[value-11])";
-
-$sql = "INSERT INTO review (name, email) ";
-$sql .= "VALUES ('".$_POST['username']."', '".$_POST['mailAddress']."')";
+$sql .= "VALUES (".$_POST['reviewCandidateId'].",'".$_POST['appUrl']."','0','need_administration')";
 
 if ($conn->query($sql) !== TRUE) {
 
@@ -82,21 +74,48 @@ if ($conn->query($sql) !== TRUE) {
 
 }
 
-$sql = "SELECT id FROM user where name='".$_POST['username']."' and email='".$_POST['mailAddress']."'";
+$sql = "SELECT id FROM app where url='".$_POST['appUrl']."'";
 $result = $conn->query($sql);
 
-if ($result->num_rows > 0) {
+if ($result->num_rows == 1) {
     // output data of each row
-    while($row = $result->fetch_assoc()) {
-        $ownerId = $row["id"];//we need the last one
-    }
-} else {
-    die ;
+    $row = $result->fetch_assoc();
+	
+	$sql = "INSERT INTO `review`(`ownerId`,`appId`, `status`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`)";
+	$sql .= "VALUES ('".$_SESSION['id']."','".$row['id']."','need_administration','".$_POST['content']."','".$_POST['pro0']."','".$_POST['con0'];
+	$sql .= "','".$_POST['pro1']."','".$_POST['con1']."','".$_POST['pro2']."','".$_POST['con2']."')";
+
+	if ($conn->query($sql) !== TRUE) {
+
+		//TODO: error module
+		
+		$mail->Subject = "error encountered: couldn't insert user";
+
+		$mail->Body = "couldn't insert user... -> ".$conn->error;
+		
+		$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+		
+		$mail->send();//fire and forget
+
+	?>
+
+		<script>
+			alert("an error has occured, you will be redirected to the main page...");
+			window.location.assign("m.php");
+		</script>
+		
+	<?
+		die;
+
+	}
+
+}else{
+
 	//TODO: error module
 	
-	$mail->Subject = "error encountered: 0 results";
+	$mail->Subject = "error encountered: couldn't insert user";
 
-	$mail->Body = "0 results... -> ".$conn->error;
+	$mail->Body = "couldn't insert user... -> ".$conn->error;
 	
 	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
 	
@@ -113,17 +132,13 @@ if ($result->num_rows > 0) {
 	die;
 }
 
-$sql = "INSERT INTO reviewCandidate (appUrl, sentence, ownerId, ownerEmail, ownerName, maxDownloads, title, src, genre) ";
-$sql .= "VALUES ('".$_POST['url']."', '".$_POST['sentence']."', '".$ownerId."', '".$_POST['mailAddress']."', '".$_POST['username']."', ";
-$sql .= "'".$_POST['maxDownloads']."', '".$_POST['title']."', '".$_POST['src']."', '".$_POST['genre']."')";
+$sql = "UPDATE reviewCandidate SET status='review_pending' WHERE id='".$_POST['reviewCandidateId']."'";
 
 if ($conn->query($sql) !== TRUE) {
-	
-	//TODO: error module
-	
-	$mail->Subject = 'error encountered: reviewCandidate';
 
-	$mail->Body = "couldn't insert reviewCandidate... -> ".$conn->error;
+	$mail->Subject = "error encountered: couldn't update mail";
+
+	$mail->Body = "couldn't update mail... -> ".$conn->error;
 	
 	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
 	
@@ -138,76 +153,10 @@ if ($conn->query($sql) !== TRUE) {
 	
 <?
 	die;
-
-}else{
-
-	$mail->Subject = 'App registered';
-
-	$mailContent = "Hey ".$_POST['username'].", <br/><br/>someone, ideally you, has registerd the app '".$_POST['appName']."' on ".$liftoffUrl."...<br/><br/>";
-
-	$mailContent .= "If it was you, you can click <a href='".$liftoffBaseUrl."mailRegistration.php?hash=".$hash."&id=".$ownerId."'>this link</a> to register your app.<br/><br/>";
-
-	$mailContent .= "If you weren't expecting this e-mail you can safely ignore it.<br/><br/>";
-
-	$mailContent .= "If you have recieved more mails like this and you don't want to receive any anymore you can click <a href=''>this link</a> to unsubscribe.<br/><br/>";
-
-	$mailContent .= "Thanks for choosing Android Liftoff,<br/><br/>we wish you a nice day and all the best with your app :).<br/><br/>";
-
-	$mailContent .= "Sincerely,<br/>The Android Liftoff team.";
-
-	$mail->Body = $mailContent;
-
-	$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 	
-	$mail->addAddress('sander.theetaert@gmail.com', $_POST['username']);  //needs to be replaced with owner e-mail
+} 
 
-	if(!$mail->send()) {
-		
-		//TODO: error module (db)
-		
-		//echo 'Message could not be sent.';
-		//echo 'Mailer Error: ' . $mail->ErrorInfo; -> usefull info
-		
-		?>
-
-			<script>
-				alert("an error has occured, you will be redirected to the main page...");
-				window.location.assign("m.php");
-			</script>
-			
-		<?
-		
-		die;
-	
-	} else {
-
-		$sql = "INSERT INTO mails (appUrl, userName, mailAddress, hash) VALUES ('".$_POST['url']."', '".$_POST['username']."', '".$_POST['mailAddress']."', '".$hash."');";
-
-		if ($conn->query($sql) !== TRUE) {
-			
-			//TODO: error module
-			
-			$mail->Subject = 'error encountered';
-
-			$mail->Body = $conn->error;
-
-			$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
-
-			$mail->send();//fire and forget
-
-		?>
-
-			<script>
-				alert("an error has occured, you will be redirected to the main page...");
-				window.location.assign("m.php");
-			</script>
-			
-		<?
-			die;
-
-		}else{
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -243,14 +192,6 @@ if ($conn->query($sql) !== TRUE) {
 		
 			<div class="well">
 
-				<p>A mail has been sent to '<?echo $_POST['mailAddress'];?>' with a link to register the app.<br/>
-				<br/>
-				Once you verify the app it is registered and will be put on the to be reviewed list.<br/>
-				<br/>
-				Additionally, the name of the owner of the app is registered as well,<br/>
-				<br/>
-				If you wish, you can register on this site when verifying the app with the link in the mail.<br/>
-				<br/>
 				<a href="m.php">Back to main page.</a><br/>
 				</p>
 			
@@ -263,10 +204,6 @@ if ($conn->query($sql) !== TRUE) {
 </body>
 </html>
 <?
-		
-		}
-	}
-}
 
 $conn->close();
 

@@ -24,7 +24,7 @@ if ($result->num_rows > 0) {
 		
 		$pwHash = md5(md5(md5($row['salt'])) . md5($_POST['pw']));
 
-		$sql = "SELECT name FROM user where pwHash='".$pwHash."' and id='".$row['id']."'";
+		$sql = "SELECT name, id FROM user where pwHash='".$pwHash."' and id='".$row['id']."'";
 		
 		$result2 = $conn->query($sql);
 
@@ -35,6 +35,7 @@ if ($result->num_rows > 0) {
 			echo $row2['name'];
 			
 			$_SESSION['login_user']= $row2['name'];
+			$_SESSION['id']= $row2['id'];
 			
 			die;
 		}
