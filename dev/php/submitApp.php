@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
 
 include_once("settings.php");
@@ -49,6 +51,43 @@ if ($conn->connect_error) {
 	die;
 } 
 
+$sql = "select count(*) as count from reviewCandidate where ip='".$_SERVER['REMOTE_ADDR']."';";
+$result = $conn->query($sql);
+
+if ($result->num_rows == 1) {
+    // output data of each row
+    $row = $result->fetch_assoc();
+	
+	if($row["count"] > 1 && !isset($_SESSION['login_user'])){
+		
+?>
+	<script>
+		alert("you can't submit multiple apps if you're not registered (and logged in)...");
+		window.location.assign("m.php");
+	</script>
+<?
+		die;
+	}
+
+} else {
+
+	$mail->Subject = "error encountered: 0 results";
+
+	$mail->Body = "0 results... -> ".$conn->error;
+	
+	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+	
+	$mail->send();//fire and forget
+
+?>
+	<script>
+		alert("an error has occured, you will be redirected to the main page...");
+		window.location.assign("m.php");
+	</script>
+<?
+	die;
+}
+
 $sql = "INSERT INTO user (name, email) ";
 $sql .= "VALUES ('".$_POST['username']."', '".$_POST['mailAddress']."')";
 
@@ -85,9 +124,7 @@ if ($result->num_rows > 0) {
         $ownerId = $row["id"];//we need the last one
     }
 } else {
-    die ;
-	//TODO: error module
-	
+
 	$mail->Subject = "error encountered: 0 results";
 
 	$mail->Body = "0 results... -> ".$conn->error;
@@ -107,9 +144,9 @@ if ($result->num_rows > 0) {
 	die;
 }
 
-$sql = "INSERT INTO reviewCandidate (appUrl, sentence, ownerId, ownerEmail, ownerName, maxDownloads, title, src, genre) ";
+$sql = "INSERT INTO reviewCandidate (appUrl, sentence, ownerId, ownerEmail, ownerName, maxDownloads, title, src, genre, ip) ";
 $sql .= "VALUES ('".$_POST['url']."', '".$_POST['sentence']."', '".$ownerId."', '".$_POST['mailAddress']."', '".$_POST['username']."', ";
-$sql .= "'".$_POST['maxDownloads']."', '".$_POST['title']."', '".$_POST['src']."', '".$_POST['genre']."')";
+$sql .= "'".$_POST['maxDownloads']."', '".$_POST['title']."', '".$_POST['src']."', '".$_POST['genre']."', '".$_SERVER['REMOTE_ADDR']."')";
 
 if ($conn->query($sql) !== TRUE) {
 	
