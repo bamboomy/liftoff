@@ -178,12 +178,13 @@ if ($conn->query($sql) !== TRUE) {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span> 
       </button>
-      <a class="navbar-brand" href="#">Android Liftoff : mail sent...</a>
+      <a class="navbar-brand" href="#">Android Liftoff : review submitted...</a>
     </div>
   </div>
+</nav>
   
 	<div class="jumbotron text-center">
-		<h1>Mail sent...</h1> 
+		<h1>Thanks for your review :)</h1> 
 	</div>
 
 	<div class="row">
@@ -192,7 +193,31 @@ if ($conn->query($sql) !== TRUE) {
 		
 			<div class="well">
 
-				<a href="m.php">Back to main page.</a><br/>
+				<p>
+				We've succesfully gotten your review,<br/>
+				<br/>
+				Thanks a bunch!!!<br/>
+				<br/>
+				Your review is only 2 steps away to be shown on the main page:
+				<ol>
+					<li>Moderator review</li>
+					<li>App owner review</li>
+				</ol>
+				<br/>
+				<ol>
+					<li>We first like to check whether the review complies with site policies, nothing fancy here.</li>
+					<li>We also let the app owner agree with the review (or not), you wouldn't like to have a bad review about your app either, no?</li>
+				</ol>
+				<br/>
+				By every step you get a confirmation e-mail,<br/>
+				<br/>
+				And you can watch the progress of your reviews on your <a href='crib.php'>'crib'</a> page...<br/>
+				<br/>
+				You can <a href="toBeReviewedList.php">review another app</a> or <a href="m.php">go back to main page...</a><br/>
+				<br/>
+				Thanks again!!!<br/>
+				<br/>
+				The liftoff team.<br/>
 				</p>
 			
 			</div>
@@ -200,7 +225,6 @@ if ($conn->query($sql) !== TRUE) {
 		</div>
 		<div class="col-sm-2"></div>
 	</div>
-</nav>
 </body>
 </html>
 <?
