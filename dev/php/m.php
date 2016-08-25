@@ -102,7 +102,7 @@ session_start();
 			<ul class="dropdown-menu">
 				<li><a href="toBeReviewedList.php">Review an app</a></li>
 				<li><a href="#">Submit an app</a></li>
-				<li><a href="#">Stats</a></li>
+				<li><a href="crib.php">Crib</a></li>
 				<li class="divider"></li>
 				<li><a href="#" onclick="logout();">Log out</a></li>
 			</ul>

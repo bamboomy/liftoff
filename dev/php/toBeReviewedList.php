@@ -287,15 +287,7 @@ if ($result->num_rows > 0) {
 								</div>
 								<div class="row">
 									<div class="col-sm-12">
-										<p>
-	<?
-										foreach($app["genre"] as $genreElement) {
-											
-											echo $genreElement . "&nbsp;";
-											
-										}
-	?>
-										</p>
+										<p><? echo $app["genre"]; ?> </p>
 									</div>
 								</div>
 								<div class="row">

@@ -72,7 +72,7 @@ function addDropDown(name){
 	html += "<ul class='dropdown-menu'>\n";
 	html += "<li><a href='toBeReviewedList.php'>Review an app</a></li>\n";
 	html += "<li><a href='#'>Submit an app</a></li>\n";
-	html += "<li><a href='#'>Stats</a></li>\n";
+	html += "<li><a href='crib.php'>Crib</a></li>\n";
 	html += "<li class='divider'></li>\n";
 	html += "<li><a href='#' onclick='logout();'>Log out</a></li>\n";
 	html += "</ul>\n";
