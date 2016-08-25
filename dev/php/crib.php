@@ -97,12 +97,75 @@ if(!isset($_SESSION['login_user'])){
 			
 				<div class="well">
 				
-					<h3>Reviews<h3>
+					<h3>Reviews</h3>
 					
 					<div class="row">
 						<div class="col-sm-1"></div>
 						<div class="col-sm-10">
-							<h4>Written:</h4>
+<?							
+
+$sql = "SELECT  `appid` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."'";
+$result = $conn->query($sql);
+
+?>
+							<h4>Written: <? echo $result->num_rows; ?></h4>
+<?
+if($result->num_rows == 0){
+?>
+							
+							<p>
+							We encourage you to write reviews, for every review approved by at least a moderator;<br/>
+							<b>your apps</b> get ranked higher in the to be reviewed list;<br/>
+							(and are more likely to be chosen to be reviewed as well...)<br/>
+							</p>
+<?
+}else{
+?>	
+							<div class="row">
+								<div class="col-sm-1"></div>
+								<div class="col-sm-10">
+									<h4>Yet to be approved:</h4>
+								</div>
+								<div class="col-sm-1"></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-1"></div>
+								<div class="col-sm-10">
+									<h4>Approved by moderator:</h4>
+								</div>
+								<div class="col-sm-1"></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-1"></div>
+								<div class="col-sm-10">
+									<h4>Published:</h4>
+								</div>
+								<div class="col-sm-1"></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-1"></div>
+								<div class="col-sm-10">
+									<h4>Rejected:</h4>
+									<div class="row">
+										<div class="col-sm-1"></div>
+										<div class="col-sm-10">
+											<h4>By moderator:</h4>
+										</div>
+										<div class="col-sm-1"></div>
+									</div>
+									<div class="row">
+										<div class="col-sm-1"></div>
+										<div class="col-sm-10">
+											<h4>By app owner:</h4>
+										</div>
+										<div class="col-sm-1"></div>
+									</div>
+								</div>
+								<div class="col-sm-1"></div>
+							</div>
+<?	
+}
+?>
 						</div>
 						<div class="col-sm-1"></div>
 					</div>
@@ -110,7 +173,7 @@ if(!isset($_SESSION['login_user'])){
 					<div class="row">
 						<div class="col-sm-1"></div>
 						<div class="col-sm-10">
-							<h4>Recieved:</h4>
+							<h4>Recieved: 0</h4>
 						</div>
 						<div class="col-sm-1"></div>
 					</div>
@@ -126,7 +189,7 @@ if(!isset($_SESSION['login_user'])){
 			
 				<div class="well">
 				
-					<h3>Apps<h3>
+					<h3>Apps</h3>
 <?
 
 $sql = "SELECT id, appUrl, sentence, maxDownloads, title, src, genre FROM reviewCandidate where ownerId='".$_SESSION['id']."'";
@@ -138,7 +201,7 @@ if($result->num_rows > 0){
 					<div class="row">
 						<div class="col-sm-1"></div>
 						<div class="col-sm-10">
-							<h4>On the to be reviewed list:</h4>
+							<h4>On the to be reviewed list: <? echo $result->num_rows; ?></h4>
 <?	
 
 	while($row = $result->fetch_assoc()) {

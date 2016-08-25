@@ -303,6 +303,12 @@ if ($result->num_rows > 0) {
 								id="review$id" data-toggle="tooltip" data-placement="bottom" title="" 
 								data-original-title="Apps can't be reviewed by someone with the same name as the app owner.">Review</button></div>
 <?
+	} else if(!isset($_SESSION['login_user'])){
+?>
+							<div class="col-sm-2"><button type="button" class="btn btn-primary disabled" 
+								id="review$id" data-toggle="tooltip" data-placement="bottom" title="" 
+								data-original-title="You need to be logged in to be able to review.">Review</button></div>
+<?
 	} else{
 ?>
 							<form action="review.php" method="post">
