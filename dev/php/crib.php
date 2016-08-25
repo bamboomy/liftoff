@@ -60,14 +60,15 @@ if(!isset($_SESSION['login_user'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Android Liftoff</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="../js/verify_password.js"></script>
+	<title>Android Liftoff</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="../css/main.css">
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+	<script src="../js/m.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -230,6 +231,19 @@ if($result->num_rows > 0){
 						</div>
 						<div class="col-sm-1"></div>
 					</div>
+					<div class="row">
+						<div class="col-sm-1"></div>
+						<div class="col-sm-10">
+							<h4>Submit a fresh app:</h4>
+							<form class="form-inline" id="subscribeAppForm" action="register_app.php" method="post">
+								<input type="app" class="form-control subscribe" size="80" 
+									placeholder="https://play.google.com/store/apps/details?id=" 
+									id="appurl" name="appurl" />
+								<button type="submit" class="btn btn-primary" id="register_app" disabled="disabled">Register app</button><br/>
+							</form>
+						</div>
+						<div class="col-sm-1"></div>
+					</div>
 <?	
 	
 }else{
@@ -240,10 +254,7 @@ if($result->num_rows > 0){
 }
 
 ?>					
-					
-					
 				</div>
-				
 			</div>
 			<div class="col-sm-1"></div>
 		</div>

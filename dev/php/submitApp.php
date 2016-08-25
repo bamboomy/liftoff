@@ -88,65 +88,105 @@ if ($result->num_rows == 1) {
 	die;
 }
 
-$sql = "INSERT INTO user (name, email) ";
-$sql .= "VALUES ('".$_POST['username']."', '".$_POST['mailAddress']."')";
+if(isset($_SESSION['login_user'])){
 
-if ($conn->query($sql) !== TRUE) {
+	$sql = "select email from user where id='".$_SESSION['id']."';";
+	$result = $conn->query($sql);
 
-	//TODO: error module
+	if ($result->num_rows == 1) {
+		// output data of each row
+		$row = $result->fetch_assoc();
+		
+		$email = $row['email'];
+
+	} else {
+
+		$mail->Subject = "error encountered: 0 results";
+
+		$mail->Body = "0 results... -> ".$conn->error;
+		
+		$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+		
+		$mail->send();//fire and forget
+
+	?>
+		<script>
+			alert("an error has occured, you will be redirected to the main page...");
+			window.location.assign("m.php");
+		</script>
+	<?
+		die;
+	}
+
+	$sql = "INSERT INTO reviewCandidate (appUrl, sentence, ownerId, ownerEmail, ownerName, maxDownloads, title, src, genre, ip) ";
+	$sql .= "VALUES ('".$_POST['url']."', '".$_POST['sentence']."', '".$_SESSION['id']."', '".$_POST['mailAddress']."', '".$_POST['username']."', ";
+	$sql .= "'".$_POST['maxDownloads']."', '".$_POST['title']."', '".$_POST['src']."', '".$_POST['genre']."', '".$_SERVER['REMOTE_ADDR']."')";
+
+}else{
 	
-	$mail->Subject = "error encountered: couldn't insert user";
-
-	$mail->Body = "couldn't insert user... -> ".$conn->error;
+	$email = $_POST['mailAddress'];
 	
-	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
-	
-	$mail->send();//fire and forget
+	$sql = "INSERT INTO user (name, email) ";
+	$sql .= "VALUES ('".$_POST['username']."', '".$_POST['mailAddress']."')";
 
-?>
+	if ($conn->query($sql) !== TRUE) {
 
-	<script>
-		alert("an error has occured, you will be redirected to the main page...");
-		window.location.assign("m.php");
-	</script>
-	
-<?
-	die;
+		//TODO: error module
+		
+		$mail->Subject = "error encountered: couldn't insert user";
+
+		$mail->Body = "couldn't insert user... -> ".$conn->error;
+		
+		$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+		
+		$mail->send();//fire and forget
+
+	?>
+
+		<script>
+			alert("an error has occured, you will be redirected to the main page...");
+			window.location.assign("m.php");
+		</script>
+		
+	<?
+		die;
+
+	}
+
+	$sql = "SELECT id FROM user where name='".$_POST['username']."' and email='".$_POST['mailAddress']."'";
+	$result = $conn->query($sql);
+
+	if ($result->num_rows > 0) {
+		// output data of each row
+		while($row = $result->fetch_assoc()) {
+			$ownerId = $row["id"];//we need the last one
+		}
+	} else {
+
+		$mail->Subject = "error encountered: 0 results";
+
+		$mail->Body = "0 results... -> ".$conn->error;
+		
+		$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+		
+		$mail->send();//fire and forget
+
+	?>
+
+		<script>
+			alert("an error has occured, you will be redirected to the main page...");
+			window.location.assign("m.php");
+		</script>
+		
+	<?
+		die;
+	}
+
+	$sql = "INSERT INTO reviewCandidate (appUrl, sentence, ownerId, ownerEmail, ownerName, maxDownloads, title, src, genre, ip) ";
+	$sql .= "VALUES ('".$_POST['url']."', '".$_POST['sentence']."', '".$ownerId."', '".$_POST['mailAddress']."', '".$_POST['username']."', ";
+	$sql .= "'".$_POST['maxDownloads']."', '".$_POST['title']."', '".$_POST['src']."', '".$_POST['genre']."', '".$_SERVER['REMOTE_ADDR']."')";
 
 }
-
-$sql = "SELECT id FROM user where name='".$_POST['username']."' and email='".$_POST['mailAddress']."'";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-        $ownerId = $row["id"];//we need the last one
-    }
-} else {
-
-	$mail->Subject = "error encountered: 0 results";
-
-	$mail->Body = "0 results... -> ".$conn->error;
-	
-	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
-	
-	$mail->send();//fire and forget
-
-?>
-
-	<script>
-		alert("an error has occured, you will be redirected to the main page...");
-		window.location.assign("m.php");
-	</script>
-	
-<?
-	die;
-}
-
-$sql = "INSERT INTO reviewCandidate (appUrl, sentence, ownerId, ownerEmail, ownerName, maxDownloads, title, src, genre, ip) ";
-$sql .= "VALUES ('".$_POST['url']."', '".$_POST['sentence']."', '".$ownerId."', '".$_POST['mailAddress']."', '".$_POST['username']."', ";
-$sql .= "'".$_POST['maxDownloads']."', '".$_POST['title']."', '".$_POST['src']."', '".$_POST['genre']."', '".$_SERVER['REMOTE_ADDR']."')";
 
 if ($conn->query($sql) !== TRUE) {
 	
@@ -190,7 +230,7 @@ if ($conn->query($sql) !== TRUE) {
 
 	$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 	
-	$mail->addAddress('sander.theetaert@gmail.com', $_POST['username']);  //needs to be replaced with owner e-mail
+	$mail->addAddress('sander.theetaert@gmail.com', $_POST['username']);  //needs to be replaced with owner e-mail (from session or from registration) -> $email
 
 	if(!$mail->send()) {
 		
@@ -212,7 +252,7 @@ if ($conn->query($sql) !== TRUE) {
 	
 	} else {
 
-		$sql = "INSERT INTO mails (appUrl, userName, mailAddress, hash) VALUES ('".$_POST['url']."', '".$_POST['username']."', '".$_POST['mailAddress']."', '".$hash."');";
+		$sql = "INSERT INTO mails (appUrl, userName, mailAddress, hash) VALUES ('".$_POST['url']."', '".$_POST['username']."', '".$email."', '".$hash."');";
 
 		if ($conn->query($sql) !== TRUE) {
 			
@@ -274,7 +314,7 @@ if ($conn->query($sql) !== TRUE) {
 		
 			<div class="well">
 
-				<p>A mail has been sent to '<?echo $_POST['mailAddress'];?>' with a link to register the app.<br/>
+				<p>A mail has been sent to '<?echo $email;?>' with a link to register the app.<br/>
 				<br/>
 				Once you verify the app it is registered and will be put on the to be reviewed list.<br/>
 				<br/>

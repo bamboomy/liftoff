@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 include_once("simple_html_dom.php");
 
 $html = file_get_html($_POST['appurl']);
@@ -193,7 +195,7 @@ if(strpos($maxDownloads, ',') !== false){
 								<? echo "<input type='hidden' name='title' value='".$title."' />\n";?>
 								<? echo "<input type='hidden' name='genre' value='".$genre."' />\n";?>
 								<? echo "<input type='hidden' name='maxDownloads' value='".$maxDownloads."' />\n";?>
-								<input id='sentence' type="text" placeholder="Say in one sentence what your app does." size="100" 
+								<input id='sentence' type="text" placeholder="Say in one sentence what your app does." size="80" 
 										onkeyup="verifySentence();countChar(this);" name="sentence" /><br/>
 								<div id="charNum"></div>
 							</div>
@@ -203,7 +205,30 @@ if(strpos($maxDownloads, ',') !== false){
 					</div>
 				</div>
 			</div>
-			
+<?
+
+if(isset($_SESSION['login_user'])){
+
+?>
+			<div class="well">
+				<p>
+				Hey there, <?echo $_SESSION['login_user'];?><br/>
+				We'll send another e-mail to your registered address to verify that you are the app owner of this app...<br/>
+				</p>
+				<div class="row">
+					<div class="col-sm-10"></div>
+					<div class="col-sm-2">
+						<button type="submit" class="btn btn-primary" id="register_app" disabled="disabled">Hit me</button>
+					</div>
+					</form>
+				</div>
+			</div>
+
+<?	
+
+}else{
+	
+?>
 			<div class="well">
 				<p>We will send an e-mail to this address to verify that you are really the app owner, 
 				<br/>this e-mail address will be used for future communication with you...</p>
@@ -219,6 +244,11 @@ if(strpos($maxDownloads, ',') !== false){
 				<p>We will also reserve your user name '<? echo $name; ?>' for future registration purposes...</p>
 				<p>We don't have a policy (yet) and hope not to need one in the future, this site is inteded to do good, please don't misuse it...</p>
 			</div>
+<?
+	
+}
+
+?>
 			
 		</div>
 		<div class="col-sm-2"></div>

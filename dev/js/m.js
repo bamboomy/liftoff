@@ -16,8 +16,6 @@ $(document).ready(function () {
 
     $('#subscribeAppForm input#appurl').on('keyup blur', function () { // fires on every keyup & blur
 
-		//alert($('#subscribeForm').valid());
-	
 		if($('#subscribeAppForm').valid()){
 
 			$('button#register_app.btn').prop('disabled', false);        // enables button
