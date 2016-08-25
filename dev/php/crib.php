@@ -115,7 +115,7 @@ if($result->num_rows == 0){
 ?>
 							
 							<p>
-							We encourage you to write reviews, for every review approved by at least a moderator;<br/>
+							We encourage you to <a href="toBeReviewedList.php">write reviews</a>, for every review approved by at least a moderator;<br/>
 							<b>your apps</b> get ranked higher in the to be reviewed list;<br/>
 							(and are more likely to be chosen to be reviewed as well...)<br/>
 							</p>
@@ -193,7 +193,7 @@ if($result->num_rows == 0){
 					<h3>Apps</h3>
 <?
 
-$sql = "SELECT id, appUrl, sentence, maxDownloads, title, src, genre FROM reviewCandidate where ownerId='".$_SESSION['id']."'";
+$sql = "SELECT id, title, src, status FROM reviewCandidate where ownerId='".$_SESSION['id']."'";
 $result = $conn->query($sql);
 
 if($result->num_rows > 0){
@@ -202,7 +202,8 @@ if($result->num_rows > 0){
 					<div class="row">
 						<div class="col-sm-1"></div>
 						<div class="col-sm-10">
-							<h4>On the to be reviewed list: <? echo $result->num_rows; ?></h4>
+							<h4>To be reviewed (yet): <? echo $result->num_rows; ?></h4>
+							<br/>
 <?	
 
 	while($row = $result->fetch_assoc()) {
@@ -219,7 +220,18 @@ if($result->num_rows > 0){
 									</div>
 									<div class="row">
 										<div class="col-sm-12">
+<?
+		if($row['status'] === 'new'){
+?>
+											<h4 style="color: red;">not yet verified</h4>
+<?
+		}else{
+?>
 											<h4><? echo "position: "; ?> </h4>
+<?		
+		}
+?>
+										
 										</div>
 									</div>
 								</div>
@@ -231,10 +243,12 @@ if($result->num_rows > 0){
 						</div>
 						<div class="col-sm-1"></div>
 					</div>
+					<br/>
 					<div class="row">
 						<div class="col-sm-1"></div>
 						<div class="col-sm-10">
 							<h4>Submit a fresh app:</h4>
+							<br/>
 							<form class="form-inline" id="subscribeAppForm" action="register_app.php" method="post">
 								<input type="app" class="form-control subscribe" size="80" 
 									placeholder="https://play.google.com/store/apps/details?id=" 
