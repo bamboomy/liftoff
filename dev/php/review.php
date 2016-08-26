@@ -293,7 +293,7 @@ if ($result->num_rows != 1) {
 						<div id="submitMessage"></div>
 					</div>
 					<div class="col-sm-2">
-						<button type="submit" class="btn btn-primary" id="submitReview" disabled="disabled">Submit</button>
+						<button type="submit" class="btn btn-primary" id="submitReview" disabled="disabled">Submit for approval</button>
 					</div>
 				</div>	
 			</div>
