@@ -131,6 +131,7 @@ if($result->num_rows == 0){
 								<div class="col-sm-1"></div>
 								<div class="col-sm-10">
 									<h4>Yet to be approved: <? echo $result->num_rows; ?></h4>
+									<br/>
 <?
 	if($result->num_rows > 0){
 		
@@ -229,86 +230,91 @@ if($result->num_rows == 0){
 										</div>
 									</div>
 									<br/>
-									<? echo "<div class='collapse well' id='review_need_admin_".$app[0]['id']."_".$reviewCounter."'>"; ?>
-										<div class="row">
-											<div class="col-sm-2">
-												Review by <?echo $_SESSION['login_user']; ?><br/>
-												<br/>
+									<div class="row">
+										<div class="col-sm-1"></div>
+										<div class="col-sm-11">
+										<? echo "<div class='collapse well' id='review_need_admin_".$app[0]['id']."_".$reviewCounter."'>"; ?>
+											<div class="row">
+												<div class="col-sm-2">
+													Review by <?echo $_SESSION['login_user']; ?><br/>
+													<br/>
+												</div>
+												<div class="col-sm-8">
+													<p><? echo nl2br($row3['text']); ?></p>
+												</div>
+												<div class="col-sm-2"></div>
 											</div>
-											<div class="col-sm-8">
-												<p><? echo nl2br($row3['text']); ?></p>
+											<div class="row">
+												<div class="col-sm-2"></div>
+												<div class="col-sm-4">Pro</div>
+												<div class="col-sm-4">Con</div>
+												<div class="col-sm-2"></div>
 											</div>
-											<div class="col-sm-2"></div>
-										</div>
-										<div class="row">
-											<div class="col-sm-2"></div>
-											<div class="col-sm-4">Pro</div>
-											<div class="col-sm-4">Con</div>
-											<div class="col-sm-2"></div>
-										</div>
-										<br/>
-										<div class="row">
-											<div class="col-sm-2"></div>
-											<div class="col-sm-4"><p><? echo $row3['pro0']; ?></p></div>
-											<div class="col-sm-4"><p><? echo $row3['con0']; ?></p></div>
-											<div class="col-sm-2"></div>
-										</div>
-										<br/>
-										<?
-											if($row3['pro1'] !== "" || $row3['con1'] !== ""){
-										?>
-										<div class="row">
-											<div class="col-sm-2"></div>
+											<br/>
+											<div class="row">
+												<div class="col-sm-2"></div>
+												<div class="col-sm-4"><p><? echo $row3['pro0']; ?></p></div>
+												<div class="col-sm-4"><p><? echo $row3['con0']; ?></p></div>
+												<div class="col-sm-2"></div>
+											</div>
+											<br/>
 											<?
-												if($row3['pro1'] !== ""){
+												if($row3['pro1'] !== "" || $row3['con1'] !== ""){
 											?>
-											<div class="col-sm-4"><p><? echo $row3['pro1']; ?></p></div>
-											<?
-												}
-												if($row3['con1'] !== ""){
-											?>
-											<div class="col-sm-4"><p><? echo $row3['con1']; ?></p></div>
-											<?
-												}
-											?>
-											<div class="col-sm-2"></div>
-										</div>
-										<br/>
-										<?
-											}
-										?>
-										<?
-											if($row3['pro2'] !== "" || $row3['con2'] !== ""){
-										?>
-										<div class="row">
-											<div class="col-sm-2"></div>
-											<?
-												if($row3['pro2'] !== ""){
-											?>
-											<div class="col-sm-4"><p><? echo $row3['pro2']; ?></p></div>
-											<?
-												}
-												if($row3['con2'] !== ""){
-											?>
-											<div class="col-sm-4"><p><? echo $row3['con2']; ?></p></div>
+											<div class="row">
+												<div class="col-sm-2"></div>
+												<?
+													if($row3['pro1'] !== ""){
+												?>
+												<div class="col-sm-4"><p><? echo $row3['pro1']; ?></p></div>
+												<?
+													}
+													if($row3['con1'] !== ""){
+												?>
+												<div class="col-sm-4"><p><? echo $row3['con1']; ?></p></div>
+												<?
+													}
+												?>
+												<div class="col-sm-2"></div>
+											</div>
+											<br/>
 											<?
 												}
 											?>
-											<div class="col-sm-2"></div>
-										</div>
-										<br/>
-										<?
-											}
-										?>
-										<div class="row">
-											<div class="col-sm-2"></div>
-											<div class="col-sm-8">
+											<?
+												if($row3['pro2'] !== "" || $row3['con2'] !== ""){
+											?>
+											<div class="row">
+												<div class="col-sm-2"></div>
+												<?
+													if($row3['pro2'] !== ""){
+												?>
+												<div class="col-sm-4"><p><? echo $row3['pro2']; ?></p></div>
+												<?
+													}
+													if($row3['con2'] !== ""){
+												?>
+												<div class="col-sm-4"><p><? echo $row3['con2']; ?></p></div>
+												<?
+													}
+												?>
+												<div class="col-sm-2"></div>
 											</div>
-											<div class="col-sm-2">
-												<button type="submit" class="btn btn-primary" id="submitReview" disabled="disabled">Edit</button>
-											</div>
+											<br/>
+											<?
+												}
+											?>
+											<div class="row">
+												<div class="col-sm-2"></div>
+												<div class="col-sm-8">
+												</div>
+												<div class="col-sm-2">
+													<button type="submit" class="btn btn-primary" id="submitReview" disabled="disabled">Edit</button>
+												</div>
+											</div>	
 										</div>	
 									</div>	
+								</div>	
 <?		
 				$reviewCounter++;
 			}
