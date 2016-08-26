@@ -121,32 +121,139 @@ if($result->num_rows == 0){
 							</p>
 <?
 }else{
+
+/*
+	$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`";
+	$sql3 .= " FROM `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='need_admin' order by appid";
+*/
+
+	$sql = "SELECT `id`, `appid`";
+	$sql .= " FROM `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='need_admin' order by appid";
+	$result = $conn->query($sql);
+
 ?>	
 							<div class="row">
 								<div class="col-sm-1"></div>
 								<div class="col-sm-10">
-									<h4>Yet to be approved:</h4>
+									<h4>Yet to be approved: <? echo $result->num_rows; ?></h4>
+<?
+	if($result->num_rows > 0){
+		
+		$appCounter = 0;
+		
+		$reviewCounter = 0;
+		
+		$oldAppId = -1;
+		
+		while($row = $result->fetch_assoc()){
+			
+			$app[$reviewCounter]['id'] 		= $row['id'];
+			$app[$reviewCounter]['appid'] 	= $row['appid'];
+			
+			$reviewCounter++;
+			
+			if($oldAppId !== $row['appid']){
+
+				$reviewCounter = 0;
+				
+				$oldAppId = $row['appid'];
+				
+				$appz[$appCounter++] = $app;
+			}
+		}
+
+		foreach($appz as $app){
+			
+		
+			$sql2 = "SELECT `id`, `appUrl`, `sentence`, `title`, `src`, `genre`, ownerName FROM `reviewCandidate` WHERE id = (";
+			$sql2 .= "SELECT `reviewCandidateId` FROM `app` WHERE `id`=".$app[0]['id'].")";
+			
+			$result2 = $conn->query($sql2);
+			
+			if($result2->num_rows == 0){
+				//2DO: ERROR HANDLING
+				echo "no reviewCandidates";
+				die;
+			}
+			
+			$row2 = $result2->fetch_assoc()
+?>
+									<div class="row">
+										<div class="col-sm-1"></div>
+										<div class="col-sm-11">
+											<div class="row">
+												<div class="col-sm-2"><? echo "<img src='".$row2['src']."' width='100' height='100' />";?></div>
+												<div class="col-sm-8">
+													<div class="row">
+														<div class="col-sm-12">
+															<h4><?php echo $title." by ".$row2['ownerName']; ?></h4>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-sm-12">
+															<p><? echo $row2['genre']; ?></p>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-sm-12">
+															<p><? echo $row2['sentence']; ?></p>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-2"></div>
+											</div>
+										</div>
+									</div>
+<?			
+/*			
+			$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, `ownerId`";
+			$sql3 .= " FROM `review` WHERE appid=".$app[0]['id'];
+			
+			$result3 = $conn->query($sql3);
+		
+			if($result3->num_rows == 0){
+				//2DO: ERROR HANDLING
+				echo "no reviews";
+				die;
+			}
+
+			while($row = $result->fetch_assoc()){
+*/			
+?>			
+
+<?		
+		}
+	}
+?>									
 								</div>
 								<div class="col-sm-1"></div>
 							</div>
 							<div class="row">
 								<div class="col-sm-1"></div>
 								<div class="col-sm-10">
-									<h4>Approved by moderator:</h4>
+									<h4>Approved by moderator: 0</h4>
+									<p>This number is accounted for in the order of the to be reviewed list.</p>
 								</div>
 								<div class="col-sm-1"></div>
 							</div>
 							<div class="row">
 								<div class="col-sm-1"></div>
 								<div class="col-sm-10">
-									<h4>Published:</h4>
+									<h4>Published: 0</h4>
 								</div>
 								<div class="col-sm-1"></div>
 							</div>
+<?							
+
+	$sql = "SELECT  `appid` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='rejected'";
+	$result = $conn->query($sql);
+
+	if($result->num_rows > 0){
+?>
 							<div class="row">
 								<div class="col-sm-1"></div>
 								<div class="col-sm-10">
-									<h4>Rejected:</h4>
+									<h4>Rejected: <? echo $result->num_rows; ?></h4>
 									<div class="row">
 										<div class="col-sm-1"></div>
 										<div class="col-sm-10">
@@ -165,6 +272,7 @@ if($result->num_rows == 0){
 								<div class="col-sm-1"></div>
 							</div>
 <?	
+	}
 }
 ?>
 						</div>
@@ -175,6 +283,27 @@ if($result->num_rows == 0){
 						<div class="col-sm-1"></div>
 						<div class="col-sm-10">
 							<h4>Recieved: 0</h4>
+							<div class="row">
+								<div class="col-sm-1"></div>
+								<div class="col-sm-10">
+									<h4>To be approved: 0</h4>
+								</div>
+								<div class="col-sm-1"></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-1"></div>
+								<div class="col-sm-10">
+									<h4>Published: 0</h4>
+								</div>
+								<div class="col-sm-1"></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-1"></div>
+								<div class="col-sm-10">
+									<h4>Rejected: 0</h4>
+								</div>
+								<div class="col-sm-1"></div>
+							</div>
 						</div>
 						<div class="col-sm-1"></div>
 					</div>
