@@ -88,6 +88,8 @@ if(!isset($_SESSION['login_user'])){
 	<div class="container-fluid androidGreen">
 		<div class="jumbotron text-center">
 			<h1>Welcome home, <? echo $_SESSION['login_user']; ?> :)</h1> 
+			
+			<img src="../imgz/crib.jpg" class="img-circle" alt="Logo" width="400" height="300">
 		</div>
 	</div>
 
