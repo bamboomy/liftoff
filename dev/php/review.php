@@ -289,10 +289,10 @@ if ($result->num_rows != 1) {
 				<br/>
 				<div class="row">
 					<div class="col-sm-2"></div>
-					<div class="col-sm-8">
+					<div class="col-sm-7">
 						<div id="submitMessage"></div>
 					</div>
-					<div class="col-sm-2">
+					<div class="col-sm-3">
 						<button type="submit" class="btn btn-primary" id="submitReview" disabled="disabled">Submit for approval</button>
 					</div>
 				</div>	

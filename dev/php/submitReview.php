@@ -82,8 +82,8 @@ if ($result->num_rows == 1) {
     $row = $result->fetch_assoc();
 	
 	$sql = "INSERT INTO `review`(`ownerId`,`appId`, `status`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`)";
-	$sql .= "VALUES ('".$_SESSION['id']."','".$row['id']."','need_administration','".$_POST['content']."','".$_POST['pro0']."','".$_POST['con0'];
-	$sql .= "','".$_POST['pro1']."','".$_POST['con1']."','".$_POST['pro2']."','".$_POST['con2']."')";
+	$sql .= "VALUES ('".$_SESSION['id']."','".$row['id']."','need_administration','".addslashes($_POST['content'])."','".addslashes($_POST['pro0']);
+	$sql .= "','".addslashes($_POST['con0'])."','".addslashes($_POST['pro1'])."','".addslashes($_POST['con1'])."','".addslashes($_POST['pro2'])."','".addslashes($_POST['con2'])."')";
 
 	if ($conn->query($sql) !== TRUE) {
 
