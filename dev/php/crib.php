@@ -354,6 +354,9 @@ if($result->num_rows > 0){
 						<div class="col-sm-1"></div>
 						<div class="col-sm-10">
 							<h4>To be reviewed (yet): <? echo $result->num_rows; ?></h4>
+							<p>
+								Your apps remain in the 'to be reviewed' status until you approve your first review for this app.<br/>
+							</p>
 							<br/>
 <?	
 

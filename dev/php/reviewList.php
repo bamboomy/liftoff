@@ -222,7 +222,18 @@
 												<div class="col-sm-8">
 												</div>
 												<div class="col-sm-2">
+<?
+													if($approve){
+
+														echo "<a class='btn btn-primary' href='approve_review.php?id=".$row3['id']."'>Approve</a>";
+
+													}else{
+?>
+												
 													<button type="submit" class="btn btn-primary" id="submitReview" disabled="disabled">Edit</button>
+<?
+													}
+?>
 												</div>
 											</div>	
 										</div>	
