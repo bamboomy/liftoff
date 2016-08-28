@@ -129,6 +129,27 @@ if($result->num_rows == 1){
 		die;
 	}
 
+	$sql = "UPDATE reviewCandidate SET status='reviewed' WHERE id=(";
+		$sql .= "select reviewCandidateId from app where id=".$appId.")";
+
+	if ($conn->query($sql) !== TRUE) {
+
+		$mail->Subject = "error encountered: couldn't update reviewCandidate";
+
+		$mail->Body = "couldn't update reviewCandidate... -> ".$conn->error;
+		
+		$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+		
+		$mail->send();//fire and forget
+
+	?>
+		<script>
+			alert("an error has occured, you will be redirected to your home...");
+			window.location.assign("crib.php");
+		</script>
+	<?
+		die;
+	}
 ?>
 	<script>
 		alert("This was the first review for this app, the app is now visible on the main site...");

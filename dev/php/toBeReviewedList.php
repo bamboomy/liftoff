@@ -232,7 +232,7 @@ if(isset($launchId)){
 <?
 }
 
-$sql = "SELECT id, appUrl, sentence, ownerName, maxDownloads, title, src, genre FROM reviewCandidate where status='verified' order by timeStamp asc";
+$sql = "SELECT id, appUrl, sentence, ownerName, maxDownloads, title, src, genre FROM reviewCandidate where status='verified' or status='review_pending' order by timeStamp asc";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
