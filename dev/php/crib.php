@@ -358,10 +358,9 @@ include 'reviewList.php';
 					<h3>Apps</h3>
 <?
 
-$sql = "SELECT id, title, src, status FROM reviewCandidate where ownerId='".$_SESSION['id']."'";
+$sql = "SELECT id, title, src, status FROM reviewCandidate where ownerId='".$_SESSION['id']."' and id not in (";
+	$sql .= "SELECT reviewCandidateId from app where status='approved')";
 $result = $conn->query($sql);
-
-if($result->num_rows > 0){
 
 ?>
 					<div class="row">
@@ -373,6 +372,8 @@ if($result->num_rows > 0){
 							</p>
 							<br/>
 <?	
+
+if($result->num_rows > 0){
 
 	while($row = $result->fetch_assoc()) {
 ?>		
@@ -409,6 +410,11 @@ if($result->num_rows > 0){
 <?		
 	}
 ?>
+<?	
+	
+}
+
+?>
 						</div>
 						<div class="col-sm-1"></div>
 					</div>
@@ -416,12 +422,51 @@ if($result->num_rows > 0){
 					<div class="row">
 						<div class="col-sm-1"></div>
 						<div class="col-sm-10">
-							<h4>Published: 0</h4>
+<?
+
+$sql = "SELECT id, title, src, status FROM reviewCandidate where ownerId='".$_SESSION['id']."' and id in (";
+	$sql .= "SELECT reviewCandidateId from app where status='approved')";
+$result = $conn->query($sql);
+
+?>
+							<h4>Published: <? echo $result->num_rows; ?></h4>
+							<?	
+
+if($result->num_rows > 0){
+
+	while($row = $result->fetch_assoc()) {
+?>		
+							<div class="row">
+								<div class="col-sm-2">
+									<? echo "<img src='".$row["src"]."' width='100' height='100'/>"; ?>
+								</div>
+								<div class="col-sm-8">
+									<div class="row">
+										<div class="col-sm-12">
+											<h4><? echo $row["title"]; ?></h4>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12">
+											<h4><? echo "position: "; ?> </h4>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
 							<br/>
+<?		
+	}
+?>
 						</div>
 						<div class="col-sm-1"></div>
 					</div>
 					<br/>
+<?	
+	
+}
+
+?>
 					<div class="row">
 						<div class="col-sm-1"></div>
 						<div class="col-sm-10">
@@ -436,16 +481,6 @@ if($result->num_rows > 0){
 						</div>
 						<div class="col-sm-1"></div>
 					</div>
-<?	
-	
-}else{
-
-?>
-<?	
-	
-}
-
-?>					
 				</div>
 			</div>
 			<div class="col-sm-1"></div>
