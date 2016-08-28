@@ -125,47 +125,30 @@ session_start();
 		<div class="col-sm-2"></div>
 		<div class="col-sm-8">
 			<p>
-				You've worked long and hard on your very own android app and finally it's ready to be let loose in the wild.<br/>
+				Android Liftoff is a site where great apps with little downloads are gathered and reviewed.<br/>
 				<br/>
-				You post your app on some forum or try to get in into a website review but allas,<br/>
+				Any app developer can submit his/her app here.<br/>
 				<br/>
-				you don't seem to be the only one trying...<br/>
+				However, it needs to be reviewed first to be visible to you (the site visitor).<br/>
 				<br/>
-				How can you even stand out if no one even downloads your precious work?<br/>
+				Furthermore;<br/>
 				<br/>
-				There seem to be many others and your first potential users seem to find it important that your app has enough downloads already...<br/>
+				The app list is sorted on votes.<br/>
 				<br/>
-				Seems a bit like a vicious circle to me :-/<br/>
+				App owners can vote (only for other apps then their own)<br/>
+				votes are made expensive so app owners are not going to vote for any app.<br/>
 				<br/>
-				But...<br/>
+				Also, when apps reach 500 downloads they are removed from this site<br/>
+				(to make place for other app developers' apps).<br/>
 				<br/>
-				There is hope!!!<br/>
+				This way we find the equilibrium between underappreciated good apps<br/>
+				and<br/>
+				apps that are in the process of becoming rising stars.<br/>
 				<br/>
-				This site will help you along the way (at least for a mere distance).<br/>
+				The apps can be found <a href='apps.php'>here</a>.<br/>
 				<br/>
-				You can put your app here (for free) and we promise it won't will be removed until you get 500 downloads.<br/>
-				<br/>
-				(Unless you misbehave of course ;-p)<br/>
-				<br/>
-				Once you get your 500th download however your app will be removed from this site to make place for others.<br/>
-				<br/>
-				Sounds like a fair system?<br/>
-				<br/>
-				Put the (play store) link below to register...<br/>
+				As app developer you can register in the upper right corner.<br/>
 			</p> 
-			
-			<div class="row">
-				<form class="form-inline" id="subscribeAppForm" action="register_app.php" method="post">
-					<div class="col-sm-2"></div>
-					<div class="col-sm-8">
-						<input type="app" class="form-control subscribe" size="80" 
-							placeholder="https://play.google.com/store/apps/details?id=" 
-							id="appurl" name="appurl" />
-						<button type="submit" class="btn btn-primary" id="register_app" disabled="disabled">Register app</button><br/>
-					</div>
-					<div class="col-sm-2"></div>
-				</form>
-			</div>
 		</div>
 		<div class="col-sm-2"></div>
 	</div>
@@ -235,18 +218,19 @@ session_start();
 		</div>
 		<br/>
 		<div class="row">
-			<div class="col-sm-1"></div>
-			<div class="col-sm-4">email:</div>
-			<div class="col-sm-5">
-				<input type="text" class="pull-right" />
-			</div>
-			<div class="col-sm-2"></div>
+			<form class="form-inline" id="subscribeAppForm" action="register_app.php" method="post">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-8">
+					<input type="app" class="form-control subscribe" size="50" 
+						placeholder="https://play.google.com/store/apps/details?id=" 
+						id="appurl" name="appurl" />
+				</div>
+				<div class="col-sm-2"></div>
+			</form>
 		</div>
 		<div class="row">
-			<div class="col-sm-5"></div>
-			<div class="col-sm-5">
-				<button class="btn btn-default pull-right" type="submit" >Register</button>
-			</div>
+			<div class="col-sm-8"></div>
+			<div class="col-sm-2"><button type="submit" class="btn btn-primary" id="register_app" disabled="disabled">Register app</button><br/></div>
 			<div class="col-sm-2"></div>
 		</div>
       </div>
