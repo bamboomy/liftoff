@@ -281,13 +281,31 @@ include 'reviewList.php';
 						</div>
 						<div class="col-sm-1"></div>
 					</div>
-					
+<?
+	$sql = "SELECT * FROM `review` WHERE appid in (";
+		$sql .= "select id from app where reviewCandidateId in (";
+			$sql .= "select id from reviewCandidate where ownerId = '".$_SESSION['id']."'";
+			$sql .= "))";
+			
+	$result = $conn->query($sql);		
+?>					
 					<div class="row">
 						<div class="col-sm-1"></div>
 						<div class="col-sm-10">
-							<h4>Recieved: 0</h4>
+							<h4>Recieved: <? echo $result->num_rows; ?></h4>
 							<div class="row">
 								<div class="col-sm-1"></div>
+<?
+	$sql = "SELECT `id`, `appid` FROM `review` WHERE appid in (";
+		$sql .= "select id from app where reviewCandidateId in (";
+			$sql .= "select id from reviewCandidate where ownerId = '".$_SESSION['id']."'";
+			$sql .= ")) and status='need_owner' order by appid";
+	$result = $conn->query($sql);
+
+	$approve = true;
+
+	include 'reviewList.php';		
+?>								
 								<div class="col-sm-10">
 									<h4>To be approved: 0</h4>
 								</div>

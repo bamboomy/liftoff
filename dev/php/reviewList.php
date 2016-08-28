@@ -1,4 +1,6 @@
 <?
+	unset($appz);
+
 	if($result->num_rows > 0){
 		
 		$appCounter = 0;
@@ -11,7 +13,7 @@
 			
 			$app[$reviewCounter]['id'] 		= $row['id'];
 			$app[$reviewCounter]['appid'] 	= $row['appid'];
-			
+
 			$reviewCounter++;
 			
 			if($oldAppId !== $row['appid']){
@@ -25,11 +27,10 @@
 		}
 
 		foreach($appz as $app){
-			
-		
+
 			$sql2 = "SELECT `id`, `appUrl`, `sentence`, `title`, `src`, `genre`, ownerName FROM `reviewCandidate` WHERE id = (";
-			$sql2 .= "SELECT `reviewCandidateId` FROM `app` WHERE `id`=".$app[0]['id'].")";
-			
+			$sql2 .= "SELECT `reviewCandidateId` FROM `app` WHERE `id`=".$app[0]['appid'].")";
+
 			$result2 = $conn->query($sql2);
 			
 			if($result2->num_rows == 0){
@@ -69,9 +70,16 @@
 									</div>
 <?			
 
-			$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`";
-			$sql3 .= " FROM `review` WHERE appid=".$app[0]['id']." and `ownerId`=".$_SESSION['id'];
-			
+			if($approve){
+					
+				$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2` FROM `review` WHERE appid=".$app[0]['appid']." and status='need_owner'";
+
+			}else{
+
+				$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`";
+				$sql3 .= " FROM `review` WHERE appid=".$app[0]['appid']." and `ownerId`=".$_SESSION['id'];
+			}
+
 			$result3 = $conn->query($sql3);
 		
 			if($result3->num_rows == 0){
@@ -90,7 +98,7 @@
 										<div class="col-sm-11">
 											<div class="row">
 												<div class="col-sm-2">
-													<? echo "<a class='btn btn-primary' data-toggle='collapse' href='#review_need_admin_".$app[0]['id']."_".$reviewCounter."'>Review by ".$_SESSION['login_user']."</a>"; ?>
+													<? echo "<a class='btn btn-primary' data-toggle='collapse' href='#review_need_admin_".$app[0]['appid']."_".$reviewCounter."'>Review by ".$_SESSION['login_user']."</a>"; ?>
 												</div>
 												<div class="col-sm-10"></div>
 											</div>
@@ -100,7 +108,7 @@
 									<div class="row">
 										<div class="col-sm-1"></div>
 										<div class="col-sm-11">
-										<? echo "<div class='collapse well' id='review_need_admin_".$app[0]['id']."_".$reviewCounter."'>"; ?>
+										<? echo "<div class='collapse well' id='review_need_admin_".$app[0]['appid']."_".$reviewCounter."'>"; ?>
 											<div class="row">
 												<div class="col-sm-2">
 													Review by <?echo $_SESSION['login_user']; ?><br/>
