@@ -72,11 +72,11 @@
 
 			if($approve){
 					
-				$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2` FROM `review` WHERE appid=".$app[0]['appid']." and status='need_owner'";
+				$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE appid=".$app[0]['appid']." and status='need_owner'";
 
 			}else{
 
-				$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`";
+				$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId";
 				$sql3 .= " FROM `review` WHERE appid=".$app[0]['appid']." and `ownerId`=".$_SESSION['id'];
 			}
 
@@ -91,6 +91,28 @@
 			$reviewCounter = 0;
 			
 			while($row3 = $result3->fetch_assoc()){
+				
+				if($approve){
+						
+					$sql4 = "SELECT name from user where id='".$row3['ownerId']."'";
+					
+					$result4 = $conn->query($sql4);
+				
+					if($result4->num_rows == 0){
+						//2DO: ERROR HANDLING
+						echo "no name";
+						die;
+					}
+					
+					$row4 = $result4->fetch_assoc();
+					
+					$owner = $row4['name'];
+
+				}else{
+
+					$owner = $_SESSION['login_user'];
+				}
+				
 ?>			
 									<br/>
 									<div class="row">
@@ -98,7 +120,7 @@
 										<div class="col-sm-11">
 											<div class="row">
 												<div class="col-sm-2">
-													<? echo "<a class='btn btn-primary' data-toggle='collapse' href='#review_need_admin_".$app[0]['appid']."_".$reviewCounter."'>Review by ".$_SESSION['login_user']."</a>"; ?>
+													<? echo "<a class='btn btn-primary' data-toggle='collapse' href='#review_need_admin_".$app[0]['appid']."_".$reviewCounter."'>Review by ".$owner."</a>"; ?>
 												</div>
 												<div class="col-sm-10"></div>
 											</div>
@@ -111,7 +133,7 @@
 										<? echo "<div class='collapse well' id='review_need_admin_".$app[0]['appid']."_".$reviewCounter."'>"; ?>
 											<div class="row">
 												<div class="col-sm-2">
-													Review by <?echo $_SESSION['login_user']; ?><br/>
+													Review by <?echo $owner; ?><br/>
 													<br/>
 												</div>
 												<div class="col-sm-8">

@@ -295,19 +295,20 @@ include 'reviewList.php';
 							<h4>Recieved: <? echo $result->num_rows; ?></h4>
 							<div class="row">
 								<div class="col-sm-1"></div>
+								<div class="col-sm-10">
 <?
 	$sql = "SELECT `id`, `appid` FROM `review` WHERE appid in (";
 		$sql .= "select id from app where reviewCandidateId in (";
 			$sql .= "select id from reviewCandidate where ownerId = '".$_SESSION['id']."'";
 			$sql .= ")) and status='need_owner' order by appid";
 	$result = $conn->query($sql);
-
+?>
+									<h4>To be approved: <? echo $result->num_rows; ?></h4>
+<?
 	$approve = true;
 
 	include 'reviewList.php';		
 ?>								
-								<div class="col-sm-10">
-									<h4>To be approved: 0</h4>
 								</div>
 								<div class="col-sm-1"></div>
 							</div>
