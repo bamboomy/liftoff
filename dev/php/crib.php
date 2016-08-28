@@ -121,6 +121,11 @@ if(!isset($_SESSION['login_user'])){
 						<div class="col-sm-1"></div>
 						<div class="col-sm-10">
 							<h4>Votes: 1</h4>
+							<p>
+								Your first vote is free;<br/>
+								after that you earn a vote for every <u>published</u> review.<br/>
+								You can cast votes on the <a href="apps.php">app page</a>.
+							</p>
 							<div class="row">
 								<div class="col-sm-1"></div>
 								<div class="col-sm-10">
@@ -135,9 +140,6 @@ if(!isset($_SESSION['login_user'])){
 								</div>
 								<div class="col-sm-1"></div>
 							</div>
-							<p>
-								You can cast votes on the <a href="apps.php">app page</a>.
-							</p>
 						</div>
 						<div class="col-sm-1"></div>
 					</div>
@@ -371,6 +373,15 @@ if($result->num_rows > 0){
 <?		
 	}
 ?>
+						</div>
+						<div class="col-sm-1"></div>
+					</div>
+					<br/>
+					<div class="row">
+						<div class="col-sm-1"></div>
+						<div class="col-sm-10">
+							<h4>Published: 0</h4>
+							<br/>
 						</div>
 						<div class="col-sm-1"></div>
 					</div>
