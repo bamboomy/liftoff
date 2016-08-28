@@ -74,6 +74,10 @@
 					
 				$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE appid=".$app[0]['appid']." and status='need_owner'";
 
+			}else if($published){
+					
+				$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE appid=".$app[0]['appid']." and status='approved'";
+
 			}else{
 
 				$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId";
@@ -92,7 +96,7 @@
 			
 			while($row3 = $result3->fetch_assoc()){
 				
-				if($approve){
+				if($approve || $published){
 						
 					$sql4 = "SELECT name from user where id='".$row3['ownerId']."'";
 					
@@ -230,7 +234,7 @@
 													}else{
 ?>
 												
-													<button type="submit" class="btn btn-primary" id="submitReview" disabled="disabled">Edit</button>
+														<!--button type="submit" class="btn btn-primary" id="submitReview" disabled="disabled">Edit</button-->
 <?
 													}
 ?>

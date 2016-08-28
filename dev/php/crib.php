@@ -315,7 +315,21 @@ include 'reviewList.php';
 							<div class="row">
 								<div class="col-sm-1"></div>
 								<div class="col-sm-10">
-									<h4>Published: 0</h4>
+<?
+	$sql = "SELECT `id`, `appid` FROM `review` WHERE appid in (";
+		$sql .= "select id from app where reviewCandidateId in (";
+			$sql .= "select id from reviewCandidate where ownerId = '".$_SESSION['id']."'";
+			$sql .= ")) and status='approved' order by appid";
+	$result = $conn->query($sql);
+?>
+									<h4>Published: <? echo $result->num_rows; ?></h4>
+<?
+	$approve = false;
+	
+	$published = true;
+
+	include 'reviewList.php';		
+?>								
 								</div>
 								<div class="col-sm-1"></div>
 							</div>
