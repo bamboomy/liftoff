@@ -71,6 +71,10 @@ if($result->num_rows != 1){
 	die;
 }
 
+$row = $result->fetch_assoc();
+
+$appId = $row['appid'];
+
 $sql = "UPDATE review SET status='approved' WHERE id='".$_GET['id']."'";
 
 if ($conn->query($sql) !== TRUE) {
@@ -95,9 +99,50 @@ if ($conn->query($sql) !== TRUE) {
 ?>
 	<script>
 		alert("review approved...");
+	</script>
+<?
+
+$sql = "SELECT id FROM `app` WHERE id = ".$appId." and status='2breviewed'";
+
+$result = $conn->query($sql);		
+
+if($result->num_rows == 1){
+
+	$sql = "UPDATE app SET status='approved' WHERE id='".$appId."'";
+
+	if ($conn->query($sql) !== TRUE) {
+
+		$mail->Subject = "error encountered: couldn't update app";
+
+		$mail->Body = "couldn't update app... -> ".$conn->error;
+		
+		$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+		
+		$mail->send();//fire and forget
+
+	?>
+		<script>
+			alert("an error has occured, you will be redirected to your home...");
+			window.location.assign("crib.php");
+		</script>
+	<?
+		die;
+	}
+
+?>
+	<script>
+		alert("This was the first review for this app, the app is now visible on the main site...");
+	</script>
+<?
+	
+}
+
+?>
+	<script>
 		window.location.assign("crib.php");
 	</script>
 <?
+
 
 $conn->close();
 

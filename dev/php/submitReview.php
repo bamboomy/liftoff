@@ -48,7 +48,7 @@ if ($conn->connect_error) {
 } 
 
 $sql = "INSERT INTO `app`(`reviewCandidateId`, `url`, `votes`, `status`)";
-$sql .= "VALUES (".$_POST['reviewCandidateId'].",'".$_POST['appUrl']."','0','need_administration')";
+$sql .= "VALUES (".$_POST['reviewCandidateId'].",'".$_POST['appUrl']."','0','2breviewed')";
 
 if ($conn->query($sql) !== TRUE) {
 
