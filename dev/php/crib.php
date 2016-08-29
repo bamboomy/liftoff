@@ -242,12 +242,20 @@ include 'reviewList.php';
 							<div class="row">
 								<div class="col-sm-1"></div>
 								<div class="col-sm-10">
-									<h4>Published: 0</h4>
+<?							
+
+	$sql = "SELECT  `appid` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='approved'";
+	$result = $conn->query($sql);
+?>
+									<h4>Published: <? echo $result->num_rows; ?></h4>
+<?							
+	include 'reviewList.php';		
+?>	
 								</div>
 								<div class="col-sm-1"></div>
 							</div>
-<?							
-
+							<br/>
+<?
 	$sql = "SELECT  `appid` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='rejected'";
 	$result = $conn->query($sql);
 
@@ -285,7 +293,7 @@ include 'reviewList.php';
 	$sql = "SELECT * FROM `review` WHERE appid in (";
 		$sql .= "select id from app where reviewCandidateId in (";
 			$sql .= "select id from reviewCandidate where ownerId = '".$_SESSION['id']."'";
-			$sql .= "))";
+			$sql .= ")) and status<>'need_admin'";
 			
 	$result = $conn->query($sql);		
 ?>					
@@ -457,16 +465,12 @@ if($result->num_rows > 0){
 							<br/>
 <?		
 	}
+}
 ?>
 						</div>
 						<div class="col-sm-1"></div>
 					</div>
 					<br/>
-<?	
-	
-}
-
-?>
 					<div class="row">
 						<div class="col-sm-1"></div>
 						<div class="col-sm-10">
