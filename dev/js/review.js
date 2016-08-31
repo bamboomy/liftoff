@@ -96,3 +96,51 @@ function updateSubmitMessage(){
 	}
 	
 }
+
+function checkWhetherToMove(){
+
+	moved = checkToMovePro();
+	
+	moved |= checkToMoveCon();
+	
+	if(moved){
+		checkWhetherToMove();
+	}
+}
+
+function checkToMovePro(){
+	
+	return checkToMove($("#pro0"), $("#pro1"), $("#pro2"));
+}
+
+function checkToMoveCon(){
+	
+	return checkToMove($("#con0"), $("#con1"), $("#con2"));
+}
+
+function checkToMove(first, second, third){
+	
+	var to = "-1";
+	
+	if(first.val()==""){
+		to = first;
+	}
+	
+	if(second.val()==""){
+		to = second;
+	}else if(to != "-1"){
+		to.val(second.val());
+		second.val("");
+		return true;
+	}
+	
+	if(third.val() != ""){
+		
+		to.val(third.val());
+		third.val("");
+		
+		return true;
+	}
+	
+	return false;
+}

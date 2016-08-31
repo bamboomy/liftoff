@@ -268,22 +268,22 @@ if ($result->num_rows != 1) {
 				<br/>
 				<div class="row">
 					<div class="col-sm-2"></div>
-					<div class="col-sm-4"><input name="pro0" type="text" id="pro0" onkeyup="updateSubmitMessage();"/></div>
-					<div class="col-sm-4"><input name="con0" type="text" id="con0" onkeyup="updateSubmitMessage();"/></div>
+					<div class="col-sm-4"><input name="pro0" type="text" id="pro0" onblur="checkWhetherToMove();" onkeyup="updateSubmitMessage();"/></div>
+					<div class="col-sm-4"><input name="con0" type="text" id="con0" onblur="checkWhetherToMove();" onkeyup="updateSubmitMessage();"/></div>
 					<div class="col-sm-2"></div>
 				</div>
 				<br/>
 				<div class="row">
 					<div class="col-sm-2"></div>
-					<div class="col-sm-4"><input name="pro1" type="text" placeholder="(optional)"/></div>
-					<div class="col-sm-4"><input name="con1" type="text" placeholder="(optional)"/></div>
+					<div class="col-sm-4"><input id="pro1" name="pro1" type="text" onblur="checkWhetherToMove();" placeholder="(optional)"/></div>
+					<div class="col-sm-4"><input id="con1" name="con1" type="text" onblur="checkWhetherToMove();" placeholder="(optional)"/></div>
 					<div class="col-sm-2"></div>
 				</div>
 				<br/>
 				<div class="row">
 					<div class="col-sm-2"></div>
-					<div class="col-sm-4"><input name="pro2" type="text" placeholder="(optional)"/></div>
-					<div class="col-sm-4"><input name="con2" type="text" placeholder="(optional)"/></div>
+					<div class="col-sm-4"><input id="pro2" name="pro2" type="text" onblur="checkWhetherToMove();" placeholder="(optional)"/></div>
+					<div class="col-sm-4"><input id="con2" name="con2" type="text" onblur="checkWhetherToMove();" placeholder="(optional)"/></div>
 					<div class="col-sm-2"></div>
 				</div>
 				<br/>
