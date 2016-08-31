@@ -37,6 +37,17 @@ if ($result->num_rows > 0) {
 			$_SESSION['login_user']= $row2['name'];
 			$_SESSION['id']= $row2['id'];
 			
+			$sql = "UPDATE user SET last_online=now() WHERE id='".$row2['id']."'";
+
+			if ($conn->query($sql) !== TRUE) {
+				
+				echo "error";
+
+				//TODO: error handling!!!
+			}
+
+			$conn->close();
+			
 			die;
 		}
 	}
@@ -48,4 +59,6 @@ if ($result->num_rows > 0) {
 	echo "not found";
 	
 }
+
+$conn->close();
 ?>
