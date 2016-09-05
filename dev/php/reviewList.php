@@ -11,20 +11,24 @@
 		
 		while($row = $result->fetch_assoc()){
 			
-			$app[$reviewCounter]['id'] 		= $row['id'];
-			$app[$reviewCounter]['appid'] 	= $row['appid'];
-
-			$reviewCounter++;
-			
 			if($oldAppId !== $row['appid']){
 
 				$reviewCounter = 0;
 				
 				$oldAppId = $row['appid'];
 				
-				$appz[$appCounter++] = $app;
+				$appCounter++;
 			}
+
+			$app[$reviewCounter]['id'] 		= $row['id'];
+			$app[$reviewCounter]['appid'] 	= $row['appid'];
+
+			$appz[$appCounter] = $app;
+
+			$reviewCounter++;
 		}
+		
+		var_dump($appz);
 
 		foreach($appz as $app){
 

@@ -302,6 +302,8 @@ include 'reviewList.php';
 			$sql .= "select id from reviewCandidate where ownerId = '".$_SESSION['id']."'";
 			$sql .= ")) and status='need_owner' order by appid";
 	$result = $conn->query($sql);
+	
+	echo $sql."<br/>";
 ?>
 									<h4>To be approved: <? echo $result->num_rows; ?></h4>
 <?

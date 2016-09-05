@@ -49,7 +49,7 @@ if ($conn->connect_error) {
 	die;
 } 
 
-$sql = "SELECT id, appUrl, sentence, ownerName FROM reviewCandidate where id='".$_POST["id"]."' and status='verified'";
+$sql = "SELECT id, appUrl, sentence, ownerName FROM reviewCandidate where id='".$_POST["id"]."' and (status='verified' or status='review_pending')";
 $result = $conn->query($sql);
 
 if ($result->num_rows != 1) {

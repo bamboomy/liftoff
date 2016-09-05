@@ -22,17 +22,16 @@ $mail->setFrom('bamboomy@gmail.com', 'Liftoff error reporting');
 
 $mail->isHTML(true); 
 
+$mail->Subject = "error encountered on submit review";
+$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
 
-	$mail->Subject = 'error encountered: no database';
-
 	$mail->Body = "couldn't connect to database... -> ".$conn->connect_error;
-	
-	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
 	
 	$mail->send();//fire and forget
 
@@ -47,30 +46,48 @@ if ($conn->connect_error) {
 	die;
 } 
 
-$sql = "INSERT INTO `app`(`reviewCandidateId`, `url`, `votes`, `status`)";
-$sql .= "VALUES (".$_POST['reviewCandidateId'].",'".$_POST['appUrl']."','0','2breviewed')";
+$sql = "select id from app where url='".$_POST['appUrl']."'";
+$result = $conn->query($sql);
 
-if ($conn->query($sql) !== TRUE) {
+if ($result->num_rows == 0) {
 
-	//TODO: error module
-	
-	$mail->Subject = "error encountered: couldn't insert user";
+	$sql = "INSERT INTO `app`(`reviewCandidateId`, `url`, `votes`, `status`)";
+	$sql .= "VALUES (".$_POST['reviewCandidateId'].",'".$_POST['appUrl']."','0','2breviewed')";
 
-	$mail->Body = "couldn't insert user... -> ".$conn->error;
-	
-	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
-	
-	$mail->send();//fire and forget
+	if ($conn->query($sql) !== TRUE) {
 
-?>
+		//TODO: error module
+		
+		$mail->Body = "couldn't insert user... -> ".$conn->error;
 
-	<script>
-		alert("an error has occured, you will be redirected to the main page...");
-		window.location.assign("m.php");
-	</script>
-	
-<?
-	die;
+		$mail->send();//fire and forget
+
+	?>
+
+		<script>
+			alert("an error has occured, you will be redirected to the main page...");
+			window.location.assign("m.php");
+		</script>
+		
+	<?
+		die;
+
+	}
+}else if ($result->num_rows > 1) {
+
+		$mail->Body = "multiple id's for same url... -> ";
+
+		$mail->send();//fire and forget
+
+	?>
+
+		<script>
+			alert("an error has occured, you will be redirected to the main page...");
+			window.location.assign("m.php");
+		</script>
+		
+	<?
+		die;
 
 }
 
@@ -89,12 +106,8 @@ if ($result->num_rows == 1) {
 
 		//TODO: error module
 		
-		$mail->Subject = "error encountered: couldn't insert user";
+		$mail->Body = "couldn't insert review... -> ".$conn->error;
 
-		$mail->Body = "couldn't insert user... -> ".$conn->error;
-		
-		$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
-		
 		$mail->send();//fire and forget
 
 	?>
@@ -113,12 +126,8 @@ if ($result->num_rows == 1) {
 
 	//TODO: error module
 	
-	$mail->Subject = "error encountered: couldn't insert user";
+	$mail->Body = "multiple apps... -> ".$conn->error;
 
-	$mail->Body = "couldn't insert user... -> ".$conn->error;
-	
-	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
-	
 	$mail->send();//fire and forget
 
 ?>
@@ -136,12 +145,8 @@ $sql = "UPDATE reviewCandidate SET status='review_pending' WHERE id='".$_POST['r
 
 if ($conn->query($sql) !== TRUE) {
 
-	$mail->Subject = "error encountered: couldn't update mail";
-
 	$mail->Body = "couldn't update mail... -> ".$conn->error;
-	
-	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
-	
+
 	$mail->send();//fire and forget
 
 ?>
