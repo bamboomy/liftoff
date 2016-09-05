@@ -27,8 +27,6 @@
 
 			$reviewCounter++;
 		}
-		
-		var_dump($appz);
 
 		foreach($appz as $app){
 
@@ -128,7 +126,7 @@
 										<div class="col-sm-11">
 											<div class="row">
 												<div class="col-sm-2">
-													<? echo "<a class='btn btn-primary' data-toggle='collapse' href='#review_need_admin_".$app[0]['appid']."_".$reviewCounter."'>Review by ".$owner."</a>"; ?>
+													<? echo "<a class='btn btn-primary' data-toggle='collapse' href='#review_".$infix."_".$app[0]['appid']."_".$reviewCounter."'>Review by ".$owner."</a>"; ?>
 												</div>
 												<div class="col-sm-10"></div>
 											</div>
@@ -138,7 +136,7 @@
 									<div class="row">
 										<div class="col-sm-1"></div>
 										<div class="col-sm-11">
-										<? echo "<div class='collapse well' id='review_need_admin_".$app[0]['appid']."_".$reviewCounter."'>"; ?>
+										<? echo "<div class='collapse well' id='review_".$infix."_".$app[0]['appid']."_".$reviewCounter."'>"; ?>
 											<div class="row">
 												<div class="col-sm-2">
 													Review by <?echo $owner; ?><br/>

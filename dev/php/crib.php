@@ -180,6 +180,8 @@ if($result->num_rows == 0){
 									<h4>Yet to be approved: <? echo $result->num_rows; ?></h4>
 <?
 
+$infix = "need_admin";
+
 include 'reviewList.php';
 	
 	$sql = "SELECT `id`, `appid`";
@@ -225,6 +227,8 @@ include 'reviewList.php';
 									</p>
 <?
 
+$infix = "need_owner";
+
 include 'reviewList.php';		
 
 ?>						
@@ -241,6 +245,8 @@ include 'reviewList.php';
 ?>
 									<h4>Published: <? echo $result->num_rows; ?></h4>
 <?							
+	$infix = "published";
+
 	include 'reviewList.php';		
 ?>	
 								</div>
@@ -302,12 +308,12 @@ include 'reviewList.php';
 			$sql .= "select id from reviewCandidate where ownerId = '".$_SESSION['id']."'";
 			$sql .= ")) and status='need_owner' order by appid";
 	$result = $conn->query($sql);
-	
-	echo $sql."<br/>";
 ?>
 									<h4>To be approved: <? echo $result->num_rows; ?></h4>
 <?
 	$approve = true;
+	
+	$infix = "need_owner";
 
 	include 'reviewList.php';		
 ?>								
@@ -329,6 +335,8 @@ include 'reviewList.php';
 	$approve = false;
 	
 	$published = true;
+	
+	$infix = "published";
 
 	include 'reviewList.php';		
 ?>								
