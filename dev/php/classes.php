@@ -4,20 +4,29 @@ class ListStrategy{
 	
 	private $prefix = "";
 	private $suffix = "";
+	private $showButton = false;
 	
-	function setPrefix($prefixIn){
+	function setPrefix($prefix){
 		
-		$this->prefix = $prefixIn;
+		$this->prefix = $prefix;
 	}
 	
-	function setSuffix($suffixIn){
+	function setSuffix($suffix){
 		
-		$this->suffix = $suffixIn;
+		$this->suffix = $suffix;
 	}
+	
+	function setShowButton($showButton){
+		
+		$this->showButton = $showButton;
+	}
+
 
     function echoButtons($id){
 		
-        echo $this->prefix.$id.$this->suffix; 
+		if($this->showButton){
+			echo $this->prefix.$id.$this->suffix; 	
+		}
     }
 }
 

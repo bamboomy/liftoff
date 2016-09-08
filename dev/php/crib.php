@@ -319,10 +319,13 @@ include 'reviewList.php';
 	
 	$strategy->setPrefix("<a class='btn btn-primary' href='approve_review.php?id=");
 	$strategy->setSuffix("'>Approve</a>");
+	$strategy->setShowButton(true);
 	
 	$infix = "need_owner";
 
 	include 'reviewList.php';		
+	
+	$strategy->setShowButton(false);
 ?>								
 								</div>
 								<div class="col-sm-1"></div>
