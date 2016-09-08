@@ -6,6 +6,8 @@ require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
 
 include_once("settings.php");
 
+include_once("classes.php");
+
 //first set mail parameters for possible errors
 
 $mail = new PHPMailer;
@@ -182,6 +184,8 @@ if($result->num_rows == 0){
 
 $infix = "need_admin";
 
+$strategy = new ListStrategy();
+
 include 'reviewList.php';
 	
 	$sql = "SELECT `id`, `appid`";
@@ -312,6 +316,9 @@ include 'reviewList.php';
 									<h4>To be approved: <? echo $result->num_rows; ?></h4>
 <?
 	$approve = true;
+	
+	$strategy->setPrefix("<a class='btn btn-primary' href='approve_review.php?id=");
+	$strategy->setSuffix("'>Approve</a>");
 	
 	$infix = "need_owner";
 

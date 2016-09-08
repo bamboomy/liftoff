@@ -107,13 +107,13 @@ include "nav.php";
 				<br/>
 				This way we find the equilibrium between underappreciated good apps<br/>
 				and<br/>
-				apps that are in the process of becoming rising stars.<br/>
+				apps that are already in the process of becoming rising stars.<br/>
 				<br/>
 				This is a nice site for disovering various apps who are yet to make it big.<br/>
 				<br/>
 				The apps can be found <a href='apps.php'>here</a>.<br/>
 				<br/>
-				As app developer you can register your app in the upper right corner.<br/>
+				As app developer you can register your app by clicking in the upper right corner.<br/>
 				<br/>
 				Enjoy the site :)<br/>
 				<br/>
