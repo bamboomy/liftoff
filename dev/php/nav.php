@@ -13,7 +13,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#services">App list</a></li>
+        <li><a href="apps.php">App list</a></li>
         <li><a href="#about">The System</a></li>
         <li><a href="#contact">Contact</a></li>
 <?

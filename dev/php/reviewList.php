@@ -45,7 +45,9 @@
 ?>
 									<br/>
 									<div class="row">
-										<div class="col-sm-1"></div>
+										<div class="col-sm-1 text-center">
+											<img src='../imgz/up_green.png' width='30' height='30'/><h2 class="closeer">0</h2>
+										</div>
 										<div class="col-sm-11">
 											<div class="row">
 												<div class="col-sm-2"><? echo "<img src='".$row2['src']."' width='100' height='100' />";?></div>

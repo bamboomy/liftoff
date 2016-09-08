@@ -6,6 +6,8 @@ require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
 
 include_once("settings.php");
 
+include_once("classes.php");
+
 //first set mail parameters for possible errors
 
 $mail = new PHPMailer;
@@ -100,6 +102,8 @@ $result = $conn->query($sql);
 $infix = "published";
 
 $published = true;
+
+$strategy = new ListStrategy();
 
 include 'reviewList.php';
 	
