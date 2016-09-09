@@ -46,7 +46,7 @@
 									<br/>
 									<div class="row">
 										<div class="col-sm-1 text-center">
-											<img src='../imgz/up_green.png' width='30' height='30'/><h2 class="closeer">0</h2>
+											<? $strategy->echoVotes($row2['ownerName'], $app[0]['appid']); ?>
 										</div>
 										<div class="col-sm-11">
 											<div class="row">

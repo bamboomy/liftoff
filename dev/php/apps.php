@@ -58,8 +58,10 @@ if ($conn->connect_error) {
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="../css/main.css">
+	<link rel="stylesheet" type="text/css" href="../css/apps.css">
 	<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
 	<script src="../js/m.js"></script>
+	<script src="../js/apps.js"></script>
 </head>
 <body>
 <?
@@ -104,6 +106,7 @@ $infix = "published";
 $published = true;
 
 $strategy = new ListStrategy();
+$strategy->setShowVotes(true);
 
 include 'reviewList.php';
 	
@@ -121,6 +124,27 @@ include 'reviewList.php';
 			<div class="col-sm-1"></div>
 		</div>
 	</div>
+	
+<div id="voteCastModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Your vote has been cast; thanks :)</h4>
+      </div>
+      <div class="modal-body">
+		<p>Remaining votes: 0</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+	
 </body>
 </html>
 <?
