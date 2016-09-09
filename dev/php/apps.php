@@ -90,8 +90,12 @@ include "nav.php";
 						<div class="col-sm-10">
 <?							
 
-$sql = "SELECT `id`, `appid`";
-$sql .= " FROM `review` WHERE status='approved'";
+$sql = "SELECT review.`id`, review.`appid`, count(appVote.appid) as votes";
+$sql .= " FROM `review`";
+$sql .= " left join appVote on review.appid = appVote.appId";
+$sql .= " WHERE status='approved'";
+$sql .= " GROUP BY review.id";
+
 $result = $conn->query($sql);
 
 ?>

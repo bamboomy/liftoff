@@ -62,6 +62,26 @@ if ($conn->query($sql) !== TRUE) {
 
 }
 
+$sql = "UPDATE user SET votes=(";
+$sql .= "select votes - 1 from (SELECT * FROM user) AS something where id='".$_SESSION['id']."'";
+$sql .= ") WHERE id='".$_SESSION['id']."'";
+
+if ($conn->query($sql) !== TRUE) {
+
+	$mail->Subject = "error encountered: couldn't update user's votes";
+
+	$mail->Body = "couldn't update user's votes... -> ".$conn->error;
+	
+	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+	
+	$mail->send();//fire and forget
+
+	echo "error";
+
+	die;
+}
+
+
 echo "done";
 
 ?>

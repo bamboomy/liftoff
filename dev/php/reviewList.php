@@ -22,6 +22,10 @@
 
 			$app[$reviewCounter]['id'] 		= $row['id'];
 			$app[$reviewCounter]['appid'] 	= $row['appid'];
+			
+			if(isset($row['votes'])){
+				$app[$reviewCounter]['votes'] 	= $row['votes'];
+			}
 
 			$appz[$appCounter] = $app;
 
@@ -46,7 +50,7 @@
 									<br/>
 									<div class="row">
 										<div class="col-sm-1 text-center">
-											<? $strategy->echoVotes($row2['ownerName'], $app[0]['appid']); ?>
+											<? $strategy->echoVotes($row2['ownerName'], $app[0]['appid'], $app[0]['votes']); ?>
 										</div>
 										<div class="col-sm-11">
 											<div class="row">

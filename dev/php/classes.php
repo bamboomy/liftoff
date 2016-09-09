@@ -34,14 +34,14 @@ class ListStrategy{
 		$this->showVotes = $showVotes;
 	}
 
-    function echoVotes($owner, $id){
+    function echoVotes($owner, $id, $votes){
 		
 		if($this->showVotes){
 			if($owner !== $_SESSION['login_user']){
 				echo "<img src='../imgz/up_grey.png' width='30' height='30' onmouseover=\"this.src='../imgz/up_green.png';\" ";
-				echo "onmouseout=\"this.src='../imgz/up_grey.png';\" onclick='castVote(".$id.")' /><h2 class='closeer'>0</h2>";	
+				echo "onmouseout=\"this.src='../imgz/up_grey.png';\" onclick='castVote(".$id.")' /><h2 class='closeer'>".$votes."</h2>";	
 			}else{
-				echo "<h2 class='closeer'>0</h2>";	
+				echo "<h2 class='closeer'>".$votes."</h2>";	
 			}
 		}
     }
