@@ -95,6 +95,7 @@ $sql .= " FROM `review`";
 $sql .= " left join appVote on review.appid = appVote.appId";
 $sql .= " WHERE status='approved'";
 $sql .= " GROUP BY review.id";
+$sql .= " order BY votes desc";
 
 $result = $conn->query($sql);
 
@@ -111,6 +112,7 @@ $published = true;
 
 $strategy = new ListStrategy();
 $strategy->setShowVotes(true);
+$strategy->setConn($conn);
 
 include 'reviewList.php';
 	
