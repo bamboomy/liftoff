@@ -138,13 +138,11 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">Android Liftoff : to be reviewed list</a>
-    </div>
-  </div>
-</nav>
+<?
+
+include "nav.php";
+
+?>
   
 	<div class="container-fluid androidGreen">
 		<div class="jumbotron text-center">

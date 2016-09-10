@@ -133,19 +133,11 @@ if ($result->num_rows != 1) {
   <script src="../js/review.js"></script>
   </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span> 
-      </button>
-      <a class="navbar-brand" href="#">Android Liftoff : review app</a>
-    </div>
-  </div>
-</nav>  
+<?
+
+include "nav.php";
+
+?>
 <div class="container-fluid androidGreen">
 	<div class="row">
 		<div class="col-sm-2"></div>
