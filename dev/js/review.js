@@ -106,6 +106,8 @@ function checkWhetherToMove(){
 	if(moved){
 		checkWhetherToMove();
 	}
+	
+	updateSubmitMessage();
 }
 
 function checkToMovePro(){

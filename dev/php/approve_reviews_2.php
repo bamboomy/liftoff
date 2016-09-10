@@ -30,7 +30,7 @@ if ($conn->connect_error || $_SESSION['login_user'] !== 'Matdoya') {
 
 	$mail->Subject = 'error encountered: no database';
 
-	$mail->Body = "couldn't connect to database... -> ".$conn->connect_error;
+	$mail->Body = "couldn't connect to database or hackattempt... -> ".$conn->connect_error;
 	
 	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
 	
@@ -123,8 +123,8 @@ $result = $conn->query($sql);
 			
 		
 			$sql2 = "SELECT `id`, `appUrl`, `sentence`, `title`, `src`, `genre`, ownerName FROM `reviewCandidate` WHERE id = (";
-			$sql2 .= "SELECT `reviewCandidateId` FROM `app` WHERE `id`=".$app[0]['id'].")";
-			
+			$sql2 .= "SELECT `reviewCandidateId` FROM `app` WHERE `id`='".$app[0]['appid']."')";
+
 			$result2 = $conn->query($sql2);
 			
 			if($result2->num_rows == 0){
@@ -164,7 +164,7 @@ $result = $conn->query($sql);
 <?			
 
 			$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId";
-			$sql3 .= " FROM `review` WHERE appid=".$app[0]['id'];
+			$sql3 .= " FROM `review` WHERE appid=".$app[0]['appid'];
 			
 			$result3 = $conn->query($sql3);
 		
