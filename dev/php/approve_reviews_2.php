@@ -57,7 +57,6 @@ if ($conn->connect_error || $_SESSION['login_user'] !== 'Matdoya') {
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="../js/verify_password.js"></script>
 	<link rel="stylesheet" type="text/css" href="../css/main.css">
 </head>
 <body>
@@ -299,8 +298,7 @@ $result = $conn->query($sql);
 												<div class="col-sm-6">
 												</div>
 												<div class="col-sm-2">
-													<? echo "<input type='hidden' name='id' value='".$row3['id']."' />"; ?>
-													<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rejectModal">Reject</button>
+													<? echo "<button type='button' class='btn btn-primary' onclick=\"$('#rejectId').val('".$row3['id']."');\" data-toggle='modal' data-target='#rejectModal'>Reject</button>"; ?>
 												</div>
 												<div class="col-sm-2">
 													<form action="approve.php" method="post">
@@ -329,22 +327,25 @@ $result = $conn->query($sql);
 
 	<!-- Modal content-->
 		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Reject</h4>
-			</div>
-			<div class="modal-body">
-				<div class="row">
-					<div class="col-sm-1"></div>
-					<div class="col-sm-2">Reason:</div>
-					<div class="col-sm-7">
-						<input type="text" id="reason" />
-					</div>
-					<div class="col-sm-2">
-						<button class="btn btn-default pull-right" onclick="login();">Submit</button>
+			<form action="reject.php" method="post">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Reject</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-sm-1"></div>
+						<div class="col-sm-2">Reason:</div>
+						<div class="col-sm-7">
+							<input type="text" name="reason" id="reason" />
+						</div>
+						<div class="col-sm-2">
+							<input type='hidden' name="id" id='rejectId' value='' />
+							<button class="btn btn-default pull-right" type="submit">Submit</button>
+						</div>
 					</div>
 				</div>
-			</div>
+			</form>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
