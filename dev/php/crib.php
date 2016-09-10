@@ -106,7 +106,7 @@ include "nav.php";
 						<div class="col-sm-10">
 						<p>
 							These points are added to all of your apps on the to be reviewed list.<br/>
-							The more points, the higher your apps are shown.<br/>
+							The more points, the higher (all of) your apps are shown.<br/>
 						</p>
 						</div>
 						<div class="col-sm-1"></div>
@@ -258,7 +258,7 @@ include 'reviewList.php';
 							</div>
 							<br/>
 <?
-	$sql = "SELECT  `appid` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='rejected'";
+	$sql = "SELECT  `appid` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and (status='reject_mod' or status='reject_own')";
 	$result = $conn->query($sql);
 
 	if($result->num_rows > 0){
