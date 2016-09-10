@@ -291,18 +291,11 @@ if ($conn->query($sql) !== TRUE) {
   <link rel="stylesheet" type="text/css" href="../css/main.css">
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span> 
-      </button>
-      <a class="navbar-brand" href="#">Android Liftoff : mail sent...</a>
-    </div>
-  </div>
+<?
+
+include "nav.php";
+
+?>
   
 	<div class="jumbotron text-center">
 		<h1>Mail sent...</h1> 
@@ -330,7 +323,6 @@ if ($conn->query($sql) !== TRUE) {
 		</div>
 		<div class="col-sm-2"></div>
 	</div>
-</nav>
 </body>
 </html>
 <?
