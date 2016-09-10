@@ -45,7 +45,7 @@ if ($conn->connect_error || $_SESSION['login_user'] !== 'Matdoya') {
 	die;
 } 
 
-$sql = "UPDATE review SET status='reject_mod', rejectReason='".addslashes($_POST['reason'])."' WHERE id='".$_POST['id']."'";
+$sql = "UPDATE review SET status='reject_mod', rejectReason='".addslashes($_POST['reason'])."' WHERE id='".addslashes($_POST['id'])."'";
 
 if ($conn->query($sql) !== TRUE) {
 

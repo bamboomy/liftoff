@@ -45,7 +45,7 @@ if ($conn->connect_error || $_SESSION['login_user'] !== 'Matdoya') {
 	die;
 } 
 
-$sql = "UPDATE review SET status='need_owner' WHERE id='".$_POST['id']."'";
+$sql = "UPDATE review SET status='need_owner' WHERE id='".addslashes($_POST['id'])."'";
 
 if ($conn->query($sql) !== TRUE) {
 

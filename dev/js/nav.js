@@ -13,7 +13,7 @@ function login(){
 			setTimeout(function(){ $("#welcomeModal").modal("show"); }, 1000);
 
 		}else{
-			$("#error").html("we couldn't find this user");
+			$("#error").html("wrong user/password");
 		}
 	});
 }

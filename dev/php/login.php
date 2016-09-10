@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 	die;
 }
 
-$sql = "SELECT id, salt FROM user where name='".$_POST['user']."' or email='".$_POST['user']."'";
+$sql = "SELECT id, salt FROM user where name='".addslashes($_POST['user'])."' or email='".addslashes($_POST['user'])."'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

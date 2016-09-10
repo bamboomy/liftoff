@@ -49,7 +49,8 @@ $salt = md5(md5(md5(time()) . md5(md5($_POST['username']) . $_POST['email'])));
 
 $pwHash = md5(md5(md5($salt)) . md5($_POST['pw']));
 
-$sql = "UPDATE user SET salt='".$salt."', pwhash='".$pwHash."', status='registered' WHERE id='".$_POST['id']."' and name='".$_POST['username']."' and email='".$_POST['email']."'";
+$sql = "UPDATE user SET salt='".$salt."', pwhash='".$pwHash."', status='registered' WHERE id='".addslashes($_POST['id'])."' "
+$sql .= "and name='".addslashes($_POST['username'])."' and email='".addslashes($_POST['email'])."'";
 
 if ($conn->query($sql) !== TRUE) {
 	

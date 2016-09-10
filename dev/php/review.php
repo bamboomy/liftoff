@@ -49,7 +49,7 @@ if ($conn->connect_error) {
 	die;
 } 
 
-$sql = "SELECT id, appUrl, sentence, ownerName FROM reviewCandidate where id='".$_POST["id"]."' and (status='verified' or status='review_pending')";
+$sql = "SELECT id, appUrl, sentence, ownerName FROM reviewCandidate where id='".addslashes($_POST["id"])."' and (status='verified' or status='review_pending')";
 $result = $conn->query($sql);
 
 if ($result->num_rows != 1) {
@@ -238,7 +238,7 @@ include "nav.php";
 		<div class="col-sm-8">
 			<form action="submitReview.php" method="post">
 			<? 
-			echo "<input type='hidden' name='reviewCandidateId' value='".$_POST["id"]."'/>"; 
+			echo "<input type='hidden' name='reviewCandidateId' value='".addslashes($_POST["id"])."'/>"; 
 			echo "<input type='hidden' name='appUrl' value='".$row["appUrl"]."'/>"; 
 			?>
 			<div class="well">
