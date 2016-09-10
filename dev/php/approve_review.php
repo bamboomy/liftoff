@@ -48,7 +48,7 @@ if ($conn->connect_error) {
 $sql = "SELECT * FROM `review` WHERE appid in (";
 	$sql .= "select id from app where reviewCandidateId in (";
 		$sql .= "select id from reviewCandidate where ownerId = '".$_SESSION['id']."'";
-		$sql .= ")) and id='".$_GET['id']."' and status='need_owner'";
+		$sql .= ")) and id='".addslashes($_GET['id'])."' and status='need_owner'";
 		
 $result = $conn->query($sql);		
 
@@ -75,7 +75,7 @@ $row = $result->fetch_assoc();
 
 $appId = $row['appid'];
 
-$sql = "UPDATE review SET status='approved' WHERE id='".$_GET['id']."'";
+$sql = "UPDATE review SET status='approved' WHERE id='".addslashes($_GET['id'])."'";
 
 if ($conn->query($sql) !== TRUE) {
 

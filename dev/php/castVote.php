@@ -42,7 +42,7 @@ if ($conn->connect_error) {
 } 
 
 $sql = "INSERT INTO appVote (appId, userId) ";
-$sql .= "VALUES ('".$_GET['id']."', '".$_SESSION['id']."')";
+$sql .= "VALUES ('".addslashes($_GET['id'])."', '".$_SESSION['id']."')";
 
 if ($conn->query($sql) !== TRUE) {
 

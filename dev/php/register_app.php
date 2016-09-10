@@ -213,7 +213,7 @@ if(isset($_SESSION['login_user'])){
 			<div class="well">
 				<p>
 				Hey there, <?echo $_SESSION['login_user'];?><br/>
-				We'll send another e-mail to your registered address to verify that you are the app owner of this app...<br/>
+				We'll send an e-mail to the address on the play store to verify that you are the owner of this app...<br/>
 				</p>
 				<div class="row">
 					<div class="col-sm-10"></div>

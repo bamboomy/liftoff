@@ -47,7 +47,7 @@ if ($conn->connect_error) {
 
 //retrieve hash from db
 
-$sql = "SELECT appUrl, userName, mailAddress FROM mails where hash='".$_GET['hash']."'";
+$sql = "SELECT appUrl, userName, mailAddress FROM mails where hash='".addslashes($_GET['hash'])."'";
 $result = $conn->query($sql);
 
 if ($result->num_rows == 1) {
@@ -76,7 +76,7 @@ if ($result->num_rows == 1) {
 	die;
 }
 
-$sql = "UPDATE mails SET status='verified' WHERE hash='".$_GET['hash']."'";
+$sql = "UPDATE mails SET status='verified' WHERE hash='".addslashes($_GET['hash'])."'";
 
 if ($conn->query($sql) !== TRUE) {
 

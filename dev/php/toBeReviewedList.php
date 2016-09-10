@@ -53,7 +53,7 @@ if ($conn->connect_error) {
 
 if(isset($_GET['token'])){
 	
-	$sql = "SELECT appUrl FROM mails where hash='".$_GET['token']."'";
+	$sql = "SELECT appUrl FROM mails where hash='".addslashes($_GET['token'])."'";
 	$result = $conn->query($sql);
 
 	if ($result->num_rows == 1) {
