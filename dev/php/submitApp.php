@@ -119,15 +119,15 @@ if(isset($_SESSION['login_user'])){
 	}
 
 	$sql = "INSERT INTO reviewCandidate (appUrl, sentence, ownerId, ownerEmail, ownerName, maxDownloads, title, src, genre, ip) ";
-	$sql .= "VALUES ('".$_POST['url']."', '".$_POST['sentence']."', '".$_SESSION['id']."', '".$_POST['mailAddress']."', '".$_POST['username']."', ";
-	$sql .= "'".$_POST['maxDownloads']."', '".$_POST['title']."', '".$_POST['src']."', '".$_POST['genre']."', '".$_SERVER['REMOTE_ADDR']."')";
+	$sql .= "VALUES ('".addslashes($_POST['url'])."', '".addslashes($_POST['sentence'])."', '".$_SESSION['id']."', '".addslashes($_POST['mailAddress'])."', '".addslashes($_POST['username'])."', ";
+	$sql .= "'".addslashes($_POST['maxDownloads'])."', '".addslashes($_POST['title'])."', '".addslashes($_POST['src'])."', '".addslashes($_POST['genre'])."', '".$_SERVER['REMOTE_ADDR']."')";
 
 }else{
 	
 	$email = $_POST['mailAddress'];
 	
 	$sql = "INSERT INTO user (name, email) ";
-	$sql .= "VALUES ('".$_POST['username']."', '".$_POST['mailAddress']."')";
+	$sql .= "VALUES ('".addslashes($_POST['username'])."', '".addslashes($_POST['mailAddress'])."')";
 
 	if ($conn->query($sql) !== TRUE) {
 
@@ -153,7 +153,7 @@ if(isset($_SESSION['login_user'])){
 
 	}
 
-	$sql = "SELECT id FROM user where name='".$_POST['username']."' and email='".$_POST['mailAddress']."'";
+	$sql = "SELECT id FROM user where name='".addslashes($_POST['username'])."' and email='".addslashes($_POST['mailAddress'])."'";
 	$result = $conn->query($sql);
 
 	if ($result->num_rows > 0) {
@@ -183,8 +183,8 @@ if(isset($_SESSION['login_user'])){
 	}
 
 	$sql = "INSERT INTO reviewCandidate (appUrl, sentence, ownerId, ownerEmail, ownerName, maxDownloads, title, src, genre, ip) ";
-	$sql .= "VALUES ('".$_POST['url']."', '".$_POST['sentence']."', '".$ownerId."', '".$_POST['mailAddress']."', '".$_POST['username']."', ";
-	$sql .= "'".$_POST['maxDownloads']."', '".$_POST['title']."', '".$_POST['src']."', '".$_POST['genre']."', '".$_SERVER['REMOTE_ADDR']."')";
+	$sql .= "VALUES ('".addslashes($_POST['url'])."', '".addslashes($_POST['sentence'])."', '".$ownerId."', '".addslashes($_POST['mailAddress'])."', '".addslashes($_POST['username'])."', ";
+	$sql .= "'".addslashes($_POST['maxDownloads'])."', '".addslashes($_POST['title'])."', '".addslashes($_POST['src'])."', '".addslashes($_POST['genre'])."', '".$_SERVER['REMOTE_ADDR']."')";
 
 }
 
@@ -252,7 +252,7 @@ if ($conn->query($sql) !== TRUE) {
 	
 	} else {
 
-		$sql = "INSERT INTO mails (appUrl, userName, mailAddress, hash) VALUES ('".$_POST['url']."', '".$_POST['username']."', '".$email."', '".$hash."');";
+		$sql = "INSERT INTO mails (appUrl, userName, mailAddress, hash) VALUES ('".addslashes($_POST['url'])."', '".addslashes($_POST['username'])."', '".$email."', '".$hash."');";
 
 		if ($conn->query($sql) !== TRUE) {
 			

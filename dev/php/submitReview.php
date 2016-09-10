@@ -46,13 +46,13 @@ if ($conn->connect_error) {
 	die;
 } 
 
-$sql = "select id from app where url='".$_POST['appUrl']."'";
+$sql = "select id from app where url='".addslashes($_POST['appUrl'])."'";
 $result = $conn->query($sql);
 
 if ($result->num_rows == 0) {
 
 	$sql = "INSERT INTO `app`(`reviewCandidateId`, `url`, `votes`, `status`)";
-	$sql .= "VALUES (".$_POST['reviewCandidateId'].",'".$_POST['appUrl']."','0','2breviewed')";
+	$sql .= "VALUES (".addslashes($_POST['reviewCandidateId']).",'".addslashes($_POST['appUrl'])."','0','2breviewed')";
 
 	if ($conn->query($sql) !== TRUE) {
 
@@ -91,7 +91,7 @@ if ($result->num_rows == 0) {
 
 }
 
-$sql = "SELECT id FROM app where url='".$_POST['appUrl']."'";
+$sql = "SELECT id FROM app where url='".addslashes($_POST['appUrl'])."'";
 $result = $conn->query($sql);
 
 if ($result->num_rows == 1) {
@@ -141,7 +141,7 @@ if ($result->num_rows == 1) {
 	die;
 }
 
-$sql = "UPDATE reviewCandidate SET status='review_pending' WHERE id='".$_POST['reviewCandidateId']."'";
+$sql = "UPDATE reviewCandidate SET status='review_pending' WHERE id='".addslashes($_POST['reviewCandidateId'])."'";
 
 if ($conn->query($sql) !== TRUE) {
 
