@@ -234,28 +234,11 @@
 												<div class="col-sm-6">
 													<? $strategy->echoReason($row3['rejectReason']); ?>
 												</div>
-												<div class="col-sm-4">
-<?
-
-													$strategy->echoButtons($row3['id']);
-													
-
-/*
-													if($approve){
-
-														echo "<a class='btn btn-primary' href='approve_review.php?id=".$row3['id']."'>Approve</a>";
-
-													}else{
-?>
-												
-														<!--button type="submit" class="btn btn-primary" id="submitReview" disabled="disabled">Edit</button-->
-<?
-	
-												}
-*/
-?>
-												</div>
+												<div class="col-sm-4"></div>
 											</div>	
+<?
+											$strategy->echoButtons($row3['id']);
+?>
 										</div>	
 									</div>	
 								</div>	

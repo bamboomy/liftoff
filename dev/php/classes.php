@@ -7,6 +7,9 @@ class ListStrategy{
 	private $showReason = false;
 	private $showApproveButton = false;
 	private $showDeleteButton = false;
+	private $showEditButton = true;
+	private $showWriteNewReviewButton = true;
+	private $showRejectButton = true;
 	
 	function setShowButton($showButton){
 		
@@ -26,11 +29,54 @@ class ListStrategy{
     function echoButtons($id){
 
 		if($this->showButtons){
+			if($this->showWriteNewReviewButton){
+?>
+											<div class="row">
+												<div class="col-sm-2"></div>
+												<div class="col-sm-6"></div>
+												<div class="col-sm-4">
+													<? echo "<a class='btn btn-primary' href='delete_review.php?id=".$id."'>Write new review</a>"; ?>
+												</div>
+											</div>	
+											<br/>
+<?
+			}
 			if($this->showApproveButton){
-				echo "<a class='btn btn-primary' href='approve_review.php?id=".$id."'>Approve</a>";
+?>
+											<div class="row">
+												<div class="col-sm-2"></div>
+												<div class="col-sm-6"></div>
+												<div class="col-sm-4">
+													<? echo "<a class='btn btn-primary' href='approve_review.php?id=".$id."'>Approve</a>"; ?>
+													<? echo "<a class='btn btn-primary' href='delete_review.php?id=".$id."'>Reject</a>"; ?>
+												</div>
+											</div>	
+											<br/>
+<?
 			}
 			if($this->showDeleteButton){
-				echo "<a class='btn btn-primary' href='delete_review.php?id=".$id."'>Delete</a>";
+?>
+											<div class="row">
+												<div class="col-sm-2"></div>
+												<div class="col-sm-6"></div>
+												<div class="col-sm-4">
+													<? echo "<a class='btn btn-primary' href='delete_review.php?id=".$id."'>Delete</a>"; ?>
+												</div>
+											</div>	
+											<br/>
+<?
+			}
+			if($this->showEditButton){
+?>
+											<div class="row">
+												<div class="col-sm-2"></div>
+												<div class="col-sm-6"></div>
+												<div class="col-sm-4">
+													<? echo "<a class='btn btn-primary' href='delete_review.php?id=".$id."'>Edit</a>"; ?>
+												</div>
+											</div>	
+											<br/>
+<?
 			}
 		}
     }
@@ -74,7 +120,7 @@ class ListStrategy{
     function echoReason($reason){
 		
 		if($this->showReason){
-			echo "<span class='red big'>Rejected!!!</span><br/>Reason:<br/>".$reason;
+			echo "<span class='red big'>Rejected...</span><br/>Reason: ".$reason;
 		}
     }
 
