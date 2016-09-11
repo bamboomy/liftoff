@@ -330,15 +330,15 @@ include 'reviewList.php';
 <?
 	$approve = true;
 	
-	$strategy->setShowButton(true);
-	$strategy->setShowApproveButton(true);
+	$strategy->setShowButtons(true);
+	$strategy->setshowDecisionButtons(true);
 	
 	$infix = "need_owner";
 
 	include 'reviewList.php';		
 	
-	$strategy->setShowButton(false);
-	$strategy->setShowApproveButton(false);
+	$strategy->setShowButtons(false);
+	$strategy->setshowDecisionButtons(false);
 ?>								
 								</div>
 								<div class="col-sm-1"></div>

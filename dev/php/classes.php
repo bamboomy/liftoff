@@ -5,20 +5,20 @@ class ListStrategy{
 	private $showButtons = false;
 	private $showVotes = false;
 	private $showReason = false;
-	private $showApproveButton = false;
-	private $showDeleteButton = false;
+	private $showDecisionButtons = false;
+	private $showDeleteButton = true;
 	private $showEditButton = true;
 	private $showWriteNewReviewButton = true;
-	private $showRejectButton = true;
+	private $showAlterButtons = true;
 	
-	function setShowButton($showButton){
+	function setShowButtons($showButton){
 		
 		$this->showButtons = $showButton;
 	}
 
-	function setShowApproveButton($showApproveButton){
+	function setshowDecisionButtons($showDecisionButtons){
 		
-		$this->showApproveButton = $showApproveButton;
+		$this->showDecisionButtons = $showDecisionButtons;
 	}
 
 	function setShowDeleteButton($showDeleteButton){
@@ -41,7 +41,7 @@ class ListStrategy{
 											<br/>
 <?
 			}
-			if($this->showApproveButton){
+			if($this->showDecisionButtons){
 ?>
 											<div class="row">
 												<div class="col-sm-2"></div>
@@ -54,28 +54,22 @@ class ListStrategy{
 											<br/>
 <?
 			}
-			if($this->showDeleteButton){
+			if($this->showAlterButtons){
 ?>
 											<div class="row">
 												<div class="col-sm-2"></div>
 												<div class="col-sm-6"></div>
 												<div class="col-sm-4">
-													<? echo "<a class='btn btn-primary' href='delete_review.php?id=".$id."'>Delete</a>"; ?>
-												</div>
-											</div>	
-											<br/>
 <?
-			}
-			if($this->showEditButton){
+				if($this->showDeleteButton){
+					echo "<a class='btn btn-primary' href='delete_review.php?id=".$id."'>Delete</a>&nbsp;"; 
+				}
+				if($this->showEditButton){
+					echo "<a class='btn btn-primary' href='delete_review.php?id=".$id."'>Edit</a>"; 
+				}
 ?>
-											<div class="row">
-												<div class="col-sm-2"></div>
-												<div class="col-sm-6"></div>
-												<div class="col-sm-4">
-													<? echo "<a class='btn btn-primary' href='delete_review.php?id=".$id."'>Edit</a>"; ?>
 												</div>
 											</div>	
-											<br/>
 <?
 			}
 		}
