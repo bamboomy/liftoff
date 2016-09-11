@@ -272,6 +272,11 @@ include 'reviewList.php';
 		$result = $conn->query($sql);
 		
 		$strategy->setShowReason(true);
+		$strategy->setShowButtons(true);
+		$strategy->setShowWriteNewReviewButton(true);
+		$strategy->setShowAlterButtons(true);
+		$strategy->setShowEditButton(true);
+		$strategy->setShowDeleteButton(true);
 ?>	
 									<div class="row">
 										<div class="col-sm-1"></div>
@@ -298,6 +303,11 @@ include 'reviewList.php';
 							</div>
 <?	
 		$strategy->setShowReason(false);
+		$strategy->setShowButtons(false);
+		$strategy->setShowWriteNewReviewButton(false);
+		$strategy->setShowAlterButtons(false);
+		$strategy->setShowEditButton(false);
+		$strategy->setShowDeleteButton(false);
 	}
 }
 ?>

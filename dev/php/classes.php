@@ -6,10 +6,10 @@ class ListStrategy{
 	private $showVotes = false;
 	private $showReason = false;
 	private $showDecisionButtons = false;
-	private $showDeleteButton = true;
-	private $showEditButton = true;
-	private $showWriteNewReviewButton = true;
-	private $showAlterButtons = true;
+	private $showDeleteButton = false;
+	private $showEditButton = false;
+	private $showWriteNewReviewButton = false;
+	private $showAlterButtons = false;
 	
 	function setShowButtons($showButton){
 		
@@ -19,6 +19,21 @@ class ListStrategy{
 	function setshowDecisionButtons($showDecisionButtons){
 		
 		$this->showDecisionButtons = $showDecisionButtons;
+	}
+
+	function setShowWriteNewReviewButton($showWriteNewReviewButton){
+		
+		$this->showWriteNewReviewButton = $showWriteNewReviewButton;
+	}
+
+	function setShowAlterButtons($showAlterButtons){
+		
+		$this->showAlterButtons = $showAlterButtons;
+	}
+
+	function setShowEditButton($showEditButton){
+		
+		$this->showEditButton = $showEditButton;
 	}
 
 	function setShowDeleteButton($showDeleteButton){
@@ -35,7 +50,7 @@ class ListStrategy{
 												<div class="col-sm-2"></div>
 												<div class="col-sm-6"></div>
 												<div class="col-sm-4">
-													<? echo "<a class='btn btn-primary' href='delete_review.php?id=".$id."'>Write new review</a>"; ?>
+													<? echo "<a class='btn btn-primary' onclick=\"alert('not yet implemented');\">Write new review</a>"; ?>
 												</div>
 											</div>	
 											<br/>
@@ -62,10 +77,10 @@ class ListStrategy{
 												<div class="col-sm-4">
 <?
 				if($this->showDeleteButton){
-					echo "<a class='btn btn-primary' href='delete_review.php?id=".$id."'>Delete</a>&nbsp;"; 
+					echo "<a class='btn btn-primary' onclick=\"alert('not yet implemented');\">Delete</a>&nbsp;"; 
 				}
 				if($this->showEditButton){
-					echo "<a class='btn btn-primary' href='delete_review.php?id=".$id."'>Edit</a>"; 
+					echo "<a class='btn btn-primary' onclick=\"alert('not yet implemented');\">Edit</a>"; 
 				}
 ?>
 												</div>
