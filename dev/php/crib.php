@@ -268,8 +268,10 @@ include 'reviewList.php';
 								<div class="col-sm-10">
 									<h4>Rejected: <? echo $result->num_rows; ?></h4>
 <?
-	$sql = "SELECT  `id`, `appid` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='reject_mod'";
-	$result = $conn->query($sql);
+		$sql = "SELECT  `id`, `appid` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='reject_mod'";
+		$result = $conn->query($sql);
+		
+		$strategy->setShowReason(true);
 ?>	
 									<div class="row">
 										<div class="col-sm-1"></div>
@@ -279,10 +281,10 @@ include 'reviewList.php';
 										<div class="col-sm-1"></div>
 									</div>
 <?
-	include 'reviewList.php';		
+		include 'reviewList.php';		
 
-	$sql = "SELECT  `appid` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='reject_own'";
-	$result = $conn->query($sql);
+		$sql = "SELECT  `appid` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='reject_own'";
+		$result = $conn->query($sql);
 ?>	
 									<div class="row">
 										<div class="col-sm-1"></div>
@@ -295,6 +297,7 @@ include 'reviewList.php';
 								<div class="col-sm-1"></div>
 							</div>
 <?	
+		$strategy->setShowReason(false);
 	}
 }
 ?>

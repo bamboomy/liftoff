@@ -88,7 +88,7 @@
 
 			}else{
 
-				$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId";
+				$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason";
 				$sql3 .= " FROM `review` WHERE appid=".$app[0]['appid']." and `ownerId`=".$_SESSION['id'];
 			}
 
@@ -231,12 +231,13 @@
 											?>
 											<div class="row">
 												<div class="col-sm-2"></div>
-												<div class="col-sm-8">
+												<div class="col-sm-6">
 												</div>
-												<div class="col-sm-2">
+												<div class="col-sm-4">
 <?
 
 													$strategy->echoButtons($row3['id']);
+													$strategy->echoReason($row3['rejectReason']);
 
 /*
 													if($approve){

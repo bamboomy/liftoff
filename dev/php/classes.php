@@ -6,6 +6,7 @@ class ListStrategy{
 	private $suffix = "";
 	private $showButton = false;
 	private $showVotes = false;
+	private $showReason = false;
 	
 	function setPrefix($prefix){
 		
@@ -61,6 +62,19 @@ class ListStrategy{
 			}
 		}
     }
+
+	function setShowReason($showReason){
+		
+		$this->showReason = $showReason;
+	}
+
+    function echoReason($reason){
+		
+		if($this->showReason){
+			echo "<span class='red big'>Rejected!!!</span><br/>Reason:<br/>".$reason;
+		}
+    }
+
 }
 
 

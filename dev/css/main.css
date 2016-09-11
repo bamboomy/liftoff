@@ -29,3 +29,7 @@ p, li, .small{
 .closeer{
 	margin-top: 10px;
 }
+
+.big{
+	font-size: large;
+}
