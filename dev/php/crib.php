@@ -330,15 +330,15 @@ include 'reviewList.php';
 <?
 	$approve = true;
 	
-	$strategy->setPrefix("<a class='btn btn-primary' href='approve_review.php?id=");
-	$strategy->setSuffix("'>Approve</a>");
 	$strategy->setShowButton(true);
+	$strategy->setShowApproveButton(true);
 	
 	$infix = "need_owner";
 
 	include 'reviewList.php';		
 	
 	$strategy->setShowButton(false);
+	$strategy->setShowApproveButton(false);
 ?>								
 								</div>
 								<div class="col-sm-1"></div>

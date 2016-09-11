@@ -232,12 +232,13 @@
 											<div class="row">
 												<div class="col-sm-2"></div>
 												<div class="col-sm-6">
+													<? $strategy->echoReason($row3['rejectReason']); ?>
 												</div>
 												<div class="col-sm-4">
 <?
 
 													$strategy->echoButtons($row3['id']);
-													$strategy->echoReason($row3['rejectReason']);
+													
 
 /*
 													if($approve){

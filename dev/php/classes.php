@@ -2,31 +2,36 @@
 
 class ListStrategy{
 	
-	private $prefix = "";
-	private $suffix = "";
-	private $showButton = false;
+	private $showButtons = false;
 	private $showVotes = false;
 	private $showReason = false;
-	
-	function setPrefix($prefix){
-		
-		$this->prefix = $prefix;
-	}
-	
-	function setSuffix($suffix){
-		
-		$this->suffix = $suffix;
-	}
+	private $showApproveButton = false;
+	private $showDeleteButton = false;
 	
 	function setShowButton($showButton){
 		
-		$this->showButton = $showButton;
+		$this->showButtons = $showButton;
+	}
+
+	function setShowApproveButton($showApproveButton){
+		
+		$this->showApproveButton = $showApproveButton;
+	}
+
+	function setShowDeleteButton($showDeleteButton){
+		
+		$this->showDeleteButton = $showDeleteButton;
 	}
 
     function echoButtons($id){
-		
-		if($this->showButton){
-			echo $this->prefix.$id.$this->suffix; 	
+
+		if($this->showButtons){
+			if($this->showApproveButton){
+				echo "<a class='btn btn-primary' href='approve_review.php?id=".$id."'>Approve</a>";
+			}
+			if($this->showDeleteButton){
+				echo "<a class='btn btn-primary' href='delete_review.php?id=".$id."'>Delete</a>";
+			}
 		}
     }
 
@@ -45,8 +50,6 @@ class ListStrategy{
 		if($this->showVotes){
 			
 			$sql9 = "SELECT `id` FROM `appVote` WHERE appId = '".$id."' and userId='".$_SESSION['id']."'";
-			
-			//echo $sql9;
 
 			$result9 = $this->conn->query($sql9);
 			
