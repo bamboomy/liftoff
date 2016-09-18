@@ -79,7 +79,7 @@ class ListStrategy{
 												<div class="col-sm-4">
 <?
 				if($this->showDeleteButton){
-					echo "<a class='btn btn-primary' onclick=\"alert('not yet implemented');\">Delete</a>&nbsp;"; 
+					echo "<a class='btn btn-primary' href='delete_review.php?id=".$id."'>Delete</a>&nbsp;"; 
 				}
 				if($this->showEditButton){
 					echo "<a class='btn btn-primary' onclick=\"alert('not yet implemented');\">Edit</a>"; 

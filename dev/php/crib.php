@@ -154,7 +154,7 @@ include "nav.php";
 						<div class="col-sm-10">
 <?							
 
-$sql = "SELECT  `appid` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."'";
+$sql = "SELECT  `appid` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status!='deleted'";
 $result = $conn->query($sql);
 
 ?>
@@ -188,10 +188,18 @@ $strategy = new ListStrategy();
 
 $strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason FROM `review` WHERE appid=", 
 	" and `ownerId`=".$_SESSION['id']." and status='need_admin'");
+$strategy->setShowButtons(true);
+$strategy->setShowEditButton(true);
+$strategy->setShowDeleteButton(true);
+$strategy->setShowAlterButtons(true);
 
 include 'reviewList.php';
 
 $strategy->setSql3("","");
+$strategy->setShowButtons(false);
+$strategy->setShowEditButton(false);
+$strategy->setShowDeleteButton(false);
+$strategy->setShowAlterButtons(false);
 	
 	$sql = "SELECT `id`, `appid`";
 	$sql .= " FROM `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='need_owner' order by appid";
@@ -219,12 +227,17 @@ $strategy->setSql3("","");
 											<br/>
 											A mail has been sent to him/her<br/>
 											<br/>
-											if (s)he approves, you get an extra point for your apps in the to be reviewed list :D<br/>
+											It is now worth one extra point in the to be reviewed list;<br/>
+											if (s)he'd approve, you get another extra point for your apps in the to be reviewed list :D<br/>
+											<br/>
+											+ -> you'd get a vote for which you can use to upvote this, or other apps on the app list.<br/>
+											(not your own)<br/>
 											<br/>
 											You'll be notified about approval/rejection via mail.<br/>
 											<br/>
-											From this point on you can't edit anymore, now you only can delete,<br/>
-											deleting also means you lose your point for this review.<br/>
+											If you'd edit this review it would need moderator approval again to get to this state.<br/>
+											<br/>
+											You can also delete this review, it will no longer be accounted for in the to be reviewed list.<br/>
 											<br/>
 											Deleting is no longer possible once the review is accepted.<br/>			
 											<br/>
@@ -240,10 +253,18 @@ $infix = "need_owner";
 
 $strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason FROM `review` WHERE appid=", 
 	" and `ownerId`=".$_SESSION['id']." and status='need_owner'");
+$strategy->setShowButtons(true);
+$strategy->setShowEditButton(true);
+$strategy->setShowDeleteButton(true);
+$strategy->setShowAlterButtons(true);
 
 include 'reviewList.php';
 
 $strategy->setSql3("", "");		
+$strategy->setShowButtons(false);
+$strategy->setShowEditButton(false);
+$strategy->setShowDeleteButton(false);
+$strategy->setShowAlterButtons(false);
 
 ?>						
 								</div>
