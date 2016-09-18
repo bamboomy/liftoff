@@ -63,7 +63,7 @@ class ListStrategy{
 												<div class="col-sm-6"></div>
 												<div class="col-sm-4">
 													<? echo "<a class='btn btn-primary' href='approve_review.php?id=".$id."'>Approve</a>"; ?>
-													<? echo "<a class='btn btn-primary' href='delete_review.php?id=".$id."'>Reject</a>"; ?>
+													<? echo "<button type='button' class='btn btn-primary' onclick=\"$('#rejectId').val('".$id."');\" data-toggle='modal' data-target='#rejectModal'>Reject</button>"; ?>
 												</div>
 											</div>	
 											<br/>

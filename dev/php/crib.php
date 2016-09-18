@@ -298,6 +298,11 @@ include 'reviewList.php';
 										</div>
 										<div class="col-sm-1"></div>
 									</div>
+<?	
+		$infix = "rejected";
+
+		include 'reviewList.php';
+?>		
 								</div>
 								<div class="col-sm-1"></div>
 							</div>
@@ -525,6 +530,38 @@ if($result->num_rows > 0){
 			<div class="col-sm-1"></div>
 		</div>
 	</div>
+
+<div id="rejectModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+	<!-- Modal content-->
+		<div class="modal-content">
+			<form action="reject_review.php" method="post">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Reject</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-sm-1"></div>
+						<div class="col-sm-2">Reason:</div>
+						<div class="col-sm-7">
+							<input type="text" name="reason" id="reason" />
+						</div>
+						<div class="col-sm-2">
+							<input type='hidden' name="id" id='rejectId' value='' />
+							<button class="btn btn-default pull-right" type="submit">Submit</button>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>	
+
 </body>
 </html>
 <?
