@@ -561,6 +561,8 @@ if($result->num_rows > 0){
 									<div class="row">
 										<div class="col-sm-12">
 											<h4><? echo "position: "; ?> </h4>
+											<h4><? echo "number of reviews: "; ?> </h4>
+											<h4><? echo "votes: "; ?> </h4>
 										</div>
 									</div>
 								</div>
