@@ -489,7 +489,7 @@ if($result->num_rows > 0){
 
 	while($row = $result->fetch_assoc()) {
 ?>		
-							<div class="row">
+							<div class="row well">
 								<div class="col-sm-2">
 									<? echo "<img src='".$row["src"]."' width='100' height='100'/>"; ?>
 								</div>
@@ -548,7 +548,7 @@ if($result->num_rows > 0){
 
 	while($row = $result->fetch_assoc()) {
 ?>		
-							<div class="row">
+							<div class="row well">
 								<div class="col-sm-2">
 									<? echo "<img src='".$row["src"]."' width='100' height='100'/>"; ?>
 								</div>
