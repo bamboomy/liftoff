@@ -393,8 +393,7 @@ $strategy->setSql3("", "");
 									<h4>Published: <? echo $result->num_rows; ?></h4>
 <?
 	$approve = false;
-	
-	//$published = true;
+	$published = true;
 
 	$strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE appid=", " and status='approved'");
 	
@@ -410,7 +409,25 @@ $strategy->setSql3("", "");
 							<div class="row">
 								<div class="col-sm-1"></div>
 								<div class="col-sm-10">
-									<h4>Rejected: 0</h4>
+<?
+	$sql = "SELECT `id`, `appid` FROM `review` WHERE appid in (";
+		$sql .= "select id from app where reviewCandidateId in (";
+			$sql .= "select id from reviewCandidate where ownerId = '".$_SESSION['id']."'";
+			$sql .= ")) and status='reject_own' order by appid";
+	$result = $conn->query($sql);
+
+?>								
+									<h4>Rejected: <? echo $result->num_rows; ?></h4>
+<?
+	$strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE appid=", " and status='reject_own'");
+	
+	$infix = "reject_own";
+
+	include 'reviewList.php';		
+
+	$strategy->setSql3("", "");
+?>								
+
 								</div>
 								<div class="col-sm-1"></div>
 							</div>

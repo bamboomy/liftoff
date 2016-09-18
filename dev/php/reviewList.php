@@ -77,31 +77,7 @@
 										</div>
 									</div>
 <?			
-
-			/*
-			if($approve){
-					
-				$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE appid=".$app[0]['appid']." and status='need_owner'";
-
-			}else 
-
-			*/
-
 			$sql3 = $strategy->getSql3($app[0]['appid']);
-
-			if($sql3 == $app[0]['appid']){
-
-				if($published){
-						
-					$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE appid=".$app[0]['appid']." and status='approved'";
-
-				}else{
-
-					$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason";
-					$sql3 .= " FROM `review` WHERE appid=".$app[0]['appid']." and `ownerId`=".$_SESSION['id'];
-				}
-
-			}
 
 			$result3 = $conn->query($sql3);
 
