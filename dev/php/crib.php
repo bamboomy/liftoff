@@ -186,7 +186,12 @@ $infix = "need_admin";
 
 $strategy = new ListStrategy();
 
+$strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason FROM `review` WHERE appid=", 
+	" and `ownerId`=".$_SESSION['id']." and status='need_admin'");
+
 include 'reviewList.php';
+
+$strategy->setSql3("","");
 	
 	$sql = "SELECT `id`, `appid`";
 	$sql .= " FROM `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='need_owner' order by appid";
@@ -233,7 +238,12 @@ include 'reviewList.php';
 
 $infix = "need_owner";
 
-include 'reviewList.php';		
+$strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason FROM `review` WHERE appid=", 
+	" and `ownerId`=".$_SESSION['id']." and status='need_owner'");
+
+include 'reviewList.php';
+
+$strategy->setSql3("", "");		
 
 ?>						
 								</div>
@@ -251,11 +261,11 @@ include 'reviewList.php';
 <?							
 	$infix = "published";
 
-	$published = true;
+	$strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE appid=", " and status='approved'");
 
 	include 'reviewList.php';	
 
-	$published = false;	
+	$strategy->setSql3("","");
 ?>	
 								</div>
 								<div class="col-sm-1"></div>
@@ -281,6 +291,8 @@ include 'reviewList.php';
 		$strategy->setShowAlterButtons(true);
 		$strategy->setShowEditButton(true);
 		$strategy->setShowDeleteButton(true);
+		$strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason FROM `review` WHERE appid=", 
+			" and `ownerId`=".$_SESSION['id']." and status='reject_mod'");
 ?>	
 									<div class="row">
 										<div class="col-sm-1"></div>
@@ -305,6 +317,9 @@ include 'reviewList.php';
 <?	
 		$infix = "rejected";
 
+		$strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason FROM `review` WHERE appid=", 
+			" and `ownerId`=".$_SESSION['id']." and status='reject_own'");
+
 		include 'reviewList.php';
 ?>		
 								</div>
@@ -317,6 +332,7 @@ include 'reviewList.php';
 		$strategy->setShowAlterButtons(false);
 		$strategy->setShowEditButton(false);
 		$strategy->setShowDeleteButton(false);
+		$strategy->setSql3("","");
 	}
 }
 ?>
@@ -378,11 +394,15 @@ include 'reviewList.php';
 <?
 	$approve = false;
 	
-	$published = true;
+	//$published = true;
+
+	$strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE appid=", " and status='approved'");
 	
 	$infix = "published";
 
 	include 'reviewList.php';		
+
+	$strategy->setSql3("", "");
 ?>								
 								</div>
 								<div class="col-sm-1"></div>
