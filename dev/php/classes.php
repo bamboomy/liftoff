@@ -10,6 +10,8 @@ class ListStrategy{
 	private $showEditButton = false;
 	private $showWriteNewReviewButton = false;
 	private $showAlterButtons = false;
+	private $sql3_pre = "";
+	private $sql3_post = "";
 	
 	function setShowButtons($showButton){
 		
@@ -132,6 +134,18 @@ class ListStrategy{
 			echo "<span class='red big'>Rejected...</span><br/>Reason: ".$reason;
 		}
     }
+
+    function setSql3($sql3_pre, $sql3_post){
+		
+		$this->sql3_pre = $sql3_pre;
+		$this->sql3_post = $sql3_post;
+	}
+
+   	function getSql3($id){
+		
+		return $this->sql3_pre.$id.$this->sql3_post;
+	}
+
 
 }
 

@@ -75,7 +75,7 @@ $row = $result->fetch_assoc();
 
 $appId = $row['appid'];
 
-$sql = "UPDATE review SET status='reject_own' WHERE id='".addslashes($_POST['id'])."'";
+$sql = "UPDATE review SET status='reject_own', rejectReason='".addslashes($_POST['reason'])."' WHERE id='".addslashes($_POST['id'])."'";
 
 if ($conn->query($sql) !== TRUE) {
 

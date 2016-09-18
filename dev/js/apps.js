@@ -7,3 +7,7 @@ function castVote(id){
 		}
 	});
 }
+
+$('#voteCastModal').on('hidden.bs.modal', function () {
+  	window.location.reload();
+})

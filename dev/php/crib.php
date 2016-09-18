@@ -251,7 +251,11 @@ include 'reviewList.php';
 <?							
 	$infix = "published";
 
-	include 'reviewList.php';		
+	$published = true;
+
+	include 'reviewList.php';	
+
+	$published = false;	
 ?>	
 								</div>
 								<div class="col-sm-1"></div>
@@ -347,6 +351,7 @@ include 'reviewList.php';
 	
 	$strategy->setShowButtons(true);
 	$strategy->setshowDecisionButtons(true);
+	$strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE appid=", " and status='need_owner'");
 	
 	$infix = "need_owner";
 
@@ -354,6 +359,7 @@ include 'reviewList.php';
 	
 	$strategy->setShowButtons(false);
 	$strategy->setshowDecisionButtons(false);
+	$strategy->setSql3("","");
 ?>								
 								</div>
 								<div class="col-sm-1"></div>

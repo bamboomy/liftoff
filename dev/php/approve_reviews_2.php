@@ -163,7 +163,7 @@ $result = $conn->query($sql);
 <?			
 
 			$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId";
-			$sql3 .= " FROM `review` WHERE appid=".$app[0]['appid'];
+			$sql3 .= " FROM `review` WHERE appid=".$app[0]['appid']." and status='need_admin'";
 			
 			$result3 = $conn->query($sql3);
 		
