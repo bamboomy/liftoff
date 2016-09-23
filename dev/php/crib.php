@@ -364,7 +364,7 @@ $strategy->setShowAlterButtons(false);
 	$sql = "SELECT * FROM `review` WHERE appid in (";
 		$sql .= "select id from app where reviewCandidateId in (";
 			$sql .= "select id from reviewCandidate where ownerId = '".$_SESSION['id']."'";
-			$sql .= ")) and status<>'need_admin'";
+			$sql .= ")) and status<>'need_admin' and status!='deleted'";
 			
 	$result = $conn->query($sql);		
 ?>					
