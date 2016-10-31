@@ -11,17 +11,17 @@
 		
 		while($row = $result->fetch_assoc()){
 			
-			if($oldAppId !== $row['appid']){
+			if($oldAppId !== $row['app_id']){
 
 				$reviewCounter = 0;
 				
-				$oldAppId = $row['appid'];
+				$oldAppId = $row['app_id'];
 				
 				$appCounter++;
 			}
 
 			$app[$reviewCounter]['id'] 		= $row['id'];
-			$app[$reviewCounter]['appid'] 	= $row['appid'];
+			$app[$reviewCounter]['app_id'] 	= $row['app_id'];
 			
 			if(isset($row['votes'])){
 				$app[$reviewCounter]['votes'] 	= $row['votes'];
@@ -35,7 +35,7 @@
 		foreach($appz as $app){
 
 			$sql2 = "SELECT `id`, `appUrl`, `sentence`, `title`, `src`, `genre`, ownerName FROM `reviewCandidate` WHERE id = (";
-			$sql2 .= "SELECT `reviewCandidateId` FROM `app` WHERE `id`=".$app[0]['appid'].")";
+			$sql2 .= "SELECT `reviewCandidate_id` FROM `app` WHERE `id`=".$app[0]['app_id'].")";
 
 			$result2 = $conn->query($sql2);
 			
@@ -50,7 +50,7 @@
 									<br/>
 									<div class="row">
 										<div class="col-sm-1 text-center">
-											<? $strategy->echoVotes($row2['ownerName'], $app[0]['appid'], $app[0]['votes']); ?>
+											<? $strategy->echoVotes($row2['ownerName'], $app[0]['app_id'], $app[0]['votes']); ?>
 										</div>
 										<div class="col-sm-11">
 											<div class="row">
@@ -77,7 +77,7 @@
 										</div>
 									</div>
 <?			
-			$sql3 = $strategy->getSql3($app[0]['appid']);
+			$sql3 = $strategy->getSql3($app[0]['app_id']);
 
 			$result3 = $conn->query($sql3);
 
@@ -119,7 +119,7 @@
 										<div class="col-sm-11">
 											<div class="row">
 												<div class="col-sm-2">
-													<? echo "<a class='btn btn-primary' data-toggle='collapse' href='#review_".$infix."_".$app[0]['appid']."_".$reviewCounter."'>Review by ".$owner."</a>"; ?>
+													<? echo "<a class='btn btn-primary' data-toggle='collapse' href='#review_".$infix."_".$app[0]['app_id']."_".$reviewCounter."'>Review by ".$owner."</a>"; ?>
 												</div>
 												<div class="col-sm-10"></div>
 											</div>
@@ -129,7 +129,7 @@
 									<div class="row">
 										<div class="col-sm-1"></div>
 										<div class="col-sm-11">
-										<? echo "<div class='collapse well' id='review_".$infix."_".$app[0]['appid']."_".$reviewCounter."'>"; ?>
+										<? echo "<div class='collapse well' id='review_".$infix."_".$app[0]['app_id']."_".$reviewCounter."'>"; ?>
 											<div class="row">
 												<div class="col-sm-2">
 													Review by <?echo $owner; ?><br/>

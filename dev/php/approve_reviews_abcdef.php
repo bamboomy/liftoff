@@ -88,7 +88,7 @@ if ($conn->connect_error || $_SESSION['login_user'] !== 'Matdoya') {
 				<div class="well">
 <?
 
-$sql = "SELECT `id`, `appid` FROM `review` WHERE status='need_admin' order by appid";
+$sql = "SELECT `id`, `app_id` FROM `review` WHERE status='need_admin' order by app_id";
 $result = $conn->query($sql);
 
 					echo "<h1>".$result->num_rows." to do</h1>";
@@ -104,15 +104,15 @@ $result = $conn->query($sql);
 		while($row = $result->fetch_assoc()){
 			
 			$app[$reviewCounter]['id'] 		= $row['id'];
-			$app[$reviewCounter]['appid'] 	= $row['appid'];
+			$app[$reviewCounter]['app_id'] 	= $row['app_id'];
 			
 			$reviewCounter++;
 			
-			if($oldAppId !== $row['appid']){
+			if($oldAppId !== $row['app_id']){
 
 				$reviewCounter = 0;
 				
-				$oldAppId = $row['appid'];
+				$oldAppId = $row['app_id'];
 				
 				$appz[$appCounter++] = $app;
 			}
@@ -122,7 +122,7 @@ $result = $conn->query($sql);
 			
 		
 			$sql2 = "SELECT `id`, `appUrl`, `sentence`, `title`, `src`, `genre`, ownerName FROM `reviewCandidate` WHERE id = (";
-			$sql2 .= "SELECT `reviewCandidateId` FROM `app` WHERE `id`='".$app[0]['appid']."')";
+			$sql2 .= "SELECT `reviewCandidate_id` FROM `app` WHERE `id`='".$app[0]['app_id']."')";
 
 			$result2 = $conn->query($sql2);
 			
@@ -162,8 +162,8 @@ $result = $conn->query($sql);
 									</div>
 <?			
 
-			$sql3 = "SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId";
-			$sql3 .= " FROM `review` WHERE appid=".$app[0]['appid']." and status='need_admin'";
+			$sql3 = "SELECT `id`, `app_id`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId";
+			$sql3 .= " FROM `review` WHERE app_id=".$app[0]['app_id']." and status='need_admin'";
 			
 			$result3 = $conn->query($sql3);
 		

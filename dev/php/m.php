@@ -93,29 +93,46 @@ include "nav.php";
 				<br/>
 				Any app developer can submit his/her app here.<br/>
 				<br/>
-				However, it needs to be reviewed first to be visible to you (the site visitor).<br/>
+				However,<br/>
 				<br/>
-				Furthermore;<br/>
+				only apps who have a review are visible in App Discoverer,<br/>
+				the sister project of AndroidLiftoff.<br/>
 				<br/>
-				The app list is sorted on votes.<br/>
+				You can see the app list <a href="apps.php">here</a> but rest assured,<br/>
+				in these times of common immediately no one is going to a site to discover apps.<br/>
 				<br/>
-				App owners can vote; only up; only for other apps then their own.<br/>
-				votes are made hard to earn so app owners are not going to vote for any app.<br/>
+				That's what App Discoverer is for:<br/>
+				it's a cute small app which lists all the apps submitted and reviewed here.<br/>
+				Which means the user just needs to tap to install,<br/>
 				<br/>
-				Also, when apps reach 500 downloads they are removed from this site<br/>
-				(to make place for other app developers' apps).<br/>
+				Easy as pie.<br/>
 				<br/>
-				This way we find the equilibrium between underappreciated good apps<br/>
-				and<br/>
-				apps that are already in the process of becoming rising stars.<br/>
+				Oh yes,<br/>
 				<br/>
-				This is a nice site for disovering various apps who are yet to make it big.<br/>
+				Once an app hits 500 downloads it is considered airborne and will no longer be listed in the app...<br/>
 				<br/>
-				The apps can be found <a href='apps.php'>here</a>.<br/>
+				We do this to give apps with lower download counts to get a chance too.<br/>
 				<br/>
-				As app developer you can register your app by clicking in the upper right corner.<br/>
+				Also,<br/>
+				<br/>
+				Don't worry about bad reviews.<br/>
+				<br/>
+				_You_ are in charge.<br/>
+				<br/>
+				Every review must be reviewed by you (pun intended)<br/>
+				and you can choose which reviews get to the App Discoverer app.<br/>
+				<br/>
+				It's hard enough to get downloads and if someone wants to 'downvote' your app<br/>
+				they can still do so on the play store.<br/>
+				<br/>
+				The project is intended to be positive minded.<br/>
+				On the app page you can vote up (and only up) other apps.<br/>
+				<br/>
+				If you have comments/ideas, you can contact us below.<br/>
 				<br/>
 				Enjoy the site :)<br/>
+				<br/>
+				(We know you will ;)<br/>
 				<br/>
 				The Android Liftoff team.<br/>
 			</p> 
