@@ -88,43 +88,15 @@ if ($result->num_rows == 1) {
 	die;
 }
 
+$email = $_POST['mailAddress'];
+
 if(isset($_SESSION['login_user'])){
-
-	$sql = "select email from user where id='".$_SESSION['id']."';";
-	$result = $conn->query($sql);
-
-	if ($result->num_rows == 1) {
-		// output data of each row
-		$row = $result->fetch_assoc();
-		
-		$email = $row['email'];
-
-	} else {
-
-		$mail->Subject = "error encountered: 0 results";
-
-		$mail->Body = "0 results... -> ".$conn->error;
-		
-		$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
-		
-		$mail->send();//fire and forget
-
-	?>
-		<script>
-			alert("an error has occured, you will be redirected to the main page...");
-			window.location.assign("m.php");
-		</script>
-	<?
-		die;
-	}
 
 	$sql = "INSERT INTO reviewCandidate (appUrl, sentence, ownerId, ownerEmail, ownerName, maxDownloads, title, src, genre, ip) ";
 	$sql .= "VALUES ('".addslashes($_POST['url'])."', '".addslashes($_POST['sentence'])."', '".$_SESSION['id']."', '".addslashes($_POST['mailAddress'])."', '".addslashes($_POST['username'])."', ";
 	$sql .= "'".addslashes($_POST['maxDownloads'])."', '".addslashes($_POST['title'])."', '".addslashes($_POST['src'])."', '".addslashes($_POST['genre'])."', '".$_SERVER['REMOTE_ADDR']."')";
 
 }else{
-	
-	$email = $_POST['mailAddress'];
 	
 	$sql = "INSERT INTO user (name, email) ";
 	$sql .= "VALUES ('".addslashes($_POST['username'])."', '".addslashes($_POST['mailAddress'])."')";
@@ -311,10 +283,22 @@ include "nav.php";
 				<br/>
 				Once you verify the app it is registered and will be put on the to be reviewed list.<br/>
 				<br/>
+<?
+if(!isset($_SESSION['login_user'])){
+?>
+
 				Additionally, the name of the owner of the app is registered as well,<br/>
 				<br/>
 				If you wish, you can register on this site when verifying the app with the link in the mail.<br/>
 				<br/>
+<?
+}else{
+?>
+				<a href="crib.php">Back to crib.</a><br/>
+				<br/>
+<?
+}
+?>
 				<a href="m.php">Back to main page.</a><br/>
 				</p>
 			

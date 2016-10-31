@@ -27,6 +27,8 @@ $mail->isHTML(true);
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+$strategy = new ListStrategy();
+
 // Check connection
 if ($conn->connect_error) {
 
@@ -154,7 +156,7 @@ include "nav.php";
 						<div class="col-sm-10">
 <?							
 
-$sql = "SELECT  `appid` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status!='deleted'";
+$sql = "SELECT  `app_id` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status!='deleted'";
 $result = $conn->query($sql);
 
 ?>
@@ -164,15 +166,15 @@ if($result->num_rows == 0){
 ?>
 							
 							<p>
-							We encourage you to <a href="toBeReviewedList.php">write reviews</a>, for every review approved by at least a moderator;<br/>
+							We encourage you to <a href="toBeReviewedList.php">write reviews</a>, for every review you wrote, approved by at least a moderator;<br/>
 							<b>your apps</b> get ranked higher in the to be reviewed list;<br/>
 							(and are more likely to be chosen to be reviewed as well...)<br/>
 							</p>
 <?
 }else{
 
-	$sql = "SELECT `id`, `appid`";
-	$sql .= " FROM `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='need_admin' order by appid";
+	$sql = "SELECT `id`, `app_id`";
+	$sql .= " FROM `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='need_admin' order by app_id";
 	$result = $conn->query($sql);
 
 ?>	
@@ -184,9 +186,7 @@ if($result->num_rows == 0){
 
 $infix = "need_admin";
 
-$strategy = new ListStrategy();
-
-$strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason FROM `review` WHERE appid=", 
+$strategy->setSql3("SELECT `id`, `app_id`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason FROM `review` WHERE app_id=", 
 	" and `ownerId`=".$_SESSION['id']." and status='need_admin'");
 $strategy->setShowButtons(true);
 $strategy->setShowEditButton(true);
@@ -201,8 +201,8 @@ $strategy->setShowEditButton(false);
 $strategy->setShowDeleteButton(false);
 $strategy->setShowAlterButtons(false);
 	
-	$sql = "SELECT `id`, `appid`";
-	$sql .= " FROM `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='need_owner' order by appid";
+	$sql = "SELECT `id`, `app_id`";
+	$sql .= " FROM `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='need_owner' order by app_id";
 	$result = $conn->query($sql);
 
 ?>									
@@ -251,19 +251,17 @@ $strategy->setShowAlterButtons(false);
 
 $infix = "need_owner";
 
-$strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason FROM `review` WHERE appid=", 
+$strategy->setSql3("SELECT `id`, `app_id`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason FROM `review` WHERE app_id=", 
 	" and `ownerId`=".$_SESSION['id']." and status='need_owner'");
 $strategy->setShowButtons(true);
-$strategy->setShowEditButton(true);
-$strategy->setShowDeleteButton(true);
+$strategy->setshowDecisionButtons(true);
 $strategy->setShowAlterButtons(true);
 
 include 'reviewList.php';
 
 $strategy->setSql3("", "");		
 $strategy->setShowButtons(false);
-$strategy->setShowEditButton(false);
-$strategy->setShowDeleteButton(false);
+$strategy->setshowDecisionButtons(false);
 $strategy->setShowAlterButtons(false);
 
 ?>						
@@ -275,14 +273,14 @@ $strategy->setShowAlterButtons(false);
 								<div class="col-sm-10">
 <?							
 
-	$sql = "SELECT  `appid` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='approved'";
+	$sql = "SELECT  `app_id` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='approved'";
 	$result = $conn->query($sql);
 ?>
 									<h4>Published: <? echo $result->num_rows; ?></h4>
 <?							
 	$infix = "published";
 
-	$strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE appid=", " and status='approved'");
+	$strategy->setSql3("SELECT `id`, `app_id`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE app_id=", " and status='approved'");
 
 	include 'reviewList.php';	
 
@@ -293,7 +291,7 @@ $strategy->setShowAlterButtons(false);
 							</div>
 							<br/>
 <?
-	$sql = "SELECT  `appid` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and (status='reject_mod' or status='reject_own')";
+	$sql = "SELECT  `app_id` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and (status='reject_mod' or status='reject_own')";
 	$result = $conn->query($sql);
 
 	if($result->num_rows > 0){
@@ -303,7 +301,7 @@ $strategy->setShowAlterButtons(false);
 								<div class="col-sm-10">
 									<h4>Rejected: <? echo $result->num_rows; ?></h4>
 <?
-		$sql = "SELECT  `id`, `appid` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='reject_mod'";
+		$sql = "SELECT  `id`, `app_id` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='reject_mod'";
 		$result = $conn->query($sql);
 		
 		$strategy->setShowReason(true);
@@ -312,7 +310,7 @@ $strategy->setShowAlterButtons(false);
 		$strategy->setShowAlterButtons(true);
 		$strategy->setShowEditButton(true);
 		$strategy->setShowDeleteButton(true);
-		$strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason FROM `review` WHERE appid=", 
+		$strategy->setSql3("SELECT `id`, `app_id`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason FROM `review` WHERE app_id=", 
 			" and `ownerId`=".$_SESSION['id']." and status='reject_mod'");
 ?>	
 									<div class="row">
@@ -325,7 +323,7 @@ $strategy->setShowAlterButtons(false);
 <?
 		include 'reviewList.php';		
 
-		$sql = "SELECT  `appid` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='reject_own'";
+		$sql = "SELECT  `app_id` FROM  `review` WHERE  `ownerId` ='".$_SESSION['id']."' and status='reject_own'";
 		$result = $conn->query($sql);
 ?>	
 									<div class="row">
@@ -338,7 +336,7 @@ $strategy->setShowAlterButtons(false);
 <?	
 		$infix = "rejected";
 
-		$strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason FROM `review` WHERE appid=", 
+		$strategy->setSql3("SELECT `id`, `app_id`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason FROM `review` WHERE app_id=", 
 			" and `ownerId`=".$_SESSION['id']." and status='reject_own'");
 
 		include 'reviewList.php';
@@ -361,8 +359,8 @@ $strategy->setShowAlterButtons(false);
 						<div class="col-sm-1"></div>
 					</div>
 <?
-	$sql = "SELECT * FROM `review` WHERE appid in (";
-		$sql .= "select id from app where reviewCandidateId in (";
+	$sql = "SELECT * FROM `review` WHERE app_id in (";
+		$sql .= "select id from app where reviewCandidate_id in (";
 			$sql .= "select id from reviewCandidate where ownerId = '".$_SESSION['id']."'";
 			$sql .= ")) and status<>'need_admin' and status!='deleted'";
 			
@@ -376,27 +374,29 @@ $strategy->setShowAlterButtons(false);
 								<div class="col-sm-1"></div>
 								<div class="col-sm-10">
 <?
-	$sql = "SELECT `id`, `appid` FROM `review` WHERE appid in (";
-		$sql .= "select id from app where reviewCandidateId in (";
+	$sql = "SELECT `id`, `app_id` FROM `review` WHERE app_id in (";
+		$sql .= "select id from app where reviewCandidate_id in (";
 			$sql .= "select id from reviewCandidate where ownerId = '".$_SESSION['id']."'";
-			$sql .= ")) and status='need_owner' order by appid";
+			$sql .= ")) and status='need_owner' order by app_id";
 	$result = $conn->query($sql);
 ?>
 									<h4>To be approved: <? echo $result->num_rows; ?></h4>
 <?
-	$approve = true;
-	
-	$strategy->setShowButtons(true);
-	$strategy->setshowDecisionButtons(true);
-	$strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE appid=", " and status='need_owner'");
-	
-	$infix = "need_owner";
+	if($result->num_rows > 0){
+		$approve = true;
+		
+		$strategy->setShowButtons(true);
+		$strategy->setshowDecisionButtons(true);
+		$strategy->setSql3("SELECT `id`, `app_id`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE app_id=", " and status='need_owner'");
+		
+		$infix = "need_owner";
 
-	include 'reviewList.php';		
-	
-	$strategy->setShowButtons(false);
-	$strategy->setshowDecisionButtons(false);
-	$strategy->setSql3("","");
+		include 'reviewList.php';		
+		
+		$strategy->setShowButtons(false);
+		$strategy->setshowDecisionButtons(false);
+		$strategy->setSql3("","");
+	}
 ?>								
 								</div>
 								<div class="col-sm-1"></div>
@@ -405,24 +405,26 @@ $strategy->setShowAlterButtons(false);
 								<div class="col-sm-1"></div>
 								<div class="col-sm-10">
 <?
-	$sql = "SELECT `id`, `appid` FROM `review` WHERE appid in (";
-		$sql .= "select id from app where reviewCandidateId in (";
+	$sql = "SELECT `id`, `app_id` FROM `review` WHERE app_id in (";
+		$sql .= "select id from app where reviewCandidate_id in (";
 			$sql .= "select id from reviewCandidate where ownerId = '".$_SESSION['id']."'";
-			$sql .= ")) and status='approved' order by appid";
+			$sql .= ")) and status='approved' order by app_id";
 	$result = $conn->query($sql);
 ?>
 									<h4>Published: <? echo $result->num_rows; ?></h4>
 <?
-	$approve = false;
-	$published = true;
+	if($result->num_rows > 0){
+		$approve = false;
+		$published = true;
 
-	$strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE appid=", " and status='approved'");
-	
-	$infix = "published";
+		$strategy->setSql3("SELECT `id`, `app_id`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE app_id=", " and status='approved'");
+		
+		$infix = "published";
 
-	include 'reviewList.php';		
+		include 'reviewList.php';		
 
-	$strategy->setSql3("", "");
+		$strategy->setSql3("", "");
+	}
 ?>								
 								</div>
 								<div class="col-sm-1"></div>
@@ -431,22 +433,25 @@ $strategy->setShowAlterButtons(false);
 								<div class="col-sm-1"></div>
 								<div class="col-sm-10">
 <?
-	$sql = "SELECT `id`, `appid` FROM `review` WHERE appid in (";
-		$sql .= "select id from app where reviewCandidateId in (";
+	$sql = "SELECT `id`, `app_id` FROM `review` WHERE app_id in (";
+		$sql .= "select id from app where reviewCandidate_id in (";
 			$sql .= "select id from reviewCandidate where ownerId = '".$_SESSION['id']."'";
-			$sql .= ")) and status='reject_own' order by appid";
+			$sql .= ")) and status='reject_own' order by app_id";
 	$result = $conn->query($sql);
 
 ?>								
 									<h4>Rejected: <? echo $result->num_rows; ?></h4>
 <?
-	$strategy->setSql3("SELECT `id`, `appid`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE appid=", " and status='reject_own'");
+	if($result->num_rows > 0){
+
+		$strategy->setSql3("SELECT `id`, `app_id`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE app_id=", " and status='reject_own'");
 	
-	$infix = "reject_own";
+		$infix = "reject_own";
 
-	include 'reviewList.php';		
+		include 'reviewList.php';		
 
-	$strategy->setSql3("", "");
+		$strategy->setSql3("", "");
+	}
 ?>								
 
 								</div>
@@ -471,7 +476,7 @@ $strategy->setShowAlterButtons(false);
 <?
 
 $sql = "SELECT id, title, src, status FROM reviewCandidate where ownerId='".$_SESSION['id']."' and id not in (";
-	$sql .= "SELECT reviewCandidateId from app where status='approved')";
+	$sql .= "SELECT reviewCandidate_id from app where status='approved')";
 $result = $conn->query($sql);
 
 ?>
@@ -480,7 +485,7 @@ $result = $conn->query($sql);
 						<div class="col-sm-10">
 							<h4>To be reviewed (yet): <? echo $result->num_rows; ?></h4>
 							<p>
-								Your apps remain in the 'to be reviewed' status until you approve your first review for this app.<br/>
+								Your apps remain in the 'to be reviewed' status until you approve a review for this app.<br/>
 							</p>
 							<br/>
 <?	
@@ -537,7 +542,7 @@ if($result->num_rows > 0){
 <?
 
 $sql = "SELECT id, title, src, status FROM reviewCandidate where ownerId='".$_SESSION['id']."' and id in (";
-	$sql .= "SELECT reviewCandidateId from app where status='approved')";
+	$sql .= "SELECT reviewCandidate_id from app where status='approved')";
 $result = $conn->query($sql);
 
 ?>

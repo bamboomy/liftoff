@@ -242,7 +242,6 @@ if(isset($_SESSION['login_user'])){
 					</form>
 				</div>
 				<p>We will also reserve your user name '<? echo $name; ?>' for future registration purposes...</p>
-				<p>We don't have a policy (yet) and hope not to need one in the future, this site is inteded to do good, please don't misuse it...</p>
 			</div>
 <?
 	

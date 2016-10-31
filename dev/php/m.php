@@ -99,8 +99,8 @@ include "nav.php";
 				<br/>
 				The app list is sorted on votes.<br/>
 				<br/>
-				App owners can vote (only for other apps then their own)<br/>
-				votes are made expensive so app owners are not going to vote for any app.<br/>
+				App owners can vote; only up; only for other apps then their own.<br/>
+				votes are made hard to earn so app owners are not going to vote for any app.<br/>
 				<br/>
 				Also, when apps reach 500 downloads they are removed from this site<br/>
 				(to make place for other app developers' apps).<br/>

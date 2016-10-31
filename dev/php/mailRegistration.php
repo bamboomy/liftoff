@@ -176,8 +176,8 @@ if ($conn->query($sql) !== TRUE) {
 							<ul>
 								<li>This list is sorted by:</li>
 								<ul>
+									<li>apps of users which wrote more reviews first</li>
 									<li>least number of downloads first</li>
-									<li>then, oldest apps first</li>
 								</ul>
 							</ul>
 							<li>Once some other app developer from this site has reviewed your app you will be notified.</li>
@@ -188,10 +188,10 @@ if ($conn->query($sql) !== TRUE) {
 						<br/>
 						<ul>
 							<li>You can review as many apps as you like</li>
-							<li>For every app you review you get a daily vote,</li>
 							<ul>
-								<li>Because you are amongst one of the first users of this site you get 1 vote for free.</li>
-								<li>Every day you can cast all of your daily votes on the main app page.</li>
+								<li>Upon registration you recieve 1 vote for free.</li>
+								<li>For every approved review you get an additional vote.</li>
+								<li>You can cast your votes on the app page.</li>
 								<li>On this page apps are sorted on votes (popular apps are shown higher)</li>
 								<li>You can only upvote a certain app once (and can't upvote your own apps)</li>
 							</ul>
@@ -203,9 +203,8 @@ if ($conn->query($sql) !== TRUE) {
 						And we'll do our best to attract as many people to the site<br/>
 						where they'll get a nice list of promising apps with a short review and 3 +'s and -'s for every app.<br/>
 						<br/>
-						We don't have the intention to get as big as the play store itself... ;)<br/>
-						<br/>
-						..but 500 downloads for good apps seems like a decent promise towards our users...<br/>
+						With this system we try to be a good review reference for apps with low downloads.<br/>
+						(Once an app hits 500 downloads it's removed from this site).<br/>
 						<br/>
 						Thank you for choosing Android Liftoff :D<br/>
 						<br/>
@@ -216,6 +215,15 @@ if ($conn->query($sql) !== TRUE) {
 			</div>
 			<div class="col-sm-2"></div>
 		</div>
+<?
+
+$sql = "SELECT id FROM user where name='".$row['userName']."'";
+$result = $conn->query($sql);
+
+if ($result->num_rows == 1) {
+
+
+?>
 		<div class="row">
 			<div class="col-sm-2"></div>
 			<div class="col-sm-8">
@@ -289,6 +297,47 @@ if ($conn->query($sql) !== TRUE) {
 			</div>
 			<div class="col-sm-2"></div>
 		</div>
+		
+<?
+
+}else {
+
+	if ($result->num_rows > 1) {
+
+		$mail->Subject = 'db inconsistency';
+
+		$mail->Body = "double name: ".$row['userName'];
+		
+		$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+		
+		$mail->send();//fire and forget
+
+	}
+
+
+?>
+
+	<div class="container-fluid androidGreen">
+		<div class="row">
+			<div class="col-sm-2"></div>
+			<div class="col-sm-8">
+			
+				<div class="well">
+					<a href="crib.php">back to crib</a>
+				</div>
+				
+			</div>
+			<div class="col-sm-2"></div>
+		</div>
+
+
+
+<?
+
+}
+
+?>
+
 	</div>
 </body>
 </html>

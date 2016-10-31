@@ -49,7 +49,7 @@ $salt = md5(md5(md5(time()) . md5(md5($_POST['username']) . $_POST['email'])));
 
 $pwHash = md5(md5(md5($salt)) . md5($_POST['pw']));
 
-$sql = "UPDATE user SET salt='".$salt."', pwhash='".$pwHash."', status='registered' WHERE id='".addslashes($_POST['id'])."' "
+$sql = "UPDATE user SET salt='".$salt."', pwhash='".$pwHash."', status='registered' WHERE id='".addslashes($_POST['id'])."' ";
 $sql .= "and name='".addslashes($_POST['username'])."' and email='".addslashes($_POST['email'])."'";
 
 if ($conn->query($sql) !== TRUE) {
@@ -82,9 +82,9 @@ if ($conn->query($sql) !== TRUE) {
 
 	$mailContent .= "If it was you, you can go to <a href='".$liftoffBaseUrl."toBeReviewedList.php'>the to be reviewed list</a> from now on to review apps from other users.<br/><br/>";
 
-	$mailContent .= "Remember: for every review you write you get a daily vote to vote up apps that you like from the <a href='".$liftoffBaseUrl."appList.php'>main site app list</a>.<br/><br/>";
+	$mailContent .= "Remember: for every review that is approved you get a vote to vote up apps that you like from the <a href='".$liftoffBaseUrl."apps.php'>main site app list</a>.<br/><br/>";
 
-	$mailContent .= "You can also now <a href='".$liftoffBaseUrl."submitOtherApp.php'>submit</a> as many other apps as you like...<br/><br/>";
+	$mailContent .= "We've created a nice cosy home for ya which is available when you <a href='".$liftoffBaseUrl."m.php'>log in</a>, where you can review your stats and written/recieved reviews...<br/><br/>";
 
 	$mailContent .= "Thanks for choosing Android Liftoff,<br/><br/>thanks for registering, we wish you a nice day and a lot of fun on the site :).<br/><br/>";
 
@@ -161,14 +161,9 @@ if ($conn->query($sql) !== TRUE) {
 					<p>
 						... and welcome of course :)<br/>
 						<br/>
-						From now on until the end of time you will be able to:<br/>
-						<ul>
-							<li><a href="toBeReviewedList.php">Write as many reviews as you like.</a></li>
-							<li>Vote on the <a hre="appList.php">app page</a>.</li>
-							<li><a href="submitOtherApp.php">Submit</a> any number of apps to the to be reviewed page.</li>
-						</ul><br/>
+						We've created a nice cosy home for ya which is available once <a href="m.php">you log in</a>...<br/>
 						<br/>
-						Don't worry, these links are also mailed to you as available <a href="login.php">once you log in</a> for easy reference...<br/>
+						You'll be able to see your stats; and statusses of your written and recieved reviews there.<br/>
 						<br/>
 						<a href="m.php">Back to main page.</a><br/>
 					</p>

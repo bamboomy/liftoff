@@ -69,7 +69,7 @@ if ($conn->query($sql) !== TRUE) {
 ?>
 	<script>
 		alert("great succezz...");
-		window.location.assign("approve_reviews_2.php");
+		window.location.assign("approve_reviews_abcdef.php");
 	</script>
 <?
 
