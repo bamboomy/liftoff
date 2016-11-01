@@ -51,7 +51,7 @@ $result = $conn->query($sql);
 
 if ($result->num_rows == 0) {
 
-	$sql = "INSERT INTO `app`(`reviewCandidateId`, `url`, `votes`, `status`)";
+	$sql = "INSERT INTO `app`(`reviewCandidate_id`, `url`, `votes`, `status`)";
 	$sql .= "VALUES (".addslashes($_POST['reviewCandidateId']).",'".addslashes($_POST['appUrl'])."','0','2breviewed')";
 
 	if ($conn->query($sql) !== TRUE) {
@@ -98,7 +98,7 @@ if ($result->num_rows == 1) {
     // output data of each row
     $row = $result->fetch_assoc();
 	
-	$sql = "INSERT INTO `review`(`ownerId`,`appId`, `status`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`)";
+	$sql = "INSERT INTO `review`(`ownerId`,`app_id`, `status`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`)";
 	$sql .= "VALUES ('".$_SESSION['id']."','".$row['id']."','need_administration','".addslashes($_POST['content'])."','".addslashes($_POST['pro0']);
 	$sql .= "','".addslashes($_POST['con0'])."','".addslashes($_POST['pro1'])."','".addslashes($_POST['con1'])."','".addslashes($_POST['pro2'])."','".addslashes($_POST['con2'])."')";
 
@@ -141,7 +141,7 @@ if ($result->num_rows == 1) {
 	die;
 }
 
-$sql = "UPDATE reviewCandidate SET status='review_pending' WHERE id='".addslashes($_POST['reviewCandidateId'])."'";
+$sql = "UPDATE reviewCandidate SET status='review_pending' WHERE id='".addslashes($_POST['reviewCandidate_id'])."'";
 
 if ($conn->query($sql) !== TRUE) {
 

@@ -90,9 +90,9 @@ include "nav.php";
 						<div class="col-sm-10">
 <?							
 
-$sql = "SELECT review.`id`, review.`appid`, count(appVote.appid) as votes";
+$sql = "SELECT review.`id`, review.`app_id`, count(appVote.appid) as votes";
 $sql .= " FROM `review`";
-$sql .= " left join appVote on review.appid = appVote.appId";
+$sql .= " left join appVote on review.app_id = appVote.appid";
 $sql .= " WHERE status='approved'";
 $sql .= " GROUP BY review.id";
 $sql .= " order BY votes desc";
@@ -111,6 +111,7 @@ $infix = "published";
 $published = true;
 
 $strategy = new ListStrategy();
+$strategy->setSql3("SELECT `id`, `app_id`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId FROM `review` WHERE app_id=", " and status='approved'");
 $strategy->setShowVotes(true);
 $strategy->setConn($conn);
 
