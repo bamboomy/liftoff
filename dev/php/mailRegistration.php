@@ -198,17 +198,16 @@ if ($conn->query($sql) !== TRUE) {
 						</ul>
 						And then the liftoff can commence...<br/>
 						<br/>
-						The review process already generates some downloads.<br/>
+						Aside from this site we also have our own app which lists apps reviewed on this site.<br/>
 						<br/>
-						And we'll do our best to attract as many people to the site<br/>
-						where they'll get a nice list of promising apps with a short review and 3 +'s and -'s for every app.<br/>
+						From this app the reviewed apps are listed alongside with the review you approved on this site,<br/>
+						with an easy one-tap to the play store...<br/>
 						<br/>
-						With this system we try to be a good review reference for apps with low downloads.<br/>
-						(Once an app hits 500 downloads it's removed from this site).<br/>
+						We advertise this one app as much as possible and in the process<br/>
+						also the apps of the registered app owners of this site.<br/>
 						<br/>
-						Thank you for choosing Android Liftoff :D<br/>
-						<br/>
-						If you want to review apps of others you can set a password below:<br/>
+						For your app to show up on this list you need to approve at least one review,<br/>
+						which means you need to register...<br/>
 					</p>
 				</div>
 				
@@ -286,8 +285,7 @@ if ($result->num_rows == 1) {
 								<div class="col-sm-4"></div>
 								<div class="col-sm-3"></div>
 								<div class="col-sm-3">
-									<button type='submit' id='submit' disabled='disabled' class="btn btn-primary">I would love to review other apps!!!</button><br/><br/>
-									<span class="center"><? echo "<a href='toBeReviewedList.php?token=".$_GET['hash']."'>No thanks</a>"; ?></span>
+									<button type='submit' id='submit' disabled='disabled' class="btn btn-primary">Launch my app!!!</button><br/><br/>
 								</div>
 								<div class="col-sm-2"></div>
 							</div>

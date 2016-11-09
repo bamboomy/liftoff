@@ -230,8 +230,8 @@ if(isset($_SESSION['login_user'])){
 	
 ?>
 			<div class="well">
-				<p>We will send an e-mail to this address to verify that you are really the app owner, 
-				<br/>this e-mail address will be used for future communication with you...</p>
+				<p>We will send an e-mail to following address to verify that you are really the app owner, 
+				<br/>this e-mail address will also be used as main e-mail address for future communication with you...</p>
 				<div class="row">
 					<div class="col-sm-10">
 						<p><?php echo $mail; ?></p>
@@ -241,7 +241,7 @@ if(isset($_SESSION['login_user'])){
 					</div>
 					</form>
 				</div>
-				<p>We will also reserve your user name '<? echo $name; ?>' for future registration purposes...</p>
+				<p>Furthermore, you will be known at this site as: '<? echo $name; ?>'...</p>
 			</div>
 <?
 	
