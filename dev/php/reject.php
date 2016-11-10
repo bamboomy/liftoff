@@ -66,10 +66,35 @@ if ($conn->query($sql) !== TRUE) {
 	die;
 }
 
+include("mails/review_rejected_admin.php");
+
+	$mail->Subject = $subject;
+	$mail->Body = $mailContent;
+
+	$mail->AltBody = 'Unfortunately non-html clients are not supported.';
+	
+	$mail->addAddress('sander.theetaert@gmail.com', $_POST['username']);  //needs to be replaced with owner e-mail (from session or from registration) -> $email
+
+	if(!$mail->send()) {
+		
+		//TODO: error module (db)
+		
+		//echo 'Message could not be sent.';
+		//echo 'Mailer Error: ' . $mail->ErrorInfo; -> usefull info
+		
+		?>
+
+			<script>
+				alert("something went wrong whilst sending the mail...");
+			</script>
+			
+		<?
+	}
+
 ?>
 	<script>
 		alert("rejected...");
-		window.location.assign("approve_reviews_2.php");
+		window.location.assign("approve_reviews_abcdef.php");
 	</script>
 <?
 

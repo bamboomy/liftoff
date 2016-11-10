@@ -90,7 +90,7 @@ if ($result->num_rows != 1) {
 	
 	$launched = ($maxDownloads > 500);
 	
-	$launched = false;
+	$launched = false;//TODO: remove if beta
 	
 	if($launched){
 		

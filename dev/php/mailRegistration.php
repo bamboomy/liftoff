@@ -168,7 +168,7 @@ if ($conn->query($sql) !== TRUE) {
 					<p>
 						Good news: Your app is now registered on our site :-D !!!<br/>
 						<br/>
-						It's not yet visible on the main site but that won't take long...<br/>
+						It's not yet visible on the main site or in the app but that won't take long...<br/>
 						<br/>
 						It's waiting for a peer to review:<br/>
 						<ul>

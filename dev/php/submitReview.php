@@ -58,7 +58,7 @@ if ($result->num_rows == 0) {
 
 		//TODO: error module
 		
-		$mail->Body = "couldn't insert user... -> ".$conn->error;
+		$mail->Body = "couldn't insert app... -> ".$conn->error;
 
 		$mail->send();//fire and forget
 
@@ -161,6 +161,39 @@ if ($conn->query($sql) !== TRUE) {
 	
 } 
 
+include("mails/awaiting_admin_approval.php");
+
+$mail->Subject = $subject;
+$mail->Body = $mailContent;
+
+$mail->AltBody = 'Unfortunately non-html clients are not supported.';
+
+$mail->addAddress('sander.theetaert@gmail.com', "admin");  
+
+$mail->setFrom('bamboomy@gmail.com', 'Liftoff admin messages');
+
+if(!$mail->send()) {
+	
+	//TODO: error module (db)
+	
+	//echo 'Message could not be sent.';
+	//echo 'Mailer Error: ' . $mail->ErrorInfo; -> usefull info
+	
+	?>
+
+		<script>
+			alert("an error has occured, you will be redirected to the main page...");
+			window.location.assign("m.php");
+		</script>
+		
+	<?
+	
+	die;
+}	
+
+$mail->Subject = "error encountered on submit review";
+$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -211,7 +244,7 @@ if ($conn->query($sql) !== TRUE) {
 				<br/>
 				<ol>
 					<li>We first like to check whether the review complies with site policies, nothing fancy here.</li>
-					<li>We also let the app owner agree with the review (or not), you wouldn't like to have a bad review about your app either, no?</li>
+					<li>We also let the app owner agree with the review (or not), you wouldn't like to have a bad review about your own app either...</li>
 				</ol>
 				<br/>
 				By every step you get a confirmation e-mail,<br/>
