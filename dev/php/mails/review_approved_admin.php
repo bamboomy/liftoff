@@ -2,7 +2,7 @@
 
 	$subject = 'Good news everyone!!!';
 
-	$mailContent = "Dear ".$_SESSION['login_user'].",<br/><br/>";
+	$mailContent = "Dear ".$_POST['reviewOwnerName'].",<br/><br/>";
 
 	$mailContent .= "Your review has been approved by the moderator :-D<br/><br/>";
 

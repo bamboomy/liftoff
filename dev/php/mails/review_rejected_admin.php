@@ -2,7 +2,7 @@
 
 	$subject = 'Review rejected...';
 
-	$mailContent = "Dear ".$_SESSION['login_user'].",<br/><br/>";
+	$mailContent = "Dear ".$_POST['reviewOwnerName'].",<br/><br/>";
 
 	$mailContent .= "Unfortunately your review has been rejected by the admin.<br/><br/>";
 

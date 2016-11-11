@@ -177,7 +177,7 @@ $result = $conn->query($sql);
 			
 			while($row3 = $result3->fetch_assoc()){
 
-				$sql4 = "SELECT `name` FROM `user` WHERE id=".$row3['ownerId'];
+				$sql4 = "SELECT `name`, email FROM `user` WHERE id=".$row3['ownerId'];
 				
 				$result4 = $conn->query($sql4);
 			
@@ -187,8 +187,22 @@ $result = $conn->query($sql);
 					die;
 				}
 				
-				$row4 = $result4->fetch_assoc()
+				$row4 = $result4->fetch_assoc();
 
+				$sql5 = "SELECT `name`, email FROM `user` WHERE id=(";
+				$sql5 .= "	select ownerId from reviewCandidate where id=(";
+				$sql5 .= "		select reviewCandidate_id from app where id='".$row3['app_id']."'";
+				$sql5 .= "))";
+				
+				$result5 = $conn->query($sql5);
+			
+				if($result5->num_rows != 1){
+					//2DO: ERROR HANDLING
+					echo "no owner";
+					die;
+				}
+				
+				$row5 = $result5->fetch_assoc();
 ?>			
 									<br/>
 									<div class="row">
@@ -298,11 +312,15 @@ $result = $conn->query($sql);
 												<div class="col-sm-6">
 												</div>
 												<div class="col-sm-2">
-													<? echo "<button type='button' class='btn btn-primary' onclick=\"$('#rejectId').val('".$row3['id']."');\" data-toggle='modal' data-target='#rejectModal'>Reject</button>"; ?>
+													<? echo "<button type='button' class='btn btn-primary' onclick=\"copyValues(".$row3['id'].")\" data-toggle='modal' data-target='#rejectModal'>Reject</button>"; ?>
 												</div>
 												<div class="col-sm-2">
 													<form action="approve.php" method="post">
 														<? echo "<input type='hidden' name='id' value='".$row3['id']."' />"; ?>
+														<? echo "<input type='hidden' name='reviewOwnerName' value='".$row4['name']."' id='reviewOwnerName_".$row3['id']."' />"; ?>
+														<? echo "<input type='hidden' name='reviewOwnerEmail' value='".$row4['email']."' id='reviewOwnerEmail_".$row3['id']."' />"; ?>
+														<? echo "<input type='hidden' name='appOwnerName' value='".$row5['name']."' />"; ?>
+														<? echo "<input type='hidden' name='appOwnerEmail' value='".$row5['email']."' />"; ?>
 														<button type="submit" class="btn btn-primary" id="submitReview">Approve</button>
 													</form>
 												</div>
@@ -321,6 +339,18 @@ $result = $conn->query($sql);
 			<div class="col-sm-2"></div>
 		</div>
 	</div>
+
+<script type="text/javascript">
+	
+	function copyValues(id){
+
+		$('#rejectId').val(id);
+		$('#reviewOwnerName').val($("#reviewOwnerName_"+id).val());
+		$('#reviewOwnerEmail').val($("#reviewOwnerEmail_"+id).val());
+
+	}
+
+</script>
 
 <div id="rejectModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
@@ -341,6 +371,8 @@ $result = $conn->query($sql);
 						</div>
 						<div class="col-sm-2">
 							<input type='hidden' name="id" id='rejectId' value='' />
+							<input type='hidden' name="reviewOwnerName" id='reviewOwnerName' value='' />
+							<input type='hidden' name="reviewOwnerEmail" id='reviewOwnerEmail' value='' />
 							<button class="btn btn-default pull-right" type="submit">Submit</button>
 						</div>
 					</div>

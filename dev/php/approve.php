@@ -30,7 +30,7 @@ if ($conn->connect_error || $_SESSION['login_user'] !== 'Matdoya') {
 
 	$mail->Subject = 'error encountered: no database';
 
-	$mail->Body = "couldn't connect to database... -> ".$conn->connect_error;
+	$mail->Body = "couldn't connect to database or hackattempt... -> ".$conn->connect_error;
 	
 	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
 	
@@ -73,7 +73,9 @@ include("mails/review_approved_admin.php");
 
 	$mail->AltBody = 'Unfortunately non-html clients are not supported.';
 	
-	$mail->addAddress('sander.theetaert@gmail.com', $_POST['username']);  //needs to be replaced with owner e-mail (from session or from registration) -> $email
+	$mail->addAddress($_POST['reviewOwnerEmail'], $_POST['reviewOwnerName']);//TODO: once tested, remove again until alpha
+
+	//$mail->addAddress('sander.theetaert@gmail.com', $_POST['username']);  //needs to be replaced with owner e-mail (from session or from registration) -> $email
 
 	if(!$mail->send()) {
 		
@@ -91,6 +93,32 @@ include("mails/review_approved_admin.php");
 		<?
 	}
 
+include("mails/review_gotten.php");
+
+	$mail->Subject = $subject;
+	$mail->Body = $mailContent;
+
+	$mail->AltBody = 'Unfortunately non-html clients are not supported.';
+	
+	$mail->addAddress($_POST['appOwnerEmail'], $_POST['appOwnerName']);//TODO: once tested, remove again until alpha
+
+	//$mail->addAddress('sander.theetaert@gmail.com', $_POST['username']);  //needs to be replaced with owner e-mail (from session or from registration) -> $email
+
+	if(!$mail->send()) {
+		
+		//TODO: error module (db)
+		
+		//echo 'Message could not be sent.';
+		//echo 'Mailer Error: ' . $mail->ErrorInfo; -> usefull info
+		
+		?>
+
+			<script>
+				alert("something went wrong whilst sending owner mail...");
+			</script>
+			
+		<?
+	}
 
 ?>
 	<script>

@@ -72,8 +72,10 @@ include("mails/review_rejected_admin.php");
 	$mail->Body = $mailContent;
 
 	$mail->AltBody = 'Unfortunately non-html clients are not supported.';
+
+	$mail->addAddress($_POST['reviewOwnerEmail'], $_POST['reviewOwnerName']);//TODO: once tested, remove again until alpha
 	
-	$mail->addAddress('sander.theetaert@gmail.com', $_POST['username']);  //needs to be replaced with owner e-mail (from session or from registration) -> $email
+	//$mail->addAddress('sander.theetaert@gmail.com', $_POST['username']);  //needs to be replaced with owner e-mail (from session or from registration) -> $email
 
 	if(!$mail->send()) {
 		
