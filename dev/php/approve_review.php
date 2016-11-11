@@ -46,7 +46,7 @@ if ($conn->connect_error) {
 } 
 
 $sql = "SELECT * FROM `review` WHERE appid in (";
-	$sql .= "select id from app where reviewCandidateId in (";
+	$sql .= "select id from app where reviewCandidate_id in (";
 		$sql .= "select id from reviewCandidate where ownerId = '".$_SESSION['id']."'";
 		$sql .= ")) and id='".addslashes($_GET['id'])."' and status='need_owner'";
 		
@@ -56,7 +56,7 @@ if($result->num_rows != 1){
 	
 	$mail->Subject = 'attempt to approve review without authorization: '.$_GET['id']."!!!";
 
-	$mail->Body = 'attempt to approve review without authorization: '.$_GET['id']."!!!";
+	$mail->Body = 'attempt to approve review without authorization: '.$_GET['id']."!!!<br/><br/>".$sql;
 	
 	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
 	
@@ -72,6 +72,22 @@ if($result->num_rows != 1){
 }
 
 $row = $result->fetch_assoc();
+
+	$sql4 = "SELECT `name`, email FROM `user` WHERE id='".$row['ownerId']."'";
+	
+	$result4 = $conn->query($sql4);
+
+	if($result4->num_rows != 1){
+		//2DO: ERROR HANDLING
+		echo "no username";
+		die;
+	}
+	
+	$row4 = $result4->fetch_assoc();
+
+	$reviewOwnerName = $row4['name'];
+
+	$reviewOwnerEmail = $row4['email'];
 
 $appId = $row['appid'];
 
@@ -158,11 +174,41 @@ if($result->num_rows == 1){
 	
 }
 
+include("mails/review_approved.php");
+
+	$mail->Subject = $subject;
+	$mail->Body = $mailContent;
+
+	$mail->AltBody = 'Unfortunately non-html clients are not supported.';
+
+	$mail->clearAddresses();
+	$mail->addAddress($reviewOwnerEmail, $reviewOwnerName);//TODO: once tested, remove again until alpha
+	
+	//$mail->addAddress('sander.theetaert@gmail.com', $reviewOwnerName."(".$reviewOwnerEmail.")");  //needs to be replaced with owner e-mail (from session or from registration) -> $email
+
+	if(!$mail->send()) {
+		
+		//TODO: error module (db)
+		
+		//echo 'Message could not be sent.';
+		//echo 'Mailer Error: ' . $mail->ErrorInfo; -> usefull info
+		
+		?>
+
+			<script>
+				alert("something went wrong whilst sending the mail...");
+			</script>
+			
+		<?
+	}
+
 ?>
 	<script>
 		window.location.assign("crib.php");
 	</script>
 <?
+
+
 
 
 $conn->close();

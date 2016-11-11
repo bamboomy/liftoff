@@ -73,6 +73,22 @@ if($result->num_rows != 1){
 
 $row = $result->fetch_assoc();
 
+	$sql4 = "SELECT `name`, email FROM `user` WHERE id='".$row['ownerId']."'";
+	
+	$result4 = $conn->query($sql4);
+
+	if($result4->num_rows != 1){
+		//2DO: ERROR HANDLING
+		echo "no username";
+		die;
+	}
+	
+	$row4 = $result4->fetch_assoc();
+
+	$reviewOwnerName = $row4['name'];
+
+	$reviewOwnerEmail = $row4['email'];
+
 $appId = $row['appid'];
 
 $sql = "UPDATE review SET status='reject_own', rejectReason='".addslashes($_POST['reason'])."' WHERE id='".addslashes($_POST['id'])."'";
@@ -101,7 +117,6 @@ if ($conn->query($sql) !== TRUE) {
 ?>
 	<script>
 		alert("review rejected...");
-		window.location.assign("crib.php");
 	</script>
 <?
 
@@ -113,9 +128,9 @@ include("mails/review_rejected_owner.php");
 	$mail->AltBody = 'Unfortunately non-html clients are not supported.';
 
 	$mail->clearAddresses();
-	$mail->addAddress($_POST['reviewOwnerEmail'], $_POST['reviewOwnerName']);//TODO: once tested, remove again until alpha
+	//$mail->addAddress($reviewOwnerEmail, $reviewOwnerName);//TODO: once tested, remove again until alpha
 	
-	//$mail->addAddress('sander.theetaert@gmail.com', $_POST['username']);  //needs to be replaced with owner e-mail (from session or from registration) -> $email
+	$mail->addAddress('sander.theetaert@gmail.com', $reviewOwnerName."(".$reviewOwnerEmail.")");  //needs to be replaced with owner e-mail (from session or from registration) -> $email
 
 	if(!$mail->send()) {
 		
@@ -133,6 +148,13 @@ include("mails/review_rejected_owner.php");
 		<?
 	}
 
+?>
+
+	<script>
+		window.location.assign("crib.php");
+	</script>
+
+<?
 
 $conn->close();
 

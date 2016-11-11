@@ -313,7 +313,7 @@ $strategy->setShowAlterButtons(false);
 		$strategy->setShowEditButton(true);
 		$strategy->setShowDeleteButton(true);
 		$strategy->setSql3("SELECT `id`, `app_id`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason FROM `review` WHERE app_id=", 
-			" and `ownerId`=".$_SESSION['id']." and status='reject_mod'");
+			" and `ownerId`=".$_SESSION['id']." and status='reject_mod'");//TODO: ownerid of review != ownerid of app!!!
 ?>	
 									<div class="row">
 										<div class="col-sm-1"></div>
