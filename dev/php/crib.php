@@ -254,14 +254,16 @@ $infix = "need_owner";
 $strategy->setSql3("SELECT `id`, `app_id`, `text`, `pro0`, `con0`, `pro1`, `con1`, `pro2`, `con2`, ownerId, rejectReason FROM `review` WHERE app_id=", 
 	" and `ownerId`=".$_SESSION['id']." and status='need_owner'");
 $strategy->setShowButtons(true);
-$strategy->setshowDecisionButtons(true);
+$strategy->setShowEditButton(true);
+$strategy->setShowDeleteButton(true);
 $strategy->setShowAlterButtons(true);
 
 include 'reviewList.php';
 
 $strategy->setSql3("", "");		
 $strategy->setShowButtons(false);
-$strategy->setshowDecisionButtons(false);
+$strategy->setShowEditButton(false);
+$strategy->setShowDeleteButton(false);
 $strategy->setShowAlterButtons(false);
 
 ?>						

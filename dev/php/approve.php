@@ -73,9 +73,10 @@ include("mails/review_approved_admin.php");
 
 	$mail->AltBody = 'Unfortunately non-html clients are not supported.';
 	
-	$mail->addAddress($_POST['reviewOwnerEmail'], $_POST['reviewOwnerName']);//TODO: once tested, remove again until alpha
+	$mail->clearAddresses();
+	//$mail->addAddress($_POST['reviewOwnerEmail'], $_POST['reviewOwnerName']);//TODO: once tested, remove again until alpha
 
-	//$mail->addAddress('sander.theetaert@gmail.com', $_POST['username']);  //needs to be replaced with owner e-mail (from session or from registration) -> $email
+	$mail->addAddress('sander.theetaert@gmail.com', $_POST['username']);  //needs to be replaced with owner e-mail (from session or from registration) -> $email
 
 	if(!$mail->send()) {
 		
@@ -101,9 +102,9 @@ include("mails/review_gotten.php");
 	$mail->AltBody = 'Unfortunately non-html clients are not supported.';
 
 	$mail->clearAddresses();
-	$mail->addAddress($_POST['appOwnerEmail'], $_POST['appOwnerName']);//TODO: once tested, remove again until alpha
+	//$mail->addAddress($_POST['appOwnerEmail'], $_POST['appOwnerName']);//TODO: once tested, remove again until alpha
 
-	//$mail->addAddress('sander.theetaert@gmail.com', $_POST['username']);  //needs to be replaced with owner e-mail (from session or from registration) -> $email
+	$mail->addAddress('sander.theetaert@gmail.com', $_POST['username']);  //needs to be replaced with owner e-mail (from session or from registration) -> $email
 
 	if(!$mail->send()) {
 		

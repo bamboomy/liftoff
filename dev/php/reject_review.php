@@ -45,8 +45,8 @@ if ($conn->connect_error) {
 	die;
 } 
 
-$sql = "SELECT * FROM `review` WHERE appid in (";
-	$sql .= "select id from app where reviewCandidateId in (";
+$sql = "SELECT * FROM `review` WHERE app_id in (";
+	$sql .= "select id from app where reviewCandidate_id in (";
 		$sql .= "select id from reviewCandidate where ownerId = '".$_SESSION['id']."'";
 		$sql .= ")) and id='".addslashes($_POST['id'])."' and status='need_owner'";
 		
@@ -54,9 +54,9 @@ $result = $conn->query($sql);
 
 if($result->num_rows != 1){
 	
-	$mail->Subject = 'attempt to approve review without authorization: '.$_POST['id']."!!!";
+	$mail->Subject = 'attempt to reject review without authorization: '.$_POST['id']."!!!";
 
-	$mail->Body = 'attempt to approve review without authorization: '.$_POST['id']."!!!";
+	$mail->Body = 'attempt to reject review without authorization: '.$_POST['id']."!!!<br/><br/>".$sql;
 	
 	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
 	
@@ -104,6 +104,35 @@ if ($conn->query($sql) !== TRUE) {
 		window.location.assign("crib.php");
 	</script>
 <?
+
+include("mails/review_rejected_owner.php");
+
+	$mail->Subject = $subject;
+	$mail->Body = $mailContent;
+
+	$mail->AltBody = 'Unfortunately non-html clients are not supported.';
+
+	$mail->clearAddresses();
+	$mail->addAddress($_POST['reviewOwnerEmail'], $_POST['reviewOwnerName']);//TODO: once tested, remove again until alpha
+	
+	//$mail->addAddress('sander.theetaert@gmail.com', $_POST['username']);  //needs to be replaced with owner e-mail (from session or from registration) -> $email
+
+	if(!$mail->send()) {
+		
+		//TODO: error module (db)
+		
+		//echo 'Message could not be sent.';
+		//echo 'Mailer Error: ' . $mail->ErrorInfo; -> usefull info
+		
+		?>
+
+			<script>
+				alert("something went wrong whilst sending the mail...");
+			</script>
+			
+		<?
+	}
+
 
 $conn->close();
 
