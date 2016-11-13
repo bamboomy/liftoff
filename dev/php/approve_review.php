@@ -45,7 +45,7 @@ if ($conn->connect_error) {
 	die;
 } 
 
-$sql = "SELECT * FROM `review` WHERE appid in (";
+$sql = "SELECT * FROM `review` WHERE app_id in (";
 	$sql .= "select id from app where reviewCandidate_id in (";
 		$sql .= "select id from reviewCandidate where ownerId = '".$_SESSION['id']."'";
 		$sql .= ")) and id='".addslashes($_GET['id'])."' and status='need_owner'";

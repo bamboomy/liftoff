@@ -7,8 +7,8 @@
 	$mailContent .= "Your review has been rejected by the app owner for following reason:<br/>";
 	$mailContent .= "'".$_POST['reason']."'...<br/><br/>";
 
-	$mailContent .= "Your review did comply with the site guidelines,<br/><br/>";
-	$mailContent .= "but the app owner couldn't find itself in your review...<br/><br/>";
+	$mailContent .= "The app owner couldn't find itself in your review...<br/>";
+	$mailContent .= "but your review <b>did</b> comply with the site guidelines...<br/><br/>";
 
 	$mailContent .= "You didn't gain a vote, but you did gain a to be reviewed point,<br/>";
 	$mailContent .= "placing your app(s) higher on the to be reviewed list.<br/><br/>";
