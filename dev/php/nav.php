@@ -55,7 +55,7 @@
 		<p id="welcome"></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location='crib.php';">Close</button>
       </div>
     </div>
 
@@ -76,7 +76,7 @@
 		<p>You are logged out.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location='m.php';">Close</button>
       </div>
     </div>
 
