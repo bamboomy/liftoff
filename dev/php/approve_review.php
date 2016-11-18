@@ -174,6 +174,29 @@ if($result->num_rows == 1){
 	
 }
 
+$sql = "update `user` set `totalVotes` = (";
+$sql .="	select totalVotes from (SELECT * FROM user) AS something WHERE  `id` ='".$_SESSION['id']."'";
+$sql .=") + 1 WHERE  `id` ='".$_SESSION['id']."'";
+
+if ($conn->query($sql) !== TRUE) {
+
+	$mail->Subject = "error encountered: couldn't update votes";
+
+	$mail->Body = "couldn't update votes... -> ".$conn->error."<br/><br/>".$sql;
+	
+	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+	
+	$mail->send();//fire and forget
+
+?>
+	<script>
+		alert("an error has occured, you will be redirected to the main page...");
+		window.location.assign("m.php");
+	</script>
+<?
+	die;
+}
+
 include("mails/review_approved.php");
 
 	$mail->Subject = $subject;

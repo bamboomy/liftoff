@@ -113,26 +113,35 @@ include "nav.php";
 						</div>
 						<div class="col-sm-1"></div>
 					</div>
+<?							
+
+$sql = "SELECT  `totalVotes`, votes FROM  `user` WHERE  `id` ='".$_SESSION['id']."'";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+
+?>
+
 					<div class="row">
 						<div class="col-sm-1"></div>
 						<div class="col-sm-10">
-							<h4>Votes: 1</h4>
+							<h4>Votes: <? echo $row['totalVotes'] ?></h4>
 							<p>
 								Your first vote is free;<br/>
-								after that you earn a vote for every <u>published</u> review.<br/>
-								You can cast votes on the <a href="apps.php">app page</a>.
+								after that you earn a vote for <u>every</u> <u><b>published</b></u> review.<br/>
+								You can cast votes on the <a href="apps.php">app page</a>.<br/>
+								You can't vote for your own apps.<br/>
 							</p>
 							<div class="row">
 								<div class="col-sm-1"></div>
 								<div class="col-sm-10">
-									<h4>Cast: 0</h4>
+									<h4>Cast: <? echo intval($row['totalVotes'])-intval($row['votes']) ?></h4>
 								</div>
 								<div class="col-sm-1"></div>
 							</div>
 							<div class="row">
 								<div class="col-sm-1"></div>
 								<div class="col-sm-10">
-									<h4>Remaining: 1</h4>
+									<h4>Remaining: <? echo $row['votes'] ?></h4>
 								</div>
 								<div class="col-sm-1"></div>
 							</div>
