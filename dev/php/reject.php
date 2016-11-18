@@ -97,7 +97,7 @@ include("mails/review_rejected_admin.php");
 ?>
 	<script>
 		alert("rejected...");
-		window.location.assign("approve_reviews_abcdef.php");
+		window.location.assign("approve_reviews_randzzz.php");
 	</script>
 <?
 

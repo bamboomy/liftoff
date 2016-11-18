@@ -38,10 +38,13 @@ if ($conn->connect_error || $_SESSION['login_user'] !== 'Matdoya') {
 
 ?>
 
-	<script>
-		alert("an error has occured, you will be redirected to the main page...");
-		window.location.assign("m.php");
-	</script>
+	<html>
+	<body>
+	<center>
+	<img src="../imgz/one_does_not.jpg" />	
+	</center>
+	</body>
+	</html>
 	
 <?
 	die;

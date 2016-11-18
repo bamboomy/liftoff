@@ -89,7 +89,7 @@ $row = $result->fetch_assoc();
 
 	$reviewOwnerEmail = $row4['email'];
 
-$appId = $row['appid'];
+$appId = $row['app_id'];
 
 $sql = "UPDATE review SET status='approved' WHERE id='".addslashes($_GET['id'])."'";
 
@@ -146,7 +146,7 @@ if($result->num_rows == 1){
 	}
 
 	$sql = "UPDATE reviewCandidate SET status='reviewed' WHERE id=(";
-		$sql .= "select reviewCandidateId from app where id=".$appId.")";
+		$sql .= "select reviewCandidate_id from app where id=".$appId.")";
 
 	if ($conn->query($sql) !== TRUE) {
 
@@ -182,9 +182,9 @@ include("mails/review_approved.php");
 	$mail->AltBody = 'Unfortunately non-html clients are not supported.';
 
 	$mail->clearAddresses();
-	$mail->addAddress($reviewOwnerEmail, $reviewOwnerName);//TODO: once tested, remove again until alpha
+	//$mail->addAddress($reviewOwnerEmail, $reviewOwnerName);//TODO: once tested, remove again until alpha
 	
-	//$mail->addAddress('sander.theetaert@gmail.com', $reviewOwnerName."(".$reviewOwnerEmail.")");  //needs to be replaced with owner e-mail (from session or from registration) -> $email
+	$mail->addAddress('sander.theetaert@gmail.com', $reviewOwnerName."(".$reviewOwnerEmail.")");  //needs to be replaced with owner e-mail (from session or from registration) -> $email
 
 	if(!$mail->send()) {
 		

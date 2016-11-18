@@ -125,7 +125,7 @@ include("mails/review_gotten.php");
 ?>
 	<script>
 		alert("great succezz...");
-		window.location.assign("approve_reviews_abcdef.php");
+		window.location.assign("approve_reviews_randzzz.php");
 	</script>
 <?
 
