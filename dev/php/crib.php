@@ -176,7 +176,7 @@ if($result->num_rows == 0){
 							
 							<p>
 							We encourage you to <a href="toBeReviewedList.php">write reviews</a>, for every review you wrote, approved by at least a moderator;<br/>
-							<b>your apps</b> get ranked higher in the to be reviewed list;<br/>
+							<b>all of your apps</b> get ranked higher in the to be reviewed list;<br/>
 							(and are more likely to be chosen to be reviewed as well...)<br/>
 							</p>
 <?

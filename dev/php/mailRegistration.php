@@ -216,7 +216,7 @@ if ($conn->query($sql) !== TRUE) {
 		</div>
 <?
 
-$sql = "SELECT id FROM user where name='".$row['userName']."'";
+$sql = "SELECT id FROM user where name='".$row['userName']."' and status != 'registered'";
 $result = $conn->query($sql);
 
 if ($result->num_rows == 1) {

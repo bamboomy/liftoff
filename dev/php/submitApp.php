@@ -58,7 +58,7 @@ if ($result->num_rows == 1) {
     // output data of each row
     $row = $result->fetch_assoc();
 	
-	if($row["count"] > 1 && !isset($_SESSION['login_user'])){
+	if($row["count"] > 0 && !isset($_SESSION['login_user'])){
 		
 ?>
 	<script>
