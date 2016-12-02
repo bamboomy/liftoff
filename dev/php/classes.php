@@ -109,11 +109,19 @@ class ListStrategy{
 			$sql9 = "SELECT `id` FROM `appVote` WHERE appId = '".$id."' and userId='".$_SESSION['id']."'";
 
 			$result9 = $this->conn->query($sql9);
-			
+
+			$sql10 = "SELECT `votes` FROM `user` WHERE id = '".$_SESSION['id']."'";
+
+			$result10 = $this->conn->query($sql10);
+
+			$row10 = $result10->fetch_assoc();
+
+			$votesLeft = (bool)(intval($row10['votes']) > 0);
+
 			if($result9->num_rows != 0){
 				echo "<img src='../imgz/up_orange.png' width='30' height='30' /><h2 class='closeer'>".$votes."</h2>";	
 			}else{
-				if($owner !== $_SESSION['login_user']){
+				if($owner !== $_SESSION['login_user'] && $votesLeft){
 					echo "<img src='../imgz/up_grey.png' width='30' height='30' onmouseover=\"this.src='../imgz/up_green.png';\" ";
 					echo "onmouseout=\"this.src='../imgz/up_grey.png';\" onclick='castVote(".$id.")' /><h2 class='closeer'>".$votes."</h2>";	
 				}else{
