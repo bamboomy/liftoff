@@ -110,7 +110,7 @@ class ListStrategy{
 
 			$result9 = $this->conn->query($sql9);
 
-			$sql10 = "SELECT `votes` FROM `user` WHERE id = '".$_SESSION['id']."'";
+			$sql10 = "SELECT votes FROM `user` WHERE id = '".$_SESSION['id']."'";
 
 			$result10 = $this->conn->query($sql10);
 

@@ -142,7 +142,15 @@ include 'reviewList.php';
         <h4 class="modal-title">Your vote has been cast; thanks :)</h4>
       </div>
       <div class="modal-body">
-		<p>Remaining votes: 0</p>
+<?
+			$sql10 = "SELECT votes FROM `user` WHERE id = '".$_SESSION['id']."'";
+
+			$result10 = $conn->query($sql10);
+
+			$row10 = $result10->fetch_assoc();
+
+			echo "<p>Remaining votes: ".(intval($row10['votes'])-1)."</p>";
+?>  
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" onclick="location.reload();">Close</button>
