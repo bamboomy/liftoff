@@ -230,7 +230,9 @@ if(isset($launchId)){
 <?
 }
 
-$sql = "SELECT id, appUrl, sentence, ownerName, maxDownloads, title, src, genre FROM reviewCandidate where status='verified' or status='review_pending' order by timeStamp asc";
+$sql = "SELECT reviewCandidate.id, appUrl, sentence, reviewCandidate.ownerName, maxDownloads, title, src, genre, user.tbrlp FROM reviewCandidate ";
+$sql.= "LEFT JOIN user ON reviewCandidate.ownerId=user.id ";
+$sql.= "where reviewCandidate.status='verified' or reviewCandidate.status='review_pending' order by reviewCandidate.timeStamp asc";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -253,6 +255,7 @@ if ($result->num_rows > 0) {
 			"title" => $row["title"],
 			"src" => $row["src"],
 			"genre" => $row["genre"],
+			"tbrlp" => $row["tbrlp"],
 		);
     }
 
@@ -264,6 +267,15 @@ if ($result->num_rows > 0) {
 	}
 
 	array_multisort($sortArray, $appList);
+
+	$sortArrayCounter = 0;
+	
+	foreach($appList as $app){
+
+		$sortArray[$sortArrayCounter++] = intval($app["tbrlp"]); //for multisort
+	}
+
+	array_multisort($sortArray, SORT_DESC, $appList);
 
 	foreach($appList as $app){
 
