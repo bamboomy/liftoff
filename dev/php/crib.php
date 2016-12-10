@@ -485,6 +485,8 @@ $strategy->setShowAlterButtons(false);
 					<h3>Apps</h3>
 <?
 
+include 'tbrlpAlgo.php';
+
 $sql = "SELECT id, title, src, status FROM reviewCandidate where ownerId='".$_SESSION['id']."' and id not in (";
 	$sql .= "SELECT reviewCandidate_id from app where status='approved')";
 $result = $conn->query($sql);
@@ -522,9 +524,21 @@ if($result->num_rows > 0){
 											<h4 style="color: red;">not yet verified</h4>
 <?
 		}else{
-?>
-											<h4><? echo "position: "; ?> </h4>
-<?		
+			if(isset($appList)){
+
+				$counter = 1;
+
+				foreach($appList as $app){
+
+					if($app['id']==$row['id']){
+						$position = $counter;
+					}
+
+					$counter++;
+				}
+
+				echo "<h4>position: ".$position."</h4>";
+			}
 		}
 ?>
 										
