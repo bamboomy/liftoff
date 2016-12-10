@@ -94,12 +94,19 @@ include "nav.php";
 			<div class="col-sm-1"></div>
 			<div class="col-sm-10">
 			
+<?							
+
+$sql = "SELECT  `totalVotes`, votes, tbrlp FROM  `user` WHERE  `id` ='".$_SESSION['id']."'";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+
+?>
 				<div class="well">
 					<h3>Loot</h3>
 					<div class="row">
 						<div class="col-sm-1"></div>
 						<div class="col-sm-10">
-							<h4>To be reviewed list points: 0</h4>
+							<h4>To be reviewed list points: <? echo $row['tbrlp']; ?></h4>
 						</div>
 						<div class="col-sm-1"></div>
 					</div>
@@ -113,14 +120,6 @@ include "nav.php";
 						</div>
 						<div class="col-sm-1"></div>
 					</div>
-<?							
-
-$sql = "SELECT  `totalVotes`, votes FROM  `user` WHERE  `id` ='".$_SESSION['id']."'";
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
-
-?>
-
 					<div class="row">
 						<div class="col-sm-1"></div>
 						<div class="col-sm-10">

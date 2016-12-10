@@ -192,7 +192,7 @@ $result = $conn->query($sql);
 				
 				$row4 = $result4->fetch_assoc();
 
-				$sql5 = "SELECT `name`, email FROM `user` WHERE id=(";
+				$sql5 = "SELECT `name`, email, id FROM `user` WHERE id=(";
 				$sql5 .= "	select ownerId from reviewCandidate where id=(";
 				$sql5 .= "		select reviewCandidate_id from app where id='".$row3['app_id']."'";
 				$sql5 .= "))";
@@ -322,6 +322,7 @@ $result = $conn->query($sql);
 														<? echo "<input type='hidden' name='id' value='".$row3['id']."' />"; ?>
 														<? echo "<input type='hidden' name='reviewOwnerName' value='".$row4['name']."' id='reviewOwnerName_".$row3['id']."' />"; ?>
 														<? echo "<input type='hidden' name='reviewOwnerEmail' value='".$row4['email']."' id='reviewOwnerEmail_".$row3['id']."' />"; ?>
+														<? echo "<input type='hidden' name='reviewOwnerId' value='".$row3['ownerId']."' />"; ?>
 														<? echo "<input type='hidden' name='appOwnerName' value='".$row5['name']."' />"; ?>
 														<? echo "<input type='hidden' name='appOwnerEmail' value='".$row5['email']."' />"; ?>
 														<button type="submit" class="btn btn-primary" id="submitReview">Approve</button>

@@ -122,6 +122,30 @@ include("mails/review_gotten.php");
 		<?
 	}
 
+$sql = "UPDATE user SET tbrlp=(";
+$sql .= "select tbrlp + 1 from (SELECT * FROM user) AS something where id='".addslashes($_POST['reviewOwnerId'])."'";
+$sql .= ") WHERE id='".addslashes($_POST['reviewOwnerId'])."'";
+
+if ($conn->query($sql) !== TRUE) {
+
+	$mail->Subject = "error encountered: couldn't update user's tbrlp";
+
+	$mail->Body = "couldn't update user's tbrlp... -> ".$conn->error;
+	
+	$mail->addAddress('sander.theetaert@gmail.com', 'asignee'); 
+	
+	$mail->send();//fire and forget
+
+?>
+	<script>
+		alert("tbrlp error...");
+		window.location.assign("approve_reviews_randzzz.php");
+	</script>
+<?
+
+	die;
+}
+
 ?>
 	<script>
 		alert("great succezz...");
